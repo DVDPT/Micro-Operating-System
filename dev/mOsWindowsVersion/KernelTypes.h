@@ -1,5 +1,7 @@
 #pragma once
 
+#define INLINE _inline
+
 typedef void Void;
 typedef void* Void_P;
 

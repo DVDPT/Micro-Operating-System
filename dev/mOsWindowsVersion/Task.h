@@ -2,19 +2,19 @@
 
 #include "ThreadingConfiguration.h"
 #include "KernelTypes.h"
-#include "UtThread.h"
+#include "BaseUtThread.h"
 
 template <typename Context>
-class UtTask : public UtThread<Context>
+class UtTask : public BaseUtThread<Context>
 {
 	U8_P _stack[KERNEL_TASKS_STACK_SIZE];
 
 public:
 	UtTask()
-		: 	UtThread<Context>(_stack,KERNEL_TASKS_STACK_SIZE)
+		: 	BaseUtThread<Context>(_stack,KERNEL_TASKS_STACK_SIZE)
 	{}
 
 	UtTask(ThreadFunction func, ThreadArgument arg)
-		:	UtThread<Contex>(_stack,KERNEL_TASKS_STACK_SIZE,func,arg)
+		:	BaseUtThread<Contex>(_stack,KERNEL_TASKS_STACK_SIZE,func,arg)
 	{}
 };

@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include "KernelTypes.h"
+#include "List.h"
 
 
 
@@ -16,7 +17,7 @@ template<typename Context>
 ///
 ///	The basic representations of a system thread
 ///
-class UtThread
+class BaseUtThread
 {
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	///																								   ///
@@ -27,27 +28,32 @@ class UtThread
 	///
 	///	A pointer to the thread context
 	///
-	Context * _context;
+	Context * m_context;
 
 	///
 	///	The thread stack
 	///
-	Void_P _stack;
+	Void_P m_stack;
 
 	///
 	///	The size of the thread stack
 	///
-	U32 _sizeOfStack;
+	U32 m_sizeOfStack;
 
 	///
 	///	The Thread function
 	///
-	ThreadFunction _func;
+	ThreadFunction m_func;
 
 	///
 	///	The Thread Argument
 	///
-	ThreadArgument _arg;
+	ThreadArgument m_arg;
+
+	///
+	///	A general purpose Node to store this thread in queues
+	///
+	Node<BaseUtThread<Context>> _node;
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	///																								   ///
@@ -70,8 +76,8 @@ public:
 	BOOL Start(ThreadFunction func = NULL, ThreadArgument arg = NULL,Void_P stack = NULL, U32 size=-1);
 protected:
 
-	UtThread(Void_P stack, U32 size, ThreadFunction func = NULL, ThreadArgument arg = NULL);
-	UtThread();		
+	BaseUtThread(Void_P stack, U32 size, ThreadFunction func = NULL, ThreadArgument arg = NULL);
+	BaseUtThread();		
 
 
 };

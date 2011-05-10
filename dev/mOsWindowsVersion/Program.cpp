@@ -9,5 +9,6 @@ Thread arr2[10];
 int main()
 {
 	Thread t(NULL,0);
+	t.Start();
 	system("pause");
 }

@@ -75,16 +75,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="KernelTypes.h" />
+    <ClInclude Include="List.h" />
     <ClInclude Include="Scheduler.h" />
     <ClInclude Include="Task.h" />
-    <ClInclude Include="DThread.h" />
+    <ClInclude Include="UtDThread.h" />
     <ClInclude Include="Threading.h" />
     <ClInclude Include="ThreadingConfiguration.h" />
-    <ClInclude Include="UtThread.h" />
+    <ClInclude Include="BaseUtThread.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Program.cpp" />
-    <ClCompile Include="UtThread.cpp" />
+    <ClCompile Include="BaseUtThread.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
