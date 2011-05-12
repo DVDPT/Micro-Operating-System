@@ -4,15 +4,15 @@
 
 template<typename Context>
 
-class UtDThread : public BaseUtThread<Context>
+class UtDThread : public BaseUThread<Context>
 {
 
 public:
 	UtDThread(Void_P stack, int size)
-		: 	BaseUtThread<Context>(stack,size)
+		: 	BaseUThread<Context>(stack,size)
 	{}
 
 	UtDThread()
-		:	BaseUtThread<Context>()
+		:	BaseUThread<Context>()
 	{}
 };

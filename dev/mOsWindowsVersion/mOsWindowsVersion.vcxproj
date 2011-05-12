@@ -74,18 +74,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="KernelPort.h" />
     <ClInclude Include="KernelTypes.h" />
     <ClInclude Include="List.h" />
-    <ClInclude Include="Scheduler.h" />
-    <ClInclude Include="Task.h" />
+    <ClInclude Include="BaseUtScheduler.h" />
+    <ClInclude Include="UtTask.h" />
     <ClInclude Include="UtDThread.h" />
-    <ClInclude Include="Threading.h" />
-    <ClInclude Include="ThreadingConfiguration.h" />
+    <ClInclude Include="KernelConfiguration.h" />
     <ClInclude Include="BaseUtThread.h" />
+    <ClInclude Include="X89Port.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Program.cpp" />
-    <ClCompile Include="BaseUtThread.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,20 +1,20 @@
 #pragma once
 
-#include "ThreadingConfiguration.h"
+#include "KernelConfiguration.h"
 #include "KernelTypes.h"
 #include "BaseUtThread.h"
 
 template <typename Context>
-class UtTask : public BaseUtThread<Context>
+class UtTask : public BaseUThread<Context>
 {
 	U8_P _stack[KERNEL_TASKS_STACK_SIZE];
 
 public:
 	UtTask()
-		: 	BaseUtThread<Context>(_stack,KERNEL_TASKS_STACK_SIZE)
+		: 	BaseUThread<Context>(this->_stack,KERNEL_TASKS_STACK_SIZE)
 	{}
 
 	UtTask(ThreadFunction func, ThreadArgument arg)
-		:	BaseUtThread<Contex>(_stack,KERNEL_TASKS_STACK_SIZE,func,arg)
+		:	BaseUThread<Contex>(this->_stack,KERNEL_TASKS_STACK_SIZE,func,arg)
 	{}
 };
