@@ -1,6 +1,7 @@
+#pragma once
 #include "KernelPort.h"
 
-struct x86Context
+struct x86Context : public BaseUThreadContext
 {
 	unsigned EDI;
 	unsigned ESI;
@@ -21,13 +22,11 @@ class X86Scheduler : public BaseUScheduler<x86Context>
 protected:
 	virtual Void ContextSwitch(x86Context* const oldThreadContext, x86Context* const newThreadContext)
 	{
+
 	}
 };
 
-X86Scheduler _scheduler;
-template <typename Context>
 
-BaseUScheduler<Context>& BaseUScheduler<Context>::_pScheduler = _scheduler;
 
 
 typedef BaseUThread<x86Context> Thread;

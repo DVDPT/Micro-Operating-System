@@ -85,12 +85,14 @@
     <ClInclude Include="UTask.h" />
     <ClInclude Include="KernelConfiguration.h" />
     <ClInclude Include="BaseUThread.h" />
-    <ClInclude Include="X89Port.h" />
+    <ClInclude Include="X86Port.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BaseUThreadContext.h" />
     <ClCompile Include="Bits.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="System.cpp" />
+    <ClCompile Include="X86Port.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
