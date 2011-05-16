@@ -1,9 +1,10 @@
 #pragma once
 
-#include "KernelTypes.h"
+#include "SystemTypes.h"
 
 template<class T>
 class List;
+
 template <class T>
 struct Node
 {
@@ -38,7 +39,7 @@ public:
 		_head._value = NULL;
 	}
 
-	BOOL IsEmpty(){ return _head._next == &_head; }
+	BOOL IsEmpty(){ return (BOOL)(_head._next == &_head); }
 
 	Node<T>* GetFirst(){ return IsEmpty() ? NULL : _head._next; }
 
@@ -58,7 +59,7 @@ public:
 
 	Void AddLast(Node<T>* node)
 	{
-		node->_next = _head;
+		node->_next = &_head;
 		node->_prev = _head._prev;
 		_head._prev->_next = node;
 		_head._prev = node;

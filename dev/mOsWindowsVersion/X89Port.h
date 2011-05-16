@@ -27,7 +27,7 @@ protected:
 X86Scheduler _scheduler;
 template <typename Context>
 
-const BaseUScheduler<Context>& BaseUScheduler<Context>::_pScheduler = _scheduler;
+BaseUScheduler<Context>& BaseUScheduler<Context>::_pScheduler = _scheduler;
 
 
 typedef BaseUThread<x86Context> Thread;

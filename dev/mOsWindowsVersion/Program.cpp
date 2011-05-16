@@ -9,10 +9,15 @@ Thread arr2[10];
 char stack[SIZE_OF_STACK];
 int main()
 {
+	/*
 	Thread t(stack,SIZE_OF_STACK);
+	Thread& x = t;
+	Thread * p = &x;
+	*/
 
-	Thread& x = Thread::GetCurrentThread();
+	
+	
 
-	t.Start();
+//	t.Start();
 	system("pause");
 }
