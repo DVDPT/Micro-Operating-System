@@ -164,7 +164,7 @@ public:
 		_arg(arg),
 		_node(),
 		_threadPriority(KERNEL_DEFAULT_THREAD_PRIORITY),
-		_parkerState(PARK_IN_PROGRESS_MASK | LOCK_MASK)
+		_parkerState(0)
 		
 	{
 		InitializeStackAndContext(stack, size);	
@@ -206,7 +206,7 @@ public:
 			return _parkerStatus;
 
 		///
-		///	Adquire System lock to manipulate the ready queue
+		///	Acquire System lock to manipulate the ready queue
 		///
 		System::AcquireSystemLock();
 
@@ -299,6 +299,11 @@ public:
 		///	Schedule this thread
 		///
 		UnparkThread();
+
+		///
+		/// Reset parker to further use
+		///
+		ResetParker();
 
 		return TRUE;
 	}
