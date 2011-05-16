@@ -16,7 +16,10 @@ int main()
 	*/
 
 	
-	
+	int value = Bits<U8>::GetLowestBitSet(0x1);
+	value = Bits<U8>::GetLowestBitSet(0xF0);
+	value = Bits<U8>::GetLowestBitSet(0xA0);
+	value = Bits<U8>::GetLowestBitSet(0x4);
 
 //	t.Start();
 	system("pause");

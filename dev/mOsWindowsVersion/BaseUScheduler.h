@@ -29,15 +29,16 @@ class BaseUScheduler
 	BaseUThread<Context> * _pRunningThread;
 	
 	///
+	///	The main thread	descriptor
+	///
+	BaseUThread<Context> _mainThread;
+	
+	///
 	///	A pointer to the scheduler instance
 	///
 	static BaseUScheduler* _pScheduler;
 
-	///
-	///	The main thread	descriptor
-	///
-	static BaseUThread<Context> _mainThread;
-
+	
 
 	///
 	///	Removes the thread passed as argument from its ready list
@@ -128,12 +129,12 @@ protected:
 	NOINLINE BaseUScheduler()
 		:	
 		_queuesBitMap(0),
-		_pRunningThread(_mainThread)
+		_mainThread(),
+		_pRunningThread(&_mainThread)
 
 	{
-
+		
 		_pScheduler = this;
-
 		
 	}
 
@@ -143,4 +144,6 @@ protected:
 
 template<typename Context>
 BaseUScheduler<Context>*  BaseUScheduler<Context>::_pScheduler = NULL;
+
+
 

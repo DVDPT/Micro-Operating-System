@@ -94,11 +94,12 @@ private:
 	NOINLINE void InitializeStackAndContext(Void_P stack, U32 size)
 	{
 
+		int sizess = sizeof(Context);
 		///
 		///	Point context to the start of the Thread stack.
 		///
-		_context = (Context*)((int)_stack + _sizeOfStack - sizeof(Context) - sizeof(int));
-
+		_context = (Context*)((int)_stack + _sizeOfStack - sizeof(Context) - sizeof(unsigned));
+		
 		///
 		///	Set start routine, so that UtThreadStart function runs after the first context switch of this thread.
 		///

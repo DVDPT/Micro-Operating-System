@@ -19,7 +19,7 @@ public:
 		*position = *position | (1 << bitnumber);
 	}
 
-	static U32 GetLowestBitSet(T value)
+	static U32 GetLowestBitSet(U32 value)
 	{
 		value  &= -int(value);
 		value  *= 0x077CB531;

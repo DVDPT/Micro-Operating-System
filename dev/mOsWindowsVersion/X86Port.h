@@ -1,7 +1,7 @@
 #pragma once
 #include "KernelPort.h"
 
-struct x86Context : public BaseUThreadContext
+struct x86Context 
 {
 	unsigned EDI;
 	unsigned ESI;
