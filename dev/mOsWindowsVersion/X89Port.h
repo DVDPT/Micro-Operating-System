@@ -30,6 +30,5 @@ template <typename Context>
 const BaseUScheduler<Context>& BaseUScheduler<Context>::_pScheduler = _scheduler;
 
 
-typedef BaseUThread<x86Context> UtThread;
-typedef UtDThread<x86Context> Thread;
+typedef BaseUThread<x86Context> Thread;
 typedef UtTask<x86Context> Task;

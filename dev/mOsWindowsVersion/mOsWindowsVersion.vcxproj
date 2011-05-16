@@ -77,11 +77,10 @@
     <ClInclude Include="KernelPort.h" />
     <ClInclude Include="KernelTypes.h" />
     <ClInclude Include="List.h" />
-    <ClInclude Include="BaseUtScheduler.h" />
+    <ClInclude Include="BaseUScheduler.h" />
     <ClInclude Include="UtTask.h" />
-    <ClInclude Include="UtDThread.h" />
     <ClInclude Include="KernelConfiguration.h" />
-    <ClInclude Include="BaseUtThread.h" />
+    <ClInclude Include="BaseUThread.h" />
     <ClInclude Include="X89Port.h" />
   </ItemGroup>
   <ItemGroup>

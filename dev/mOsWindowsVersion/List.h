@@ -17,9 +17,9 @@ public:
 	Node() : _next(NULL), _prev(NULL), _value(NULL)
 	{}
 
-	INLINE T* GetValue(){return _value;}
+	T* GetValue(){return _value;}
 
-	Void INLINE SetValue(T* value){ _value = value; }
+	Void SetValue(T* value){ _value = value; }
 
 
 };
@@ -29,8 +29,8 @@ class List
 {
 	Node<T> _head;
 
-	BOOL INLINE IsLastNode(Node<T>* node){return node->_next == &_head;}
-	BOOL INLINE IsFirstNode(Node<T>* node){return node->_prev == &_head;}
+	BOOL IsLastNode(Node<T>* node){return node->_next == &_head;}
+	BOOL IsFirstNode(Node<T>* node){return node->_prev == &_head;}
 public:
 	List()
 	{
@@ -38,17 +38,17 @@ public:
 		_head._value = NULL;
 	}
 
-	INLINE BOOL IsEmpty(){ return _head._next == &_head; }
+	BOOL IsEmpty(){ return _head._next == &_head; }
 
-	INLINE Node<T>* GetFirst(){ return IsEmpty() ? NULL : _head._next; }
+	Node<T>* GetFirst(){ return IsEmpty() ? NULL : _head._next; }
 
-	INLINE Node<T>* GetLast(){ return IsEmpty() ? NULL : _head._prev; }
+	Node<T>* GetLast(){ return IsEmpty() ? NULL : _head._prev; }
 
-	INLINE Node<T>* GetNext(Node<T> * node) { IsLastNode(node) ? NULL : node->_next;}
+	Node<T>* GetNext(Node<T> * node) { IsLastNode(node) ? NULL : node->_next;}
 
-	INLINE Node<T>* GetPrevious(Node<T> * node) { IsFirstNode(node) ? NULL : node->_prev;}
+	Node<T>* GetPrevious(Node<T> * node) { IsFirstNode(node) ? NULL : node->_prev;}
 
-	INLINE Void AddFirst(Node<T>* node)
+	Void AddFirst(Node<T>* node)
 	{
 		node->_prev = &_head;
 		node->_next = _head._next;
@@ -56,7 +56,7 @@ public:
 		_head._next = node;
 	}
 
-	INLINE Void AddLast(Node<T>* node)
+	Void AddLast(Node<T>* node)
 	{
 		node->_next = _head;
 		node->_prev = _head._prev;
@@ -64,22 +64,22 @@ public:
 		_head._prev = node;
 	}
 
-	INLINE Void Remove(Node<T>* node)
+	Void Remove(Node<T>* node)
 	{
 		node->_prev->_next = node->_next;
 		node->_next->_prev = node->_prev;
 		node->_next = node->_prev = NULL;
 	}
 
-	INLINE Void RemoveFirst(){ Remove(_head._next); }
-	INLINE Void RemoveLast(){ Remove(_head._prev); }
-		
-	INLINE Void Enqueue(Node<T>* node)
+	Void RemoveFirst(){ Remove(_head._next); }
+	Void RemoveLast(){ Remove(_head._prev); }
+	
+	Void Enqueue(Node<T>* node)
 	{
 		AddLast(node);
 	}
 
-	INLINE Node<T>* Dequeue()
+	Node<T>* Dequeue()
 	{
 		Node<T> * ret = GetFirst();
 		if(ret)

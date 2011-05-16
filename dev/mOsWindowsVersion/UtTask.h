@@ -2,7 +2,7 @@
 
 #include "KernelConfiguration.h"
 #include "KernelTypes.h"
-#include "BaseUtThread.h"
+#include "BaseUThread.h"
 
 template <typename Context>
 class UtTask : public BaseUThread<Context>

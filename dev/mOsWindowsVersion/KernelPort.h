@@ -1,7 +1,7 @@
 #pragma once
 
-#include "BaseUtThread.h"
-#include "BaseUtScheduler.h"
+#include "BaseUThread.h"
+#include "BaseUScheduler.h"
 #include "UtDThread.h"
 #include "UtTask.h"
 
