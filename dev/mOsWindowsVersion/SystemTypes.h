@@ -2,6 +2,8 @@
 
 #define INLINE _inline
 #define NOINLINE __declspec(noinline)
+#define FASTCALL __fastcall
+#define NAKED __declspec(naked)
 
 typedef void Void;
 typedef void* Void_P;
@@ -20,4 +22,4 @@ typedef char* S8_P;
 
 #define NULL (0)
 
-enum BOOL {FALSE,TRUE};
+enum BOOL {TRUE=1,FALSE=0};

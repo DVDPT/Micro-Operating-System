@@ -88,7 +88,6 @@
     <ClInclude Include="X86Port.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Bits.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="X86Port.cpp" />

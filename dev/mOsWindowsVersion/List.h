@@ -33,23 +33,24 @@ class List
 	BOOL IsLastNode(Node<T>* node){return node->_next == &_head;}
 	BOOL IsFirstNode(Node<T>* node){return node->_prev == &_head;}
 public:
-	List()
+	NOINLINE List() : _head()
 	{
-		_head._next = _head._prev = &_head;
+		_head._next =  &_head;
+		_head._prev = &_head;
 		_head._value = NULL;
 	}
 
-	BOOL IsEmpty(){ return (BOOL)(_head._next == &_head); }
+	NOINLINE BOOL IsEmpty(){ return (BOOL)(_head._next == &_head); }
 
-	Node<T>* GetFirst(){ return IsEmpty() ? NULL : _head._next; }
+	NOINLINE Node<T>* GetFirst(){ return IsEmpty() ? NULL : _head._next; }
 
-	Node<T>* GetLast(){ return IsEmpty() ? NULL : _head._prev; }
+	NOINLINE Node<T>* GetLast(){ return IsEmpty() ? NULL : _head._prev; }
 
-	Node<T>* GetNext(Node<T> * node) { IsLastNode(node) ? NULL : node->_next;}
+	NOINLINE Node<T>* GetNext(Node<T> * node) { IsLastNode(node) ? NULL : node->_next;}
 
-	Node<T>* GetPrevious(Node<T> * node) { IsFirstNode(node) ? NULL : node->_prev;}
+	NOINLINE Node<T>* GetPrevious(Node<T> * node) { IsFirstNode(node) ? NULL : node->_prev;}
 
-	Void AddFirst(Node<T>* node)
+	NOINLINE Void AddFirst(Node<T>* node)
 	{
 		node->_prev = &_head;
 		node->_next = _head._next;
@@ -57,7 +58,7 @@ public:
 		_head._next = node;
 	}
 
-	Void AddLast(Node<T>* node)
+	NOINLINE Void AddLast(Node<T>* node)
 	{
 		node->_next = &_head;
 		node->_prev = _head._prev;
@@ -65,22 +66,22 @@ public:
 		_head._prev = node;
 	}
 
-	Void Remove(Node<T>* node)
+	NOINLINE Void Remove(Node<T>* node)
 	{
 		node->_prev->_next = node->_next;
 		node->_next->_prev = node->_prev;
 		node->_next = node->_prev = NULL;
 	}
 
-	Void RemoveFirst(){ Remove(_head._next); }
-	Void RemoveLast(){ Remove(_head._prev); }
+	NOINLINE Void RemoveFirst(){ Remove(_head._next); }
+	NOINLINE Void RemoveLast(){ Remove(_head._prev); }
 	
-	Void Enqueue(Node<T>* node)
+	NOINLINE Void Enqueue(Node<T>* node)
 	{
 		AddLast(node);
 	}
 
-	Node<T>* Dequeue()
+	NOINLINE Node<T>* Dequeue()
 	{
 		Node<T> * ret = GetFirst();
 		if(ret)

@@ -6,10 +6,11 @@
 #include "BaseUScheduler.h"
 #include "Interlocked.h"
 
+
+
+
 typedef Void_P ThreadArgument;
 typedef Void (*ThreadFunction)(ThreadArgument);
-
-
 
 ///
 ///	The template defines the UtThread context
@@ -27,8 +28,6 @@ public:
 	///
 	enum ParkerStatus { Success, Cancelled, Timeout };
 
-	typedef Void_P ThreadArgument;
-	typedef Void (*ThreadFunction)(ThreadArgument);
 
 private:
 	///
@@ -125,7 +124,7 @@ private:
 	}
 
 	///
-	///	Auxiliar function to the thread parker
+	///	Auxiliary function to the thread parker
 	///
 	NOINLINE BOOL TestAndClearMask(U8 mask)
 	{
@@ -327,7 +326,26 @@ public:
 		return BaseUScheduler<Context>::GetRunningThread();
 	}
 
+	///
+	///	Yields the current thread
+	///
+	static Void Yield()
+	{
+		System::AcquireSystemLock();
 
+		if(BaseUScheduler<Context>::HaveReadyThreads())
+		{
+			
+			BaseUScheduler<Context>::InsertThreadInReadyQueue(GetCurrentThread());
+
+			BaseUScheduler<Context>::Schedule(TRUE);
+
+			return;
+		}
+
+		System::ReleaseSystemLock();
+		
+	}
 
 
 
