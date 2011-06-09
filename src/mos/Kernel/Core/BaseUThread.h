@@ -65,7 +65,7 @@ private:
 	///
 	///	A general purpose Node to store this thread in queues
 	///
-	Node<BaseUThread<Context>> _node;
+	Node<BaseUThread<Context> > _node;
 	
 	///
 	///	Auxiliary constants to control the state of the parker
@@ -148,7 +148,7 @@ private:
 	}
 
 
-	friend UScheduler;
+	friend   class BaseUScheduler<Context>;
 
 
 public:

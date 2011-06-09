@@ -3,6 +3,7 @@
 #include "KernelConfiguration.h"
 #include "Assert.h"
 #include "Bits.h"
+#include "System.h"
 
 template <typename Context>
 class BaseUThread;
@@ -25,7 +26,7 @@ private:
 	///
 	///	The array of ready queues supported by the kernel.
 	///
-	List<BaseUThread<Context>> _readyQueues[KERNEL_NR_OF_THREAD_PRIORITIES]; 
+	List<BaseUThread<Context> > _readyQueues[KERNEL_NR_OF_THREAD_PRIORITIES];
 
 	///
 	///	A bit map that indicates witch ready queues have threads.
@@ -74,7 +75,7 @@ private:
 	{
 		if(&thread != _pScheduler->_pRunningThread)
 		{
-			List<BaseUThread<Context>>& list = _pScheduler->_readyQueues[thread._threadPriority];
+			List<BaseUThread<Context> >& list = _pScheduler->_readyQueues[thread._threadPriority];
 			list.Remove(&thread._node);
 			
 			if(list.IsEmpty())
@@ -88,7 +89,7 @@ private:
 	NOINLINE static Void InsertThreadInReadyQueue(BaseUThread<Context>& thread)
 	{
 
-		List<BaseUThread<Context>>& list =  _pScheduler->_readyQueues[thread._threadPriority]; 
+		List<BaseUThread<Context> >& list =  _pScheduler->_readyQueues[thread._threadPriority];
 		
 		BOOL wasEmpty = list.IsEmpty();
 		
@@ -118,9 +119,9 @@ private:
 	{
 		U32 queueIndex = Bits<U8>::GetLowestBitSet(_pScheduler->_queuesBitMap);
 
-		List<BaseUThread<Context>>& list =  _pScheduler->_readyQueues[queueIndex];
+		List<BaseUThread<Context> >& list =  _pScheduler->_readyQueues[queueIndex];
 		
-		Node<BaseUThread<Context>>* threadNode = list.GetFirst();
+		Node<BaseUThread<Context> >* threadNode = list.GetFirst();
 		return *(threadNode->GetValue());
 	}
 
@@ -231,7 +232,7 @@ protected:
 	}
 
 
-	friend BaseUThread<Context>;
+	friend class BaseUThread<Context>;
 };
 
 template<typename Context>

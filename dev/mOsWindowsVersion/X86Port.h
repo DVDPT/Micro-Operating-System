@@ -5,7 +5,7 @@
 
 struct X86Context 
 {
-	unsigned EDI;
+	unsigned EDI;\
 	unsigned ESI;
 	unsigned EBX;
 	unsigned EBP;
