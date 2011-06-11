@@ -9,5 +9,5 @@
 
 #define INLINE inline
 #define NOINLINE __attribute__((noinline))
-#define FASTCALL
+#define FASTCALL __attribute__((fastcall))
 #define NAKED __attribute__((naked)

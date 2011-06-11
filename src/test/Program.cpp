@@ -1,9 +1,8 @@
-#include <System.h>
 
+#include <Threading.h>
 
 #define SIZE_OF_STACK (1024 * 4)
-Task arr[10];
-Thread arr2[10];
+
 
 char stack[SIZE_OF_STACK];
 
@@ -12,7 +11,7 @@ void Func()
 	Thread::Yield();
 }
 
-void main()
+int main()
 {
 
 	Thread t(stack,SIZE_OF_STACK);
@@ -21,4 +20,5 @@ void main()
 	t.Start((ThreadFunction)Func,NULL);
 
 	Thread::Yield();
+	return 0;
 }
