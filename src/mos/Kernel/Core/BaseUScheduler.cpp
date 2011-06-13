@@ -11,6 +11,29 @@
 BaseUScheduler*  BaseUScheduler::_pScheduler = NULL;
 
 
+
+///
+///	A protected ctor so that only derived types can access it.
+///	_pRunningThread is initialized with the value of the main thread (the thread running this code)
+///
+BaseUScheduler::BaseUScheduler(ContextSwitch contextSwitch) :
+	_queuesBitMap(0), _mainThread(), _pRunningThread(&_mainThread),
+			_idleThread(), _contextSwitch(contextSwitch)
+
+{
+	///
+	///	Register the scheduler instance so it can be used on methods
+	///
+	_pScheduler = this;
+
+	///
+	///	Set idle thread priority and start it
+	///
+	_idleThread._threadPriority = KERNEL_MINIMUM_THREAD_PRIORITY;
+	InsertThreadInReadyQueue(_idleThread);
+}
+
+
 Void IdleThreadRoutine()
 {
 
@@ -158,24 +181,4 @@ Void BaseUScheduler::unlock()
 
 }
 
-///
-///	A protected ctor so that only derived types can access it.
-///	_pRunningThread is initialized with the value of the main thread (the thread running this code)
-///
-BaseUScheduler::BaseUScheduler(ContextSwitch contextSwitch) :
-	_queuesBitMap(0), _mainThread(), _pRunningThread(&_mainThread),
-			_idleThread(), _contextSwitch(contextSwitch)
-
-{
-	///
-	///	Register the scheduler instance so it can be used on methods
-	///
-	_pScheduler = this;
-
-	///
-	///	Set idle thread priority and start it
-	///
-	_idleThread.SetThreadPriority(KERNEL_MINIMUM_THREAD_PRIORITY);
-	InsertThreadInReadyQueue(_idleThread);
-}
 

@@ -5,6 +5,9 @@
 
 
 char stack[SIZE_OF_STACK];
+char stack2[SIZE_OF_STACK];
+
+Thread t2();
 
 void Func()
 {
@@ -14,11 +17,11 @@ void Func()
 int main()
 {
 
+	//
 	Thread t(stack,SIZE_OF_STACK);
-
-	t.SetThreadPriority(4);
 	t.Start((ThreadFunction)Func,NULL);
 
 	Thread::Yield();
+	//*/
 	return 0;
 }

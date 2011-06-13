@@ -8,6 +8,40 @@
 #include "BaseUThread.h"
 #include "BaseUScheduler.h"
 
+///
+///	Create and configure a new UThread
+///
+BaseUThread::BaseUThread(Void_P stack, U32 size, ThreadFunction func /*= NULL*/, ThreadArgument arg /*= NULL*/)
+	:
+		_stack(stack),
+		_sizeOfStack(size),
+		_func(func),
+		_arg(arg),
+		_threadPriority(KERNEL_DEFAULT_THREAD_PRIORITY),
+		_node(),
+		_parkerState(0),
+		_parkerStatus(Success)
+{
+	InitializeStackAndContext(stack, size);
+
+	_node.SetValue(this);
+}
+
+BaseUThread::BaseUThread()
+	:
+		_stack(NULL),
+		_sizeOfStack(0),
+		_func(NULL),
+		_arg(NULL),
+		_threadPriority(KERNEL_DEFAULT_THREAD_PRIORITY),
+		_node(),
+		_parkerState(0),
+		_parkerStatus(Success)
+{
+	_node.SetValue(this);
+}
+
+
 void BaseUThread::InitializeStackAndContext(Void_P stack, U32 size)
 {
 	///
@@ -60,38 +94,7 @@ BOOL BaseUThread::TestAndClearMask(U8 mask)
 	} while (true);
 }
 
-///
-///	Create and configure a new UThread
-///
-BaseUThread::BaseUThread(Void_P stack, U32 size, ThreadFunction func /*= NULL*/, ThreadArgument arg /*= NULL*/)
-	:
-		_stack(stack),
-		_sizeOfStack(size),
-		_func(func),
-		_arg(arg),
-		_threadPriority(KERNEL_DEFAULT_THREAD_PRIORITY),
-		_node(),
-		_parkerState(0),
-		_parkerStatus(Success)
-{
-	InitializeStackAndContext(stack, size);
 
-	_node.SetValue(this);
-}
-
-BaseUThread::BaseUThread()
-	:
-		_stack(NULL),
-		_sizeOfStack(0),
-		_func(NULL),
-		_arg(NULL),
-		_threadPriority(KERNEL_DEFAULT_THREAD_PRIORITY),
-		_node(),
-		_parkerState(0),
-		_parkerStatus(Success)
-{
-	_node.SetValue(this);
-}
 
 ///
 ///	Removes this thread from ready list
