@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include "Config.h"
+
 #include "ARMKernelConfig.h"
 
 typedef THREAD_CONTEXT Context;

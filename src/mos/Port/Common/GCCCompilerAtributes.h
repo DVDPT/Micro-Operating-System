@@ -11,3 +11,5 @@
 #define NOINLINE __attribute__((noinline))
 #define FASTCALL __attribute__((fastcall))
 #define NAKED __attribute__((naked))
+#define SECTION(sec) __attribute__ ((section (sec)))
+#define ASM_VOLATILE __asm__ volatile

@@ -2,7 +2,7 @@
 
 #include "Config.h"
 
-typedef void Void;
+
 typedef void* Void_P;
 
 typedef unsigned int U32;

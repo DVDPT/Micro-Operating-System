@@ -9,16 +9,18 @@
 
 
 
+ARMScheduler armscheduler;
 
 ARMScheduler::ARMScheduler() : Scheduler(ARMContextSwitch)
 {
+
 }
 
-NAKED Void ARMScheduler::ARMContextSwitch(Thread* oldThread, Thread* newThread)
+NAKED void ARMScheduler::ARMContextSwitch(Thread* oldThread, Thread* newThread)
 {
 	//	R0 oldThread
 	//	R1 newThread
-	__asm__ volatile
+	ASM_VOLATILE
 	(
 
 		///
@@ -47,4 +49,3 @@ NAKED Void ARMScheduler::ARMContextSwitch(Thread* oldThread, Thread* newThread)
 }
 
 
-ARMScheduler armscheduler;

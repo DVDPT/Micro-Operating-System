@@ -13,10 +13,10 @@ public:
 	///
 	///	This function ensures multiple exclusion through out the entire system
 	///
-	static Void AcquireSystemLock();
+	static void AcquireSystemLock();
 	
 	///
 	///	Release the multiple exclusion
 	///
-	static Void ReleaseSystemLock();
+	static void ReleaseSystemLock();
 };

@@ -1,12 +1,12 @@
 #include "System.h"
 
-Void System::AcquireSystemLock()
+void System::AcquireSystemLock()
 {
 
 	/// disable interrupts
 }
 
-Void System::ReleaseSystemLock()
+void System::ReleaseSystemLock()
 {
 	/// enable interrupts
 }

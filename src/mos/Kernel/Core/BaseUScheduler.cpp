@@ -17,10 +17,11 @@ BaseUScheduler*  BaseUScheduler::_pScheduler = NULL;
 ///	_pRunningThread is initialized with the value of the main thread (the thread running this code)
 ///
 BaseUScheduler::BaseUScheduler(ContextSwitch contextSwitch) :
-	_queuesBitMap(0), _mainThread(), _pRunningThread(&_mainThread),
+	_queuesBitMap(0), _mainThread(),
 			_idleThread(), _contextSwitch(contextSwitch)
 
 {
+	_pRunningThread = &_mainThread;
 	///
 	///	Register the scheduler instance so it can be used on methods
 	///
@@ -34,7 +35,7 @@ BaseUScheduler::BaseUScheduler(ContextSwitch contextSwitch) :
 }
 
 
-Void IdleThreadRoutine()
+void IdleThreadRoutine()
 {
 
 }
@@ -42,7 +43,7 @@ Void IdleThreadRoutine()
 ///
 ///	Removes the thread passed as argument from its ready list
 ///
-Void BaseUScheduler::RemoveThreadFromReadyQueue(BaseUThread& thread)
+void BaseUScheduler::RemoveThreadFromReadyQueue(BaseUThread& thread)
 {
 	if (&thread != _pScheduler->_pRunningThread)
 	{
@@ -59,7 +60,7 @@ Void BaseUScheduler::RemoveThreadFromReadyQueue(BaseUThread& thread)
 ///
 ///	Inserts this thread passed as argument in its ready queue
 ///
-Void BaseUScheduler::InsertThreadInReadyQueue(BaseUThread& thread)
+void BaseUScheduler::InsertThreadInReadyQueue(BaseUThread& thread)
 {
 
 	List<BaseUThread >& list =
@@ -120,7 +121,7 @@ BOOL BaseUScheduler::HaveReadyThreads()
 ///
 ///	The scheduler function
 ///
-Void BaseUScheduler::Schedule(BOOL locked)
+void BaseUScheduler::Schedule(BOOL locked)
 {
 
 	///
@@ -166,19 +167,19 @@ U32 BaseUScheduler::GetLockCount()
 	return _pScheduler->_schedulerLock;
 }
 
-Void BaseUScheduler::SetLockCount(U32 newlock)
+void BaseUScheduler::SetLockCount(U32 newlock)
 {
 	_pScheduler->_schedulerLock = newlock;
 }
 
-Void BaseUScheduler::lock()
+void BaseUScheduler::lock()
 {
 	_pScheduler->_schedulerLock++;
 }
 
-Void BaseUScheduler::unlock()
+void BaseUScheduler::unlock()
 {
 
 }
 
-
+void BaseUScheduler::RegisterScheduler(BaseUScheduler * sche){ _pScheduler = sche; }

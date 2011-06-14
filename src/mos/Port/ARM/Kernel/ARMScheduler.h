@@ -11,8 +11,10 @@ class ARMScheduler : public BaseUScheduler
 {
 
 public:
-	static ARMScheduler* _scheduler;
 	ARMScheduler();
 protected:
-	static Void ARMContextSwitch(Thread* oldThread, Thread* newThread);
+	static void ARMContextSwitch(Thread* oldThread, Thread* newThread);
+
 };
+
+extern ARMScheduler armscheduler;

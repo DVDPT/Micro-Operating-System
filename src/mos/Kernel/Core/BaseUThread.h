@@ -9,7 +9,7 @@
 
 
 typedef Void_P ThreadArgument;
-typedef Void (*ThreadFunction)(ThreadArgument);
+typedef void (*ThreadFunction)(ThreadArgument);
 
 
 
@@ -123,7 +123,7 @@ public:
 	///
 	///	Schedules this thread
 	///
-	Void UnparkThread(ParkerStatus status = Success);
+	void UnparkThread(ParkerStatus status = Success);
 
 	///
 	///	Tries to lock this thread parker
@@ -133,7 +133,7 @@ public:
 	///
 	///	Resets this parker for further use
 	///
-	Void ResetParker();
+	void ResetParker();
 
 
 	///
@@ -144,7 +144,7 @@ public:
 	///
 	///	Sets a new priority for this thread
 	///
-	Void SetThreadPriority(U8 newPriority);
+	void SetThreadPriority(U8 newPriority);
 	///
 	///	This function returns the instance of the current running thread
 	///	
@@ -153,7 +153,7 @@ public:
 	///
 	///	Yields the current thread
 	///
-	static Void Yield();
+	static void Yield();
 
 };
 

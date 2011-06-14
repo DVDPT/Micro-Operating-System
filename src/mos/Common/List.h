@@ -20,7 +20,7 @@ public:
 
 	T* GetValue(){return _value;}
 
-	Void SetValue(T* value){ _value = value; }
+	void SetValue(T* value){ _value = value; }
 
 
 };
@@ -50,7 +50,7 @@ public:
 
 	NOINLINE Node<T>* GetPrevious(Node<T> * node) { IsFirstNode(node) ? NULL : node->_prev;}
 
-	NOINLINE Void AddFirst(Node<T>* node)
+	NOINLINE void AddFirst(Node<T>* node)
 	{
 		node->_prev = &_head;
 		node->_next = _head._next;
@@ -58,7 +58,7 @@ public:
 		_head._next = node;
 	}
 
-	NOINLINE Void AddLast(Node<T>* node)
+	NOINLINE void AddLast(Node<T>* node)
 	{
 		node->_next = &_head;
 		node->_prev = _head._prev;
@@ -66,17 +66,17 @@ public:
 		_head._prev = node;
 	}
 
-	NOINLINE Void Remove(Node<T>* node)
+	NOINLINE void Remove(Node<T>* node)
 	{
 		node->_prev->_next = node->_next;
 		node->_next->_prev = node->_prev;
 		node->_next = node->_prev = NULL;
 	}
 
-	NOINLINE Void RemoveFirst(){ Remove(_head._next); }
-	NOINLINE Void RemoveLast(){ Remove(_head._prev); }
+	NOINLINE void RemoveFirst(){ Remove(_head._next); }
+	NOINLINE void RemoveLast(){ Remove(_head._prev); }
 	
-	NOINLINE Void Enqueue(Node<T>* node)
+	NOINLINE void Enqueue(Node<T>* node)
 	{
 		AddLast(node);
 	}

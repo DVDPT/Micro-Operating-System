@@ -17,7 +17,7 @@ protected:
 	///
 	///	The prototype to the context switch function
 	///
-	typedef Void (FASTCALL *ContextSwitch)(BaseUThread* oldThread, BaseUThread* newThread);
+	typedef void (FASTCALL *ContextSwitch)(BaseUThread* oldThread, BaseUThread* newThread);
 
 private:
 	///
@@ -60,17 +60,17 @@ private:
 	///
 	volatile U32 _schedulerLock;
 
-	static Void IdleThreadRoutine();
+	static void IdleThreadRoutine();
 
 	///
 	///	Removes the thread passed as argument from its ready list
 	///
-	static Void RemoveThreadFromReadyQueue(BaseUThread& thread);
+	static void RemoveThreadFromReadyQueue(BaseUThread& thread);
 
 	///
 	///	Inserts this thread passed as argument in its ready queue
 	///
-	static Void InsertThreadInReadyQueue(BaseUThread& thread);
+	static void InsertThreadInReadyQueue(BaseUThread& thread);
 
 	
 	///
@@ -92,7 +92,7 @@ private:
 	///
 	///	The scheduler function
 	///
-	static Void Schedule(BOOL locked);
+	static void Schedule(BOOL locked);
 
 	///
 	///	Returns the current running thread
@@ -101,13 +101,15 @@ private:
 
 	static U32 GetLockCount();
 
-	static Void SetLockCount(U32 newlock);
+	static void SetLockCount(U32 newlock);
 
-	static Void lock();
+	static void lock();
 	
-	static Void unlock();
+	static void unlock();
 	 
 
+public:
+	static void RegisterScheduler(BaseUScheduler* sche);
 
 protected:
 	///

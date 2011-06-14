@@ -1,12 +1,5 @@
 #pragma once
 
-class BaseUThread;
-class BaseUScheduler;
-class UTask;
-
-typedef BaseUThread Thread;
-typedef BaseUScheduler Scheduler;
-typedef UTask Task;
 
 #include "KernelConstants.h"
 #include "KernelConfig.h"
@@ -15,3 +8,7 @@ typedef UTask Task;
 #include "BaseUScheduler.h"
 
 #include "SystemTypes.h"
+
+typedef BaseUThread Thread;
+typedef BaseUScheduler Scheduler;
+typedef UTask Task;

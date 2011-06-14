@@ -5,7 +5,7 @@ class Assert
 {
 public:
 
-	static Void NotEquals(void * expected, void * value);
+	static void NotEquals(void * expected, void * value);
 
-	static Void Equals(void * expected, void* value);
+	static void Equals(void * expected, void* value);
 };

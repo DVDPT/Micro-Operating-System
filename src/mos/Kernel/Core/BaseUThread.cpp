@@ -141,7 +141,7 @@ BaseUThread::ParkerStatus BaseUThread::ParkThread(U32 timeout)
 ///
 ///	Schedules this thread
 ///
-Void BaseUThread::UnparkThread(ParkerStatus status /*= Success*/)
+void BaseUThread::UnparkThread(ParkerStatus status /*= Success*/)
 {
 	_parkerStatus = status;
 
@@ -170,7 +170,7 @@ BOOL BaseUThread::TryLockParker()
 ///
 ///	Resets this parker for further use
 ///
-Void BaseUThread::ResetParker()
+void BaseUThread::ResetParker()
 {
 	_parkerState = LOCK_MASK | PARK_IN_PROGRESS_MASK;
 }
@@ -221,7 +221,7 @@ BOOL BaseUThread::Start(ThreadFunction func /*= NULL*/, ThreadArgument arg /*= N
 ///
 ///	Sets a new priority for this thread
 ///
-Void BaseUThread::SetThreadPriority(U8 newPriority)
+void BaseUThread::SetThreadPriority(U8 newPriority)
 {
 	_threadPriority = newPriority;
 
@@ -239,7 +239,7 @@ BaseUThread& BaseUThread::GetCurrentThread()
 ///
 ///	Yields the current thread
 ///
-Void BaseUThread::Yield()
+void BaseUThread::Yield()
 {
 	System::AcquireSystemLock();
 
