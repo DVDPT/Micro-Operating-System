@@ -120,7 +120,7 @@ private:
 	///	Performs context switch this function is not implemented by the kernel core
 	///		for porting reasons
 	///
-	NAKED void ContextSwitch(BaseUThread * old, BaseUThread * next);
+	NAKED static void ContextSwitch(BaseUThread * old, BaseUThread * next);
 
 
 	///

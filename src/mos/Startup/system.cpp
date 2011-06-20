@@ -9,7 +9,7 @@ int main();
 
 void system_main()
 {
-	Configuration::ConfigureKernel();
+
 	main();
 }
 }
