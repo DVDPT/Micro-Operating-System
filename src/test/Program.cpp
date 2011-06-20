@@ -1,6 +1,5 @@
 
 #include <Threading.h>
-#include <ARMScheduler.h>
 
 #define SIZE_OF_STACK (1024 * 4)
 
@@ -8,7 +7,6 @@
 char stack[SIZE_OF_STACK];
 char stack2[SIZE_OF_STACK];
 
-extern ARMScheduler armscheduler;
 
 Thread t2();
 

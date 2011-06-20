@@ -18,7 +18,7 @@ iniciar_bss:
 
 ctors:
     ldr r0,=__ctors_init__
-    ldr r1,=end
+    ldr r1,=__ctors_end__
     bl init_constructors
 
 callMain:

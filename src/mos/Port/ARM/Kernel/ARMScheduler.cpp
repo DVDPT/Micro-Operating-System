@@ -5,18 +5,12 @@
  *      Author: DVD
  */
 
-#include "ARMScheduler.h"
+#include "Threading.h"
 
 
 
-ARMScheduler armscheduler;
 
-ARMScheduler::ARMScheduler() : Scheduler(ARMContextSwitch)
-{
-
-}
-
-NAKED void ARMScheduler::ARMContextSwitch(Thread* oldThread, Thread* newThread)
+NAKED void BaseUScheduler::ContextSwitch(Thread* oldThread, Thread* newThread)
 {
 	//	R0 oldThread
 	//	R1 newThread

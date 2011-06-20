@@ -13,11 +13,6 @@
 class BaseUScheduler
 {
 
-protected:
-	///
-	///	The prototype to the context switch function
-	///
-	typedef void (FASTCALL *ContextSwitch)(BaseUThread* oldThread, BaseUThread* newThread);
 
 private:
 	///
@@ -46,19 +41,15 @@ private:
 	UTask _idleThread;
 
 	///
-	///	A function Pointer to the Context Switch
-	///
-	ContextSwitch _contextSwitch;
-
-	///
-	///	A pointer to the scheduler instance
-	///
-	static BaseUScheduler* _pScheduler;
-
-	///
 	///	The Scheduler lock counter
 	///
 	volatile U32 _schedulerLock;
+
+	///
+	///	The singleton instance of the scheduler
+	///
+	static BaseUScheduler _Scheduler;
+
 
 	static void IdleThreadRoutine();
 
@@ -99,26 +90,44 @@ private:
 	///
 	static BaseUThread& GetRunningThread();
 
+	///
+	///	Returns the current lock count
+	///
 	static U32 GetLockCount();
 
+	///
+	///	Sets the lock count
+	///
 	static void SetLockCount(U32 newlock);
 
+	///
+	///	Disables context switching
+	///
 	static void lock();
 	
+	///
+	///	Enables context switching if possible
+	///
 	static void unlock();
 	 
 
-public:
-	static void RegisterScheduler(BaseUScheduler* sche);
-
-protected:
 	///
-	///	A protected ctor so that only derived types can access it.
-	///	_pRunningThread is initialized with the value of the main thread (the thread running this code)
+	///	BaseUThread class can access private BaseUScheduler members
 	///
-	BaseUScheduler(ContextSwitch contextSwitch);
-
 	friend class BaseUThread;
+
+	///
+	///	Performs context switch this function is not implemented by the kernel core
+	///		for porting reasons
+	///
+	NAKED void ContextSwitch(BaseUThread * old, BaseUThread * next);
+
+
+	///
+	///	public constructor to be
+	///
+	BaseUScheduler();
+
 };
 
 

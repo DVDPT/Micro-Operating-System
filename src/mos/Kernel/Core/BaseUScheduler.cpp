@@ -1,5 +1,5 @@
 /*
- * BaseUScheduler.cpp
+ * BaseU_Scheduler.cpp
  *
  *  Created on: 10 de Jun de 2011
  *      Author: DVD
@@ -8,7 +8,8 @@
 #include "BaseUScheduler.h"
 
 
-BaseUScheduler*  BaseUScheduler::_pScheduler = NULL;
+
+BaseUScheduler  BaseUScheduler::_Scheduler;
 
 
 
@@ -16,16 +17,12 @@ BaseUScheduler*  BaseUScheduler::_pScheduler = NULL;
 ///	A protected ctor so that only derived types can access it.
 ///	_pRunningThread is initialized with the value of the main thread (the thread running this code)
 ///
-BaseUScheduler::BaseUScheduler(ContextSwitch contextSwitch) :
-	_queuesBitMap(0), _mainThread(),
-			_idleThread(), _contextSwitch(contextSwitch)
+BaseUScheduler::BaseUScheduler()
+	:
+	_queuesBitMap(0), _mainThread(),_idleThread()
 
 {
 	_pRunningThread = &_mainThread;
-	///
-	///	Register the scheduler instance so it can be used on methods
-	///
-	_pScheduler = this;
 
 	///
 	///	Set idle thread priority and start it
@@ -45,14 +42,14 @@ void IdleThreadRoutine()
 ///
 void BaseUScheduler::RemoveThreadFromReadyQueue(BaseUThread& thread)
 {
-	if (&thread != _pScheduler->_pRunningThread)
+	if (&thread != _Scheduler._pRunningThread)
 	{
 		List<BaseUThread>& list =
-				_pScheduler->_readyQueues[thread._threadPriority];
+				_Scheduler._readyQueues[thread._threadPriority];
 		list.Remove(&thread._node);
 
 		if (list.IsEmpty())
-			Bits<U8>::ClearBit(&_pScheduler->_queuesBitMap,
+			Bits<U8>::ClearBit(&_Scheduler._queuesBitMap,
 					thread._threadPriority);
 	}
 }
@@ -64,14 +61,14 @@ void BaseUScheduler::InsertThreadInReadyQueue(BaseUThread& thread)
 {
 
 	List<BaseUThread >& list =
-			_pScheduler->_readyQueues[thread._threadPriority];
+			_Scheduler._readyQueues[thread._threadPriority];
 
 	BOOL wasEmpty = list.IsEmpty();
 
 	list.Enqueue(&thread._node);
 
 	if (wasEmpty)
-		Bits<U8>::SetBit(&(_pScheduler->_queuesBitMap), thread._threadPriority);
+		Bits<U8>::SetBit(&(_Scheduler._queuesBitMap), thread._threadPriority);
 }
 
 ///
@@ -91,9 +88,9 @@ BaseUThread& BaseUScheduler::DequeueNextReadyThread()
 ///
 BaseUThread& BaseUScheduler::PeekNextReadyThread()
 {
-	U32 queueIndex = Bits<U8>::GetLowestBitSet(_pScheduler->_queuesBitMap);
+	U32 queueIndex = Bits<U8>::GetLowestBitSet(_Scheduler._queuesBitMap);
 
-	List<BaseUThread>& list = _pScheduler->_readyQueues[queueIndex];
+	List<BaseUThread>& list = _Scheduler._readyQueues[queueIndex];
 
 	Node<BaseUThread>* threadNode = list.GetFirst();
 	return *(threadNode->GetValue());
@@ -144,14 +141,14 @@ void BaseUScheduler::Schedule(BOOL locked)
 	BaseUThread& currentThread = GetRunningThread();
 	BaseUThread& nextThread = DequeueNextReadyThread();
 
-	BaseUThread* p1 = _pScheduler->_pRunningThread;
+	BaseUThread* p1 = _Scheduler._pRunningThread;
 	p1 = &currentThread;
 
-	_pScheduler->_pRunningThread = &nextThread;
+	_Scheduler._pRunningThread = &nextThread;
 
 	System::ReleaseSystemLock();
 
-	_pScheduler->_contextSwitch(&currentThread, &nextThread);
+	_Scheduler.ContextSwitch(&currentThread, &nextThread);
 }
 
 ///
@@ -159,22 +156,22 @@ void BaseUScheduler::Schedule(BOOL locked)
 ///
 BaseUThread& BaseUScheduler::GetRunningThread()
 {
-	return *_pScheduler->_pRunningThread;
+	return *_Scheduler._pRunningThread;
 }
 
 U32 BaseUScheduler::GetLockCount()
 {
-	return _pScheduler->_schedulerLock;
+	return _Scheduler._schedulerLock;
 }
 
 void BaseUScheduler::SetLockCount(U32 newlock)
 {
-	_pScheduler->_schedulerLock = newlock;
+	_Scheduler._schedulerLock = newlock;
 }
 
 void BaseUScheduler::lock()
 {
-	_pScheduler->_schedulerLock++;
+	_Scheduler._schedulerLock++;
 }
 
 void BaseUScheduler::unlock()
@@ -182,4 +179,3 @@ void BaseUScheduler::unlock()
 
 }
 
-void BaseUScheduler::RegisterScheduler(BaseUScheduler * sche){ _pScheduler = sche; }

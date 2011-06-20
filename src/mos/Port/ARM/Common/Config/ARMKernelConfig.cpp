@@ -7,9 +7,8 @@
 
 #include "Configuration.h"
 #include "KernelConfig.h"
-#include "ARMScheduler.h"
 
 void Configuration::ConfigureKernel()
 {
-	BaseUScheduler::RegisterScheduler(&armscheduler);
+	//BaseUScheduler::RegisterScheduler(&armscheduler);
 }
