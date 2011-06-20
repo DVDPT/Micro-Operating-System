@@ -1,19 +1,19 @@
 #pragma once
 
-#include "BaseUThread.h"
+#include "UThread.h"
 #include "SystemTypes.h"
 
 
-class UTask : public BaseUThread
+class UTask : public UThread
 {
 	U8_P _stack[KERNEL_TASKS_STACK_SIZE];
 
 public:
 	UTask()
-		: 	BaseUThread(this->_stack,KERNEL_TASKS_STACK_SIZE)
+		: 	UThread(this->_stack,KERNEL_TASKS_STACK_SIZE)
 	{}
 
 	UTask(ThreadFunction func, ThreadArgument arg)
-		:	BaseUThread(this->_stack,KERNEL_TASKS_STACK_SIZE,func,arg)
+		:	UThread(this->_stack,KERNEL_TASKS_STACK_SIZE,func,arg)
 	{}
 };

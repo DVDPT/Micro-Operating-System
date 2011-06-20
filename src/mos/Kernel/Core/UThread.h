@@ -13,12 +13,12 @@ typedef void (*ThreadFunction)(ThreadArgument);
 
 
 
-class BaseUScheduler;
+class UScheduler;
 
 ///
 ///	The basic representations of a system thread
 ///
-class BaseUThread
+class UThread
 {
 public:
 	///
@@ -61,7 +61,7 @@ private:
 	///
 	///	A general purpose Node to store this thread in queues
 	///
-	Node<BaseUThread> _node;
+	Node<UThread> _node;
 	
 	///
 	///	Auxiliary constants to control the state of the parker
@@ -100,7 +100,7 @@ private:
 	///
 	BOOL TestAndClearMask(U8 mask);
 
-	friend class BaseUScheduler;
+	friend class UScheduler;
 
 
 public:
@@ -110,9 +110,9 @@ public:
 	///
 	///	Create and configure a new UThread
 	///
-	BaseUThread(Void_P stack, U32 size, ThreadFunction func = NULL, ThreadArgument arg = NULL);
+	UThread(Void_P stack, U32 size, ThreadFunction func = NULL, ThreadArgument arg = NULL);
 
-	BaseUThread();
+	UThread();
 
 
 	///
@@ -148,7 +148,7 @@ public:
 	///
 	///	This function returns the instance of the current running thread
 	///	
-	static BaseUThread& GetCurrentThread();
+	static UThread& GetCurrentThread();
 
 	///
 	///	Yields the current thread

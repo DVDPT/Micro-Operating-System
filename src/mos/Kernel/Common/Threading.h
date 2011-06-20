@@ -3,12 +3,12 @@
 
 #include "KernelConstants.h"
 #include "KernelConfig.h"
-#include "BaseUThread.h"
+#include "UThread.h"
 #include "UTask.h"
-#include "BaseUScheduler.h"
+#include "UScheduler.h"
 
 #include "SystemTypes.h"
 
-typedef BaseUThread Thread;
-typedef BaseUScheduler Scheduler;
+typedef UThread Thread;
+typedef UScheduler Scheduler;
 typedef UTask Task;

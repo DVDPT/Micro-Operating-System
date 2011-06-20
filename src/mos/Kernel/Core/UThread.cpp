@@ -5,13 +5,13 @@
  *      Author: DVD
  */
 
-#include "BaseUThread.h"
-#include "BaseUScheduler.h"
+#include "UThread.h"
+#include "UScheduler.h"
 
 ///
 ///	Create and configure a new UThread
 ///
-BaseUThread::BaseUThread(Void_P stack, U32 size, ThreadFunction func /*= NULL*/, ThreadArgument arg /*= NULL*/)
+UThread::UThread(Void_P stack, U32 size, ThreadFunction func /*= NULL*/, ThreadArgument arg /*= NULL*/)
 	:
 		_stack(stack),
 		_sizeOfStack(size),
@@ -27,7 +27,7 @@ BaseUThread::BaseUThread(Void_P stack, U32 size, ThreadFunction func /*= NULL*/,
 	_node.SetValue(this);
 }
 
-BaseUThread::BaseUThread()
+UThread::UThread()
 	:
 		_stack(NULL),
 		_sizeOfStack(0),
@@ -42,7 +42,7 @@ BaseUThread::BaseUThread()
 }
 
 
-void BaseUThread::InitializeStackAndContext(Void_P stack, U32 size)
+void UThread::InitializeStackAndContext(Void_P stack, U32 size)
 {
 	///
 	///	Point context to the start of the Thread stack.
@@ -65,9 +65,9 @@ void BaseUThread::InitializeStackAndContext(Void_P stack, U32 size)
 ///
 ///	This function is responsible for the call to the ThreadFunction with the ThreadArgument stored in the instance.
 ///
-void BaseUThread::UtThreadStart()
+void UThread::UtThreadStart()
 {
-	BaseUThread &thread = BaseUScheduler::GetRunningThread();
+	UThread &thread = UScheduler::GetRunningThread();
 	thread._func(thread._arg);
 
 }
@@ -75,7 +75,7 @@ void BaseUThread::UtThreadStart()
 ///
 ///	Auxiliary function to the thread parker
 ///
-BOOL BaseUThread::TestAndClearMask(U8 mask)
+BOOL UThread::TestAndClearMask(U8 mask)
 {
 	int aux;
 	do
@@ -99,7 +99,7 @@ BOOL BaseUThread::TestAndClearMask(U8 mask)
 ///
 ///	Removes this thread from ready list
 ///
-BaseUThread::ParkerStatus BaseUThread::ParkThread(U32 timeout)
+UThread::ParkerStatus UThread::ParkThread(U32 timeout)
 {
 	Assert::Equals(this, &GetCurrentThread());
 
@@ -123,12 +123,12 @@ BaseUThread::ParkerStatus BaseUThread::ParkThread(U32 timeout)
 	///
 	///	Remove this thread from ready queue
 	///
-	BaseUScheduler::RemoveThreadFromReadyQueue(*this);
+	UScheduler::RemoveThreadFromReadyQueue(*this);
 
 	///
 	///	Call the scheduler to block this thread
 	///
-	BaseUScheduler::Schedule(TRUE);
+	UScheduler::Schedule(TRUE);
 
 	///
 	///	The thread was unparked return the result
@@ -141,7 +141,7 @@ BaseUThread::ParkerStatus BaseUThread::ParkThread(U32 timeout)
 ///
 ///	Schedules this thread
 ///
-void BaseUThread::UnparkThread(ParkerStatus status /*= Success*/)
+void UThread::UnparkThread(ParkerStatus status /*= Success*/)
 {
 	_parkerStatus = status;
 
@@ -152,7 +152,7 @@ void BaseUThread::UnparkThread(ParkerStatus status /*= Success*/)
 	{
 		System::AcquireSystemLock();
 
-		BaseUScheduler::InsertThreadInReadyQueue(*this);
+		UScheduler::InsertThreadInReadyQueue(*this);
 
 		System::ReleaseSystemLock();
 	}
@@ -162,7 +162,7 @@ void BaseUThread::UnparkThread(ParkerStatus status /*= Success*/)
 ///
 ///	Tries to lock this thread parker
 ///
-BOOL BaseUThread::TryLockParker()
+BOOL UThread::TryLockParker()
 {
 	return TestAndClearMask(LOCK_MASK);
 }
@@ -170,7 +170,7 @@ BOOL BaseUThread::TryLockParker()
 ///
 ///	Resets this parker for further use
 ///
-void BaseUThread::ResetParker()
+void UThread::ResetParker()
 {
 	_parkerState = LOCK_MASK | PARK_IN_PROGRESS_MASK;
 }
@@ -178,7 +178,7 @@ void BaseUThread::ResetParker()
 ///
 ///	Schedules this thread instance as ready
 ///
-BOOL BaseUThread::Start(ThreadFunction func /*= NULL*/, ThreadArgument arg /*= NULL*/,
+BOOL UThread::Start(ThreadFunction func /*= NULL*/, ThreadArgument arg /*= NULL*/,
 		Void_P stack /*= NULL*/, U32 size /*= -1*/)
 {
 	///
@@ -221,34 +221,34 @@ BOOL BaseUThread::Start(ThreadFunction func /*= NULL*/, ThreadArgument arg /*= N
 ///
 ///	Sets a new priority for this thread
 ///
-void BaseUThread::SetThreadPriority(U8 newPriority)
+void UThread::SetThreadPriority(U8 newPriority)
 {
 	_threadPriority = newPriority;
 
-	BaseUThread::Yield();
+	UThread::Yield();
 }
 
 ///
 ///	This function returns the instance of the current running thread
 ///
-BaseUThread& BaseUThread::GetCurrentThread()
+UThread& UThread::GetCurrentThread()
 {
-	return BaseUScheduler::GetRunningThread();
+	return UScheduler::GetRunningThread();
 }
 
 ///
 ///	Yields the current thread
 ///
-void BaseUThread::Yield()
+void UThread::Yield()
 {
 	System::AcquireSystemLock();
 
-	if (BaseUScheduler::HaveReadyThreads())
+	if (UScheduler::HaveReadyThreads())
 	{
 
-		BaseUScheduler::InsertThreadInReadyQueue(GetCurrentThread());
+		UScheduler::InsertThreadInReadyQueue(GetCurrentThread());
 
-		BaseUScheduler::Schedule(TRUE);
+		UScheduler::Schedule(TRUE);
 
 		return;
 	}

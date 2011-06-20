@@ -7,10 +7,10 @@
 #include "Bits.h"
 #include "System.h"
 #include "KernelConstants.h"
-#include "BaseUThread.h"
+#include "UThread.h"
 #include "UTask.h"
 
-class BaseUScheduler
+class UScheduler
 {
 
 
@@ -18,7 +18,7 @@ private:
 	///
 	///	The array of ready queues supported by the kernel.
 	///
-	List<BaseUThread> _readyQueues[KERNEL_NR_OF_THREAD_PRIORITIES];
+	List<UThread> _readyQueues[KERNEL_NR_OF_THREAD_PRIORITIES];
 
 	///
 	///	A bit map that indicates witch ready queues have threads.
@@ -28,12 +28,12 @@ private:
 	///
 	///	The current running thread
 	///
-	BaseUThread * _pRunningThread;
+	UThread * _pRunningThread;
 	
 	///
 	///	The main thread	descriptor
 	///
-	BaseUThread _mainThread;
+	UThread _mainThread;
 
 	///
 	///	The idle Thread descriptor
@@ -48,7 +48,7 @@ private:
 	///
 	///	The singleton instance of the scheduler
 	///
-	static BaseUScheduler _Scheduler;
+	static UScheduler _Scheduler;
 
 
 	static void IdleThreadRoutine();
@@ -56,25 +56,25 @@ private:
 	///
 	///	Removes the thread passed as argument from its ready list
 	///
-	static void RemoveThreadFromReadyQueue(BaseUThread& thread);
+	static void RemoveThreadFromReadyQueue(UThread& thread);
 
 	///
 	///	Inserts this thread passed as argument in its ready queue
 	///
-	static void InsertThreadInReadyQueue(BaseUThread& thread);
+	static void InsertThreadInReadyQueue(UThread& thread);
 
 	
 	///
 	///	Returns and removes from the ready list the next thread ready to run
 	///		NOTE: this function always return a thread, because idle thread never blocks
 	///
-	static BaseUThread& DequeueNextReadyThread();
+	static UThread& DequeueNextReadyThread();
 
 	///
 	///	Returns the next ready thread.
 	///		NOTE: this function always return a thread, because idle thread never blocks
 	///
-	static BaseUThread& PeekNextReadyThread();
+	static UThread& PeekNextReadyThread();
 	///
 	///	Returns TRUE when there is a ready thread with a bigger priority than the running thread. Returns FALSE otherwise.
 	///
@@ -88,7 +88,7 @@ private:
 	///
 	///	Returns the current running thread
 	///
-	static BaseUThread& GetRunningThread();
+	static UThread& GetRunningThread();
 
 	///
 	///	Returns the current lock count
@@ -114,19 +114,19 @@ private:
 	///
 	///	BaseUThread class can access private BaseUScheduler members
 	///
-	friend class BaseUThread;
+	friend class UThread;
 
 	///
 	///	Performs context switch this function is not implemented by the kernel core
 	///		for porting reasons
 	///
-	NAKED static void ContextSwitch(BaseUThread * old, BaseUThread * next);
+	NAKED static void ContextSwitch(UThread * old, UThread * next);
 
 
 	///
 	///	public constructor to be
 	///
-	BaseUScheduler();
+	UScheduler();
 
 };
 

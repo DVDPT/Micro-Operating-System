@@ -5,11 +5,11 @@
  *      Author: DVD
  */
 
-#include "BaseUScheduler.h"
+#include "UScheduler.h"
 
 
 
-BaseUScheduler  BaseUScheduler::_Scheduler;
+UScheduler  UScheduler::_Scheduler;
 
 
 
@@ -17,7 +17,7 @@ BaseUScheduler  BaseUScheduler::_Scheduler;
 ///	A protected ctor so that only derived types can access it.
 ///	_pRunningThread is initialized with the value of the main thread (the thread running this code)
 ///
-BaseUScheduler::BaseUScheduler()
+UScheduler::UScheduler()
 	:
 	_queuesBitMap(0), _mainThread(),_idleThread()
 
@@ -40,11 +40,11 @@ void IdleThreadRoutine()
 ///
 ///	Removes the thread passed as argument from its ready list
 ///
-void BaseUScheduler::RemoveThreadFromReadyQueue(BaseUThread& thread)
+void UScheduler::RemoveThreadFromReadyQueue(UThread& thread)
 {
 	if (&thread != _Scheduler._pRunningThread)
 	{
-		List<BaseUThread>& list =
+		List<UThread>& list =
 				_Scheduler._readyQueues[thread._threadPriority];
 		list.Remove(&thread._node);
 
@@ -57,10 +57,10 @@ void BaseUScheduler::RemoveThreadFromReadyQueue(BaseUThread& thread)
 ///
 ///	Inserts this thread passed as argument in its ready queue
 ///
-void BaseUScheduler::InsertThreadInReadyQueue(BaseUThread& thread)
+void UScheduler::InsertThreadInReadyQueue(UThread& thread)
 {
 
-	List<BaseUThread >& list =
+	List<UThread >& list =
 			_Scheduler._readyQueues[thread._threadPriority];
 
 	BOOL wasEmpty = list.IsEmpty();
@@ -75,9 +75,9 @@ void BaseUScheduler::InsertThreadInReadyQueue(BaseUThread& thread)
 ///	Returns and removes from the ready list the next thread ready to run
 ///		NOTE: this function always return a thread, because idle thread never blocks
 ///
-BaseUThread& BaseUScheduler::DequeueNextReadyThread()
+UThread& UScheduler::DequeueNextReadyThread()
 {
-	BaseUThread& nextThread = PeekNextReadyThread();
+	UThread& nextThread = PeekNextReadyThread();
 	RemoveThreadFromReadyQueue(nextThread);
 	return nextThread;
 }
@@ -86,25 +86,25 @@ BaseUThread& BaseUScheduler::DequeueNextReadyThread()
 ///	Returns the next ready thread.
 ///		NOTE: this function always return a thread, because idle thread never blocks
 ///
-BaseUThread& BaseUScheduler::PeekNextReadyThread()
+UThread& UScheduler::PeekNextReadyThread()
 {
 	U32 queueIndex = Bits<U8>::GetLowestBitSet(_Scheduler._queuesBitMap);
 
-	List<BaseUThread>& list = _Scheduler._readyQueues[queueIndex];
+	List<UThread>& list = _Scheduler._readyQueues[queueIndex];
 
-	Node<BaseUThread>* threadNode = list.GetFirst();
+	Node<UThread>* threadNode = list.GetFirst();
 	return *(threadNode->GetValue());
 }
 
 ///
 ///	Returns TRUE when there is a ready thread with a bigger priority than the running thread. Returns FALSE otherwise.
 ///
-BOOL BaseUScheduler::HaveReadyThreads()
+BOOL UScheduler::HaveReadyThreads()
 {
 	///
 	///	Get the value of the next thread
 	///
-	BaseUThread& nextThread = PeekNextReadyThread();
+	UThread& nextThread = PeekNextReadyThread();
 
 	///
 	///	Check if the next thread have a lower priority than the current thread, if so return FALSE
@@ -118,7 +118,7 @@ BOOL BaseUScheduler::HaveReadyThreads()
 ///
 ///	The scheduler function
 ///
-void BaseUScheduler::Schedule(BOOL locked)
+void UScheduler::Schedule(BOOL locked)
 {
 
 	///
@@ -138,10 +138,10 @@ void BaseUScheduler::Schedule(BOOL locked)
 	if (!locked)
 		System::AcquireSystemLock();
 
-	BaseUThread& currentThread = GetRunningThread();
-	BaseUThread& nextThread = DequeueNextReadyThread();
+	UThread& currentThread = GetRunningThread();
+	UThread& nextThread = DequeueNextReadyThread();
 
-	BaseUThread* p1 = _Scheduler._pRunningThread;
+	UThread* p1 = _Scheduler._pRunningThread;
 	p1 = &currentThread;
 
 	_Scheduler._pRunningThread = &nextThread;
@@ -154,27 +154,27 @@ void BaseUScheduler::Schedule(BOOL locked)
 ///
 ///	Returns the current running thread
 ///
-BaseUThread& BaseUScheduler::GetRunningThread()
+UThread& UScheduler::GetRunningThread()
 {
 	return *_Scheduler._pRunningThread;
 }
 
-U32 BaseUScheduler::GetLockCount()
+U32 UScheduler::GetLockCount()
 {
 	return _Scheduler._schedulerLock;
 }
 
-void BaseUScheduler::SetLockCount(U32 newlock)
+void UScheduler::SetLockCount(U32 newlock)
 {
 	_Scheduler._schedulerLock = newlock;
 }
 
-void BaseUScheduler::lock()
+void UScheduler::lock()
 {
 	_Scheduler._schedulerLock++;
 }
 
-void BaseUScheduler::unlock()
+void UScheduler::unlock()
 {
 
 }
