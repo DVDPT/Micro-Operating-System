@@ -103,13 +103,17 @@ private:
 	///
 	///	Disables context switching
 	///
-	static void lock();
+	static void Lock();
 	
 	///
 	///	Enables context switching if possible
 	///
-	static void unlock();
-	 
+	static void Unlock();
+
+	///
+	///	This functions returns TRUE when the current thread timeslice is over, the lock is free and there are new threads available.
+	///
+	static BOOL CanScheduleThreads();
 
 	///
 	///	BaseUThread class can access private BaseUScheduler members

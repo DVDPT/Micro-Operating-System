@@ -6,6 +6,7 @@
  */
 
 #include "UScheduler.h"
+#include "Debug.h"
 
 
 UScheduler  UScheduler::_Scheduler;
@@ -146,6 +147,10 @@ void UScheduler::Schedule(BOOL locked)
 
 	System::ReleaseSystemLock();
 
+	DebugExec(currentThread.SetTimestamp(-1));
+
+	nextThread.SetTimestamp(System::GetTickCount() + THREAD_TIME_SLICE);
+
 	_Scheduler.ContextSwitch(&currentThread, &nextThread);
 }
 
@@ -167,13 +172,23 @@ void UScheduler::SetLockCount(U32 newlock)
 	_Scheduler._schedulerLock = newlock;
 }
 
-void UScheduler::lock()
+void UScheduler::Lock()
 {
 	_Scheduler._schedulerLock++;
 }
 
-void UScheduler::unlock()
+void UScheduler::Unlock()
 {
 
 }
 
+BOOL UScheduler::CanScheduleThreads()
+{
+	if(System::GetTickCount() >= _Scheduler._pRunningThread->_timestamp
+			&& GetLockCount() == 0
+			&& HaveReadyThreads())
+	{
+		return TRUE;
+	}
+	return FALSE;
+}

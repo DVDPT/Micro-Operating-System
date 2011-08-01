@@ -85,6 +85,11 @@ private:
 	volatile ParkerStatus _parkerStatus;
 
 	///
+	///	The time where the thread was putted on run state, this field is needed for timeslice calculation
+	///
+	volatile U32 _timestamp;
+
+	///
 	///	This method is initializes the thread stack, and its context
 	/// The context is located at the first X bytes of the thread stack, being X the size of the context
 	///
@@ -100,6 +105,18 @@ private:
 	///
 	BOOL TestAndClearMask(U8 mask);
 
+	///
+	///
+	///
+	U32 GetTimestamp()
+	{
+		return _timestamp;
+	}
+
+	void SetTimestamp(U32 newStamp)
+	{
+		_timestamp = newStamp;
+	}
 	friend class UScheduler;
 
 

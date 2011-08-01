@@ -1,5 +1,6 @@
 
 #include <Threading.h>
+#include <Interrupts.h>
 
 #define SIZE_OF_STACK (1024 * 4)
 
@@ -24,7 +25,8 @@ int main()
 
 	Thread t(stack,SIZE_OF_STACK);
 	t.Start((ThreadFunction)Func,NULL);
-
+	Interrupts::EnableInterrupts();
+	Interrupts::DisableInterrupts();
 	Thread::Yield();
 	//*/
 	return 0;

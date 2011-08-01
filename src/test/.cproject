@@ -38,6 +38,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Common}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Concurrent}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Interrupts}&quot;"/>
 								</option>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input.1745870645" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input"/>
 							</tool>
@@ -53,6 +54,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Common}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Concurrent}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Interrupts}&quot;"/>
 								</option>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input.536100395" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input"/>
 							</tool>
@@ -68,6 +70,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Common}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Concurrent}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Interrupts}&quot;"/>
 								</option>
 								<option id="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.misc.std.785893109" name="Language Standard" superClass="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.misc.std" value="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.misc.std.default" valueType="enumerated"/>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.cpp.compiler.base.input.1450761726" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.cpp.compiler.base.input"/>
@@ -3778,6 +3781,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Common}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Concurrent}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Interrupts}&quot;"/>
 								</option>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input.203374894" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input"/>
 							</tool>
@@ -3804,6 +3808,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Common}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Concurrent}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Interrupts}&quot;"/>
 								</option>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input.2070375422" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input"/>
 							</tool>
@@ -3831,6 +3836,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Common}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Concurrent}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Interrupts}&quot;"/>
 								</option>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.cpp.compiler.base.input.223552620" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.cpp.compiler.base.input"/>
 							</tool>

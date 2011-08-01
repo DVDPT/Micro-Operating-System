@@ -9,3 +9,9 @@ void System::ReleaseSystemLock()
 {
 	/// enable interrupts
 }
+
+U32 System::GetTickCount()
+{
+	///	get timer values
+	return 0;
+}

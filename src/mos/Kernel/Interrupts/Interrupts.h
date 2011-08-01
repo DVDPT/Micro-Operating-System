@@ -28,12 +28,12 @@ public:
 	///
 	///	Enables interrupts, returns the previous state of the interrupts
 	///
-	static void EnableInterrupts();
+	NAKED static void EnableInterrupts();
 
 	///
 	///	Disables interrupts, returns the previous state of the interrupts
 	///
-	static void DisableInterrupts();
+	NAKED static void DisableInterrupts();
 
 	///
 	///	Sets the state of the interrupts to @state.

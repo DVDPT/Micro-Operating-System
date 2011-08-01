@@ -19,4 +19,9 @@ public:
 	///	Release the multiple exclusion
 	///
 	static void ReleaseSystemLock();
+
+	///
+	///	Returns the current system ticks
+	///
+	static U32 GetTickCount();
 };
