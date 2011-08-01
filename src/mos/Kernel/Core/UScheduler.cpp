@@ -8,7 +8,6 @@
 #include "UScheduler.h"
 
 
-
 UScheduler  UScheduler::_Scheduler;
 
 
@@ -23,7 +22,6 @@ UScheduler::UScheduler()
 
 {
 	_pRunningThread = &_mainThread;
-
 	///
 	///	Set idle thread priority and start it
 	///

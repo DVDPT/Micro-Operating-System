@@ -29,45 +29,45 @@
 							<builder buildPath="${workspace_loc:/test/Debug}" id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.builder.debug.1676242916" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="ARM Sourcery Windows GNU Make builder" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.builder.debug"/>
 							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.assembler.debug.537055903" name="ARM Sourcery Windows GCC Assembler" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.assembler.debug">
 								<option id="org.eclipse.cdt.cross.arm.gnu.assembler.option.include.paths.971689188" name="Include paths (-I)" superClass="org.eclipse.cdt.cross.arm.gnu.assembler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\System&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Config&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Port\ARM\Common\Config&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Port\ARM\Kernel&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Port\Common&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Kernel\Core&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Kernel\Concurrent&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Common&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test/mos/Kernel/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Common/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Concurrent}&quot;"/>
 								</option>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input.1745870645" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input"/>
 							</tool>
 							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.c.compiler.debug.1185896030" name="ARM Sourcery Windows GCC C Compiler" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.c.compiler.debug">
 								<option id="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.optimization.level.592647792" name="Optimization level" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.optimization.level" value="org.eclipse.cdt.cross.arm.gnu.base.option.optimization.level.none" valueType="enumerated"/>
 								<option id="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.include.paths.512040869" name="Include paths (-I)" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\System&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Config&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Port\ARM\Common\Config&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Port\ARM\Kernel&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Port\Common&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Kernel\Core&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Kernel\Concurrent&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Common&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test/mos/Kernel/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Common/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Concurrent}&quot;"/>
 								</option>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input.536100395" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input"/>
 							</tool>
 							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.cpp.compiler.debug.1785976629" name="ARM Sourcery Windows GCC C++ Compiler" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.cpp.compiler.debug">
 								<option id="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.optimization.level.851595930" name="Optimization level" superClass="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.optimization.level" value="org.eclipse.cdt.cross.arm.gnu.base.option.optimization.level.none" valueType="enumerated"/>
 								<option id="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.include.paths.1349633867" name="Include paths (-I)" superClass="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\System&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Config&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Port\ARM\Common\Config&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Port\ARM\Kernel&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Port\Common&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Kernel\Core&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Kernel\Concurrent&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Common&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test/mos/Kernel/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Common/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Concurrent}&quot;"/>
 								</option>
 								<option id="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.misc.std.785893109" name="Language Standard" superClass="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.misc.std" value="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.misc.std.default" valueType="enumerated"/>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.cpp.compiler.base.input.1450761726" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.cpp.compiler.base.input"/>
@@ -102,9 +102,7 @@
 					</sourceEntries>
 				</configuration>
 			</storageModule>
-			<storageModule moduleId="org.eclipse.cdt.core.externalSettings">
-				<externalSettings containerId="mos;" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier"/>
-			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
 			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 			<storageModule moduleId="scannerConfiguration">
@@ -3767,6 +3765,19 @@
 									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Kernel\Common&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Config&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test/mos/Kernel/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test/mos/Port/ARM/Kernel}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test/mos/Port/ARM/Kernel/Concurrent}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test/mos/Port/ARM/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Common/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test/mos/Port/ARM7/Common/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test/Debug/mos/Port/ARM7/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Kernel\Core\Common&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Concurrent}&quot;"/>
 								</option>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input.203374894" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input"/>
 							</tool>
@@ -3780,6 +3791,19 @@
 									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Kernel\Common&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Config&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test/mos/Kernel/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test/mos/Port/ARM/Kernel}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test/mos/Port/ARM/Kernel/Concurrent}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test/mos/Port/ARM/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Common/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test/mos/Port/ARM7/Common/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test/Debug/mos/Port/ARM7/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Kernel\Core\Common&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Concurrent}&quot;"/>
 								</option>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input.2070375422" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input"/>
 							</tool>
@@ -3794,6 +3818,19 @@
 									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Kernel\Common&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Config&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test/mos/Kernel/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test/mos/Port/ARM/Kernel}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test/mos/Port/ARM/Kernel/Concurrent}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test/mos/Port/ARM/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Common/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test/mos/Port/ARM7/Common/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/test/Debug/mos/Port/ARM7/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;D:\FAC\Programing\Projects\mos\src\mos\Kernel\Core\Common&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Concurrent}&quot;"/>
 								</option>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.cpp.compiler.base.input.223552620" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.cpp.compiler.base.input"/>
 							</tool>

@@ -8,7 +8,6 @@
 #pragma once
 
 #include "SystemTypes.h"
-#include "Config.h"
 
 
 enum IsrCompletationStatus {  };
@@ -37,11 +36,11 @@ public:
 	static void DisableInterrupts();
 
 	///
-	///	Sets the state of the interrupts to @state, returns the previous state of the interrupts
+	///	Sets the state of the interrupts to @state.
 	///
-	static void SetInterruptSate(BOOL set)
+	static void SetInterruptSate(BOOL state)
 	{
-		if(set)
+		if(state)
 			Interrupts::EnableInterrupts();
 		else
 			Interrupts::DisableInterrupts();

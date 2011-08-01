@@ -1,4 +1,4 @@
-#include "Config.h"
+#include "SystemTypes.h"
 
 SECTION(".targetconfig") NAKED void  target_config()
 {

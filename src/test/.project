@@ -80,11 +80,4 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>mos</name>
-			<type>2</type>
-			<location>D:/FAC/Programing/Projects/mos/src/mos</location>
-		</link>
-	</linkedResources>
 </projectDescription>

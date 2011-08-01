@@ -6,6 +6,7 @@
 #include "UThread.h"
 #include "UTask.h"
 #include "UScheduler.h"
+#include "Interlocked.h"
 
 #include "SystemTypes.h"
 

@@ -6,7 +6,7 @@
  */
 
 #include "Interrupts.h"
-#include "Config.h"
+#include "SystemTypes.h"
 
 
 #define IRQ (1<<7)

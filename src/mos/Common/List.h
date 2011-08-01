@@ -46,9 +46,9 @@ public:
 
 	NOINLINE Node<T>* GetLast(){ return IsEmpty() ? NULL : _head._prev; }
 
-	NOINLINE Node<T>* GetNext(Node<T> * node) { IsLastNode(node) ? NULL : node->_next;}
+	NOINLINE Node<T>* GetNext(Node<T> * node) { return IsLastNode(node) ? NULL : node->_next;}
 
-	NOINLINE Node<T>* GetPrevious(Node<T> * node) { IsFirstNode(node) ? NULL : node->_prev;}
+	NOINLINE Node<T>* GetPrevious(Node<T> * node) { return IsFirstNode(node) ? NULL : node->_prev;}
 
 	NOINLINE void AddFirst(Node<T>* node)
 	{

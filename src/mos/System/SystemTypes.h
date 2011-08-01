@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Config.h"
+#include "PortConfig.h"
 
 
 typedef void* Void_P;
@@ -10,6 +10,13 @@ typedef unsigned int* U32_P;
 
 typedef  int  S32;
 typedef  int* S32_P;
+
+typedef unsigned short U16;
+typedef unsigned short* U16_P;
+
+
+typedef short S16;
+typedef short* S16_P;
 
 typedef unsigned char U8;
 typedef unsigned char* U8_P;

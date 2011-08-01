@@ -17,7 +17,11 @@ void Func()
 
 int main()
 {
-	//
+	unsigned int i = 0;
+
+	Interlocked::Decrement(&i);
+	//::CompareExchange((volatile unsigned int*)&i,123,123);
+
 	Thread t(stack,SIZE_OF_STACK);
 	t.Start((ThreadFunction)Func,NULL);
 

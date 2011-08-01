@@ -87,8 +87,7 @@ BOOL UThread::TestAndClearMask(U8 mask)
 		if (aux == 0)
 			return FALSE;
 
-		if (Interlocked<U8>::CompareExchange(&_parkerState, aux & ~mask, aux)
-				== aux)
+		if (Interlocked::CompareExchange(&_parkerState, aux & ~mask, aux) == aux)
 			return TRUE;
 
 	} while (true);

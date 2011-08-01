@@ -18,13 +18,13 @@ _start:
 /// Exception table
 ///
     b       .reset_handler                       /* Reset */
-    ldr pc, .undefined_handler_address               /* Undefined instructions */
-    ldr pc, .swi_handler_address                     /* Software interrupt (SWI/SVC) */
-    ldr pc, .prefetch_abort_handler_address         /* Prefetch abort */
-    ldr pc, .data_abort_handler_address      /* Data abort */
+    ldr pc, .undefined_handler_address           /* Undefined instructions */
+    ldr pc, .swi_handler_address                 /* Software interrupt (SWI/SVC) */
+    ldr pc, .prefetch_abort_handler_address      /* Prefetch abort */
+    ldr pc, .data_abort_handler_address          /* Data abort */
     .word   0xb5403fba                           /* Reserved */
-    ldr pc, [pc, #-0xFF0]                    /* IRQ */
-    ldr pc, [pc, #-0xFF0]                    /* FIQ */
+    ldr pc, [pc, #-0xFF0]                        /* IRQ */
+    ldr pc, [pc, #-0xFF0]                        /* FIQ */
 
 ///
 /// Exception handlers addresses
@@ -58,7 +58,7 @@ _start:
 ///
 _system_start:
     ///
-    /// Set system mode
+    /// Change to system mode
     ///
     mov r0,#SYSTEM_MODE
     msr cpsr,r0

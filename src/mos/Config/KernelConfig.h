@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include "Config.h"
+#include "PortConfig.h"
 
-#include "ARMKernelConfig.h"
+#include "PortKernelConfig.h"
 
 typedef THREAD_CONTEXT Context;
