@@ -3,6 +3,7 @@
 	<name>test</name>
 	<comment></comment>
 	<projects>
+		<project>mos</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

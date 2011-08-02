@@ -1,8 +1,11 @@
 ///
 /// Constants
 ///
-.EQU SYSTEM_MODE,0x10
-.EQU USER_STACK_SIZE, 1024
+.EQU SYSTEM_MODE,0x13
+.EQU IRQ_MODE, 0x12
+.EQU IRQ_STACK_SIZE,1024
+.EQU USER_STACK_SIZE, 1024 + IRQ_STACK_SIZE
+
 
 
 
@@ -56,17 +59,28 @@ _start:
 ///
 /// System initialization
 ///
+
 _system_start:
+    ///
+    /// Change to IRQ mode to configure its stack
+    ///
+    msr cpsr,#IRQ_MODE
+    ldr sp, =__stack_end__
+    mov r0,sp
+    ///
+    /// Set the user mode base stack pointer on r0
+    ///
+    sub r0,r0,#IRQ_STACK_SIZE
+
     ///
     /// Change to system mode
     ///
-    mov r0,#SYSTEM_MODE
-    msr cpsr,r0
+    msr cpsr,#SYSTEM_MODE
 
     ///
     /// Initialize Program Stack
     ///
-    ldr sp, =__stack_end__
+    mov sp, r0
     mov fp,sp
 
     ///

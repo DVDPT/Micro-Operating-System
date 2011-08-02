@@ -13,7 +13,7 @@ struct ARMContext
 		U32 cpsr;
 		struct
 		{
-			unsigned mode	:4;
+			unsigned mode	:5;
 			unsigned thumb	:1;
 			unsigned fiq		:1;
 			unsigned irq		:1;
@@ -27,10 +27,12 @@ struct ARMContext
 		};
 	};
 
+
 	ARMFlags flags;
-	U32 r4,r5,r6,r7,r8,r9,r10,fp,r12;
+	U32 r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,fp,r12;
 
 	void (*lr)();
+	U32 pc;
 
 	void SetThreadStartFunction(void (*ThreadStart)())
 	{

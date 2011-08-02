@@ -8,7 +8,7 @@ int main();
 
 void system_main()
 {
-	Interrupts::EnableInterrupts();
+	//Interrupts::EnableInterrupts();
 	main();
 }
 }

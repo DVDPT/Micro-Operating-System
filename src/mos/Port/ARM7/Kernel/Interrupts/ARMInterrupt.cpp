@@ -9,25 +9,20 @@
 #include "SystemTypes.h"
 #include "Interrupts.h"
 
-#define IRQ (1<<7)
-NAKED void Interrupts::EnableInterrupts()
+extern "C"
 {
-	ASM_VOLATILE
-	(
-		"MRS     r1, CPSR\n"
-		"BIC     r1, r1, #0x80\n"
-		"MSR     CPSR, r1\n"
-	);
+	void arm_clear_interrupt();
+	void arm_set_interrupt();
 }
 
-NAKED void Interrupts::DisableInterrupts()
+void Interrupts::EnableInterrupts()
 {
-	ASM_VOLATILE
-	(
-		"MRS     r1, CPSR\n"
-		"ORR     r1, r1, #0x80\n"
-		"MSR     CPSR_c, r1\n"
-	);
+	arm_set_interrupt();
+}
+
+void Interrupts::DisableInterrupts()
+{
+	arm_clear_interrupt();
 }
 
 

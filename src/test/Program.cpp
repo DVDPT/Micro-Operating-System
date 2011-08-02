@@ -1,4 +1,4 @@
-
+/*/
 #include <Threading.h>
 #include <Interrupts.h>
 
@@ -15,13 +15,13 @@ void Func()
 {
 	Thread::Yield();
 }
-
-int main()
+//*/
+int main2()
 {
 	unsigned int i = 0;
 
-	Interlocked::Decrement(&i);
-	//::CompareExchange((volatile unsigned int*)&i,123,123);
+	//Interlocked::Decrement(&i);
+	/*/::CompareExchange((volatile unsigned int*)&i,123,123);
 
 	Thread t(stack,SIZE_OF_STACK);
 	t.Start((ThreadFunction)Func,NULL);
@@ -31,3 +31,4 @@ int main()
 	//*/
 	return 0;
 }
+
