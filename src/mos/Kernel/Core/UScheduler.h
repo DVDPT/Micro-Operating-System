@@ -78,12 +78,12 @@ private:
 	///
 	///	Returns TRUE when there is a ready thread with a bigger priority than the running thread. Returns FALSE otherwise.
 	///
-	static BOOL HaveReadyThreads();
+	static bool HaveReadyThreads();
 
 	///
 	///	The scheduler function
 	///
-	static void Schedule(BOOL locked);
+	static void Schedule(bool locked);
 
 	///
 	///	Returns the current running thread
@@ -113,7 +113,7 @@ private:
 	///
 	///	This functions returns TRUE when the current thread timeslice is over, the lock is free and there are new threads available.
 	///
-	static BOOL CanScheduleThreads();
+	static bool CanScheduleThreads();
 
 	///
 	///	BaseUThread class can access private BaseUScheduler members

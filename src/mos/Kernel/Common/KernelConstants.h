@@ -27,3 +27,8 @@
 ///
 #define KERNEL_TASKS_STACK_SIZE (1024)
 
+///
+///	Defines the thread time slice in miliseconds
+///
+#define KERNEL_THREAD_TIME_SLICE (10)
+

@@ -30,8 +30,8 @@ class List
 {
 	Node<T> _head;
 
-	BOOL IsLastNode(Node<T>* node){return node->_next == &_head;}
-	BOOL IsFirstNode(Node<T>* node){return node->_prev == &_head;}
+	bool IsLastNode(Node<T>* node){return node->_next == &_head;}
+	bool IsFirstNode(Node<T>* node){return node->_prev == &_head;}
 public:
 	NOINLINE List() : _head()
 	{
@@ -40,7 +40,7 @@ public:
 		_head._value = NULL;
 	}
 
-	NOINLINE BOOL IsEmpty(){ return (BOOL)(_head._next == &_head); }
+	NOINLINE bool IsEmpty(){ return (bool)(_head._next == &_head); }
 
 	NOINLINE Node<T>* GetFirst(){ return IsEmpty() ? NULL : _head._next; }
 

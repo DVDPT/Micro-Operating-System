@@ -103,7 +103,7 @@ private:
 	///
 	///	Auxiliary function to the thread parker
 	///
-	BOOL TestAndClearMask(U8 mask);
+	bool TestAndClearMask(U8 mask);
 
 	///
 	///
@@ -145,7 +145,7 @@ public:
 	///
 	///	Tries to lock this thread parker
 	///
-	BOOL TryLockParker();
+	bool TryLockParker();
 
 	///
 	///	Resets this parker for further use
@@ -156,7 +156,7 @@ public:
 	///
 	///	Schedules this thread instance as ready
 	///
-	BOOL Start(ThreadFunction func = NULL, ThreadArgument arg = NULL,Void_P stack = NULL, U32 size=-1);
+	bool Start(ThreadFunction func = NULL, ThreadArgument arg = NULL,Void_P stack = NULL, U32 size=-1);
 
 	///
 	///	Sets a new priority for this thread

@@ -1,52 +1,32 @@
 /*
  * Interrupts.h
  *
- *  Created on: Jun 20, 2011
+ *  Created on: Aug 3, 2011
  *      Author: DVD
  */
 
 #pragma once
 
-#include "SystemTypes.h"
+enum IsrCompletationStatus { FINISHED_HANDLING, CALL_PISR, ERROR };
 
-
-enum IsrCompletationStatus {  };
-
-typedef void* IsrArgs;
+//typedef void* IsrArgs;
 typedef void* PisrArgs;
 
 ///
 ///
 ///
-typedef IsrCompletationStatus(*IsrFunction)(IsrArgs);
+typedef IsrCompletationStatus(*IsrFunction)();
 typedef void(*PisrFunction)(PisrArgs);
 
-class Interrupts
-{
-public:
+///
+///	The possible interrupts acceptable by the system
+//	the port should undef this symbols and redefine new ones
+///
+#define KERNEL_INTERRUPTS_TIMER 	(-1)
+#define KERNEL_INTERRUPTS_SERIAL	(-1)
+#define KERNEL_INTERRUPTS_ADC		(-1)
+#define KERNEL_INTERRUPTS_WATCHDOG	(-1)
 
-	///
-	///	Enables interrupts, returns the previous state of the interrupts
-	///
-	NAKED static void EnableInterrupts();
-
-	///
-	///	Disables interrupts, returns the previous state of the interrupts
-	///
-	NAKED static void DisableInterrupts();
-
-	///
-	///	Sets the state of the interrupts to @state.
-	///
-	static void SetInterruptSate(BOOL state)
-	{
-		if(state)
-			Interrupts::EnableInterrupts();
-		else
-			Interrupts::DisableInterrupts();
-	}
+#include "PortInterrupts.h"
 
 
-
-
-};

@@ -75,7 +75,7 @@ void UThread::UtThreadStart()
 ///
 ///	Auxiliary function to the thread parker
 ///
-BOOL UThread::TestAndClearMask(U8 mask)
+bool UThread::TestAndClearMask(U8 mask)
 {
 	int aux;
 	do
@@ -85,10 +85,10 @@ BOOL UThread::TestAndClearMask(U8 mask)
 		///	if the bit was already cleared return
 		///
 		if (aux == 0)
-			return FALSE;
+			return false;
 
 		if (Interlocked::CompareExchange(&_parkerState, aux & ~mask, aux) == aux)
-			return TRUE;
+			return true;
 
 	} while (true);
 }
@@ -127,7 +127,7 @@ UThread::ParkerStatus UThread::ParkThread(U32 timeout)
 	///
 	///	Call the scheduler to block this thread
 	///
-	UScheduler::Schedule(TRUE);
+	UScheduler::Schedule(true);
 
 	///
 	///	The thread was unparked return the result
@@ -161,7 +161,7 @@ void UThread::UnparkThread(ParkerStatus status /*= Success*/)
 ///
 ///	Tries to lock this thread parker
 ///
-BOOL UThread::TryLockParker()
+bool UThread::TryLockParker()
 {
 	return TestAndClearMask(LOCK_MASK);
 }
@@ -177,7 +177,7 @@ void UThread::ResetParker()
 ///
 ///	Schedules this thread instance as ready
 ///
-BOOL UThread::Start(ThreadFunction func /*= NULL*/, ThreadArgument arg /*= NULL*/,
+bool UThread::Start(ThreadFunction func /*= NULL*/, ThreadArgument arg /*= NULL*/,
 		Void_P stack /*= NULL*/, U32 size /*= -1*/)
 {
 	///
@@ -186,7 +186,7 @@ BOOL UThread::Start(ThreadFunction func /*= NULL*/, ThreadArgument arg /*= NULL*
 	if (this->_stack == NULL)
 	{
 		if (stack == NULL)
-			return FALSE;
+			return false;
 
 		_stack = stack;
 		_sizeOfStack = size;
@@ -199,7 +199,7 @@ BOOL UThread::Start(ThreadFunction func /*= NULL*/, ThreadArgument arg /*= NULL*
 	if (this->_func == NULL)
 	{
 		if (func == NULL)
-			return FALSE;
+			return false;
 		this->_func = func;
 		this->_arg = arg;
 	}
@@ -214,7 +214,7 @@ BOOL UThread::Start(ThreadFunction func /*= NULL*/, ThreadArgument arg /*= NULL*
 	///
 	ResetParker();
 
-	return TRUE;
+	return true;
 }
 
 ///
@@ -247,7 +247,7 @@ void UThread::Yield()
 
 		UScheduler::InsertThreadInReadyQueue(GetCurrentThread());
 
-		UScheduler::Schedule(TRUE);
+		UScheduler::Schedule(true);
 
 		return;
 	}

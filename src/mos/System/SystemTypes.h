@@ -26,4 +26,4 @@ typedef char* S8_P;
 
 #define NULL (0)
 
-enum BOOL {FALSE=0,TRUE=1};
+

@@ -62,7 +62,7 @@ void UScheduler::InsertThreadInReadyQueue(UThread& thread)
 	List<UThread >& list =
 			_Scheduler._readyQueues[thread._threadPriority];
 
-	BOOL wasEmpty = list.IsEmpty();
+	bool wasEmpty = list.IsEmpty();
 
 	list.Enqueue(&thread._node);
 
@@ -98,7 +98,7 @@ UThread& UScheduler::PeekNextReadyThread()
 ///
 ///	Returns TRUE when there is a ready thread with a bigger priority than the running thread. Returns FALSE otherwise.
 ///
-BOOL UScheduler::HaveReadyThreads()
+bool UScheduler::HaveReadyThreads()
 {
 	///
 	///	Get the value of the next thread
@@ -109,15 +109,15 @@ BOOL UScheduler::HaveReadyThreads()
 	///	Check if the next thread have a lower priority than the current thread, if so return FALSE
 	///
 	if (nextThread._threadPriority > GetRunningThread()._threadPriority)
-		return FALSE;
+		return false;
 
-	return TRUE;
+	return true;
 }
 
 ///
 ///	The scheduler function
 ///
-void UScheduler::Schedule(BOOL locked)
+void UScheduler::Schedule(bool locked)
 {
 
 	///
@@ -149,7 +149,7 @@ void UScheduler::Schedule(BOOL locked)
 
 	DebugExec(currentThread.SetTimestamp(-1));
 
-	nextThread.SetTimestamp(System::GetTickCount() + THREAD_TIME_SLICE);
+	nextThread.SetTimestamp(System::GetTickCount() + KERNEL_THREAD_TIME_SLICE);
 
 	_Scheduler.ContextSwitch(&currentThread, &nextThread);
 }
@@ -182,13 +182,13 @@ void UScheduler::Unlock()
 
 }
 
-BOOL UScheduler::CanScheduleThreads()
+bool UScheduler::CanScheduleThreads()
 {
 	if(System::GetTickCount() >= _Scheduler._pRunningThread->_timestamp
 			&& GetLockCount() == 0
 			&& HaveReadyThreads())
 	{
-		return TRUE;
+		return true;
 	}
-	return FALSE;
+	return false;
 }

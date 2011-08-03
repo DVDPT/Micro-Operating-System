@@ -12,12 +12,12 @@ class Interlocked
 
 public:
 
-	static BOOL CompareExchange(volatile U8 * location, U8 value, U8 comparand);
-	static BOOL CompareExchange(volatile U16 * location, U16 value, U16 comparand);
-	static BOOL CompareExchange(volatile U32 * location, U32 value, U32 comparand);
+	static bool CompareExchange(volatile U8 * location, U8 value, U8 comparand);
+	static bool CompareExchange(volatile U16 * location, U16 value, U16 comparand);
+	static bool CompareExchange(volatile U32 * location, U32 value, U32 comparand);
 
 	template <typename T>
-	static BOOL CompareExchange(T* location, T value, T comparand)
+	static bool CompareExchange(T* location, T value, T comparand)
 	{
 
 		return CompareExchange((volatile U32*)location,(U32)value,(U32)comparand);

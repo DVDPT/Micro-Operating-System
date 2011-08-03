@@ -16,3 +16,11 @@ void Assert::Equals(void * expected, void* value)
 {
 	//printf("EQUALS %s", expected != value ? "FALSE": "TRUE");
 }
+
+void Assert::True(bool expr)
+{
+
+}
+
+
+

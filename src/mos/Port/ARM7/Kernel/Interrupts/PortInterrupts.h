@@ -1,0 +1,18 @@
+/*
+ * PortInterrupt.h
+ *
+ *  Created on: Aug 3, 2011
+ *      Author: DVD
+ */
+
+#pragma once
+
+#undef KERNEL_INTERRUPTS_TIMER
+#undef KERNEL_INTERRUPTS_SERIAL
+#undef KERNEL_INTERRUPTS_ADC
+#undef KERNEL_INTERRUPTS_WATCHDOG
+
+#define KERNEL_INTERRUPTS_TIMER 0
+#define KERNEL_INTERRUPTS_SERIAL 1
+#define KERNEL_INTERRUPTS_ADC 2
+#define KERNEL_INTERRUPTS_WATCHDOG 3

@@ -7,7 +7,7 @@
 
 
 #include "SystemTypes.h"
-#include "Interrupts.h"
+#include "InterruptController.h"
 
 extern "C"
 {
@@ -15,12 +15,12 @@ extern "C"
 	void arm_set_interrupt();
 }
 
-void Interrupts::EnableInterrupts()
+void InterruptController::EnableInterrupts()
 {
 	arm_set_interrupt();
 }
 
-void Interrupts::DisableInterrupts()
+void InterruptController::DisableInterrupts()
 {
 	arm_clear_interrupt();
 }

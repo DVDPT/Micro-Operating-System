@@ -11,6 +11,5 @@
 
 #include "PortKernelConfig.h"
 
-typedef THREAD_CONTEXT Context;
+typedef KERNEL_THREAD_CONTEXT_TYPE Context;
 
-#define THREAD_TIME_SLICE (10) // miliseconds

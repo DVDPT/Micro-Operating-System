@@ -46,6 +46,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Concurrent}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/lpc2xxx/YAAB2294/Startup}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Interrupts}&quot;"/>
 								</option>
 								<option id="org.eclipse.cdt.cross.arm.gnu.assembler.option.preprocessor.def.423238573" name="Defined symbols (-D)" superClass="org.eclipse.cdt.cross.arm.gnu.assembler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__DEBUG__=1"/>
@@ -70,6 +71,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Concurrent}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Interrupts}&quot;"/>
 								</option>
 								<option id="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.preprocessor.def.1050200602" name="Defined symbols (-D)" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__DEBUG__=1"/>
@@ -93,6 +95,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Concurrent}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Interrupts}&quot;"/>
 								</option>
 								<option id="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.preprocessor.def.162108413" name="Defined symbols (-D)" superClass="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__DEBUG__=1"/>
@@ -2703,6 +2706,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM/Kernel/Concurrent}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM/Kernel/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Common/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Interrupts}&quot;"/>
 								</option>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input.1900500621" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input"/>
 							</tool>
@@ -2727,6 +2731,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM/Kernel/Concurrent}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM/Kernel/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Common/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Interrupts}&quot;"/>
 								</option>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input.1344711976" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input"/>
 							</tool>
@@ -2751,6 +2756,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM/Kernel/Concurrent}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM/Kernel/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Common/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Interrupts}&quot;"/>
 								</option>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.cpp.compiler.base.input.1217795213" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.cpp.compiler.base.input"/>
 							</tool>

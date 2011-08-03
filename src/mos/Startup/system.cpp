@@ -1,6 +1,6 @@
 #include "Configuration.h"
 #include "PortConfig.h"
-#include "Interrupts.h"
+
 extern "C"
 {
 
