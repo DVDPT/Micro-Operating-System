@@ -91,26 +91,6 @@ private:
 	static UThread& GetRunningThread();
 
 	///
-	///	Returns the current lock count
-	///
-	static U32 GetLockCount();
-
-	///
-	///	Sets the lock count
-	///
-	static void SetLockCount(U32 newlock);
-
-	///
-	///	Disables context switching
-	///
-	static void Lock();
-	
-	///
-	///	Enables context switching if possible
-	///
-	static void Unlock();
-
-	///
 	///	This functions returns TRUE when the current thread timeslice is over, the lock is free and there are new threads available.
 	///
 	static bool CanScheduleThreads();
@@ -128,10 +108,37 @@ private:
 
 
 	///
-	///	public constructor to be
+	///	private constructor so that only this class can create instances of Scheduler
 	///
 	UScheduler();
 
+
+
+public:
+	///
+	///	Returns the current lock count
+	///
+	static U32 GetLockCount();
+
+	///
+	///	Sets the lock count
+	///
+	static void SetLockCount(U32 newlock);
+
+	///
+	///	Disables context switching
+	///
+	static void Lock();
+
+	///
+	///	Enables context switching if possible
+	///
+	static void Unlock();
+
+	///
+	///	Returns if the scheduler lock is locked
+	///
+	static bool IsLocked();
 };
 
 

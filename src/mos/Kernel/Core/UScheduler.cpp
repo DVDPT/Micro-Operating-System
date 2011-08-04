@@ -33,7 +33,8 @@ UScheduler::UScheduler()
 
 void IdleThreadRoutine()
 {
-
+	while(true)
+		UThread::Yield();
 }
 
 ///
@@ -117,39 +118,29 @@ bool UScheduler::HaveReadyThreads()
 ///
 ///	The scheduler function
 ///
-void UScheduler::Schedule(bool locked)
+void UScheduler::Schedule(bool threadBlocking)
 {
 
 	///
 	///	Check if there are ready threads to run
 	///
-	if (!HaveReadyThreads())
+	if (!threadBlocking && !HaveReadyThreads())
 	{
-		if (locked)
-			System::ReleaseSystemLock();
-
+		Unlock();
 		return;
 	}
-
-	///
-	///	Acquire the System lock to safely manipulate the queues
-	///
-	if (!locked)
-		System::AcquireSystemLock();
 
 	UThread& currentThread = GetRunningThread();
 	UThread& nextThread = DequeueNextReadyThread();
 
-	UThread* p1 = _Scheduler._pRunningThread;
-	p1 = &currentThread;
-
 	_Scheduler._pRunningThread = &nextThread;
 
-	System::ReleaseSystemLock();
 
 	DebugExec(currentThread.SetTimestamp(-1));
 
 	nextThread.SetTimestamp(System::GetTickCount() + KERNEL_THREAD_TIME_SLICE);
+
+	Unlock();
 
 	_Scheduler.ContextSwitch(&currentThread, &nextThread);
 }
@@ -191,4 +182,9 @@ bool UScheduler::CanScheduleThreads()
 		return true;
 	}
 	return false;
+}
+
+bool UScheduler::IsLocked()
+{
+	return _Scheduler._schedulerLock == 0;
 }

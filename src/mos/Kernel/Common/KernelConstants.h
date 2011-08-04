@@ -25,7 +25,7 @@
 ///
 ///	Defines the "static" stack of a Task
 ///
-#define KERNEL_TASKS_STACK_SIZE (1024)
+#define KERNEL_TASKS_STACK_SIZE (1024 * 2)
 
 ///
 ///	Defines the thread time slice in miliseconds

@@ -31,6 +31,12 @@ public:
 		return Add(location,-value);
 	}
 
+	template <typename T>
+	static T Subtract(T* location, T value)
+	{
+		return Subtract((U32*)location,(U32)-value);
+	}
+
 	static U32 Increment(U32* location)
 	{
 		return Add(location,1);

@@ -22,5 +22,9 @@ void Assert::True(bool expr)
 
 }
 
+void Assert::Error(const char * msg)
+{
+
+}
 
 

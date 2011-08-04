@@ -5,6 +5,7 @@
 #include "Interrupts.h"
 #include "InterruptController.h"
 #include "Debug.h"
+#include "Interlocked.h"
 
 class InterruptController;
 
@@ -61,6 +62,22 @@ class InterruptDescriptor
 	///
 	IsrFunction GetIsr(){ return _isr; }
 
+	///
+	///	Increments the number of nested isrs
+	///
+	void IncrementNumberOfNestedIsr()
+	{
+		_numberOfNestedIsr++;
+	}
+
+	///
+	///	Resets the value of the number of nested isrs to 0
+	///
+	void SubtractNumberOfNestedIsr(U16 value)
+	{
+		Interlocked::Subtract<U16>((U16*)&_numberOfNestedIsr,value);
+	}
+
 
 public:
 
@@ -71,18 +88,32 @@ public:
 		:
 			_interruptVectorIndex(interruptVectorIndex),
 			_isr(function),
-			_pisr(NULL)
+			_pisr(NULL),
+			_numberOfNestedIsr(0)
 	{
 		DebugAssertNotNull(_isr);
 		_node.SetValue(this);
 	}
 
+	///
+	///	Set the Post Interrupt Service Routine
+	///
 	void SetPisr(PisrFunction pisr)	{		_pisr = pisr;	}
 
+	///
+	///	Returns the vector index of this interrupt
+	///
 	U8 GetInterruptVectorIndex(){ return _interruptVectorIndex; }
 
+	///
+	///	Returns the number of times that this interrupt happened, DEBUG ONLY
+	///
 	DebugMethod(void,IncrementInterruptCounterDebug,_counterDebug++;)
 
+	///
+	///	Returns the number of times that this interrupt happened before the PISR
+	///	was called, this value can change during the PISR.
+	///
 	U16 GetNumberOfIsrCalledBeforePisr(){return _numberOfNestedIsr;}
 
 };

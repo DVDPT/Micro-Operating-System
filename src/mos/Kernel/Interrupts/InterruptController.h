@@ -12,7 +12,9 @@
 #include "Interrupts.h"
 #include "InterruptDescriptor.h"
 #include "Debug.h"
+#include "Assert.h"
 #include "List.h"
+#include "Threading.h"
 
 ///
 ///	This constant is returned by GetCurrentInterruptVectorIndex when the method HandleInterrupt is called
@@ -33,10 +35,18 @@ class InterruptController
 	static List<InterruptDescriptor> _pendingPisr;
 
 	///
+	///	The task responsible for running all PISRs
+	///
+	static Task _pisrTask;
+	///
 	///	Returns the number of the current Interrupt.
 	///
-	///
 	static U8 GetCurrentInterruptVectorIndex();
+
+	///
+	///	The routine of pisr task.
+	///
+	static void PisrTaskRoutine();
 
 public:
 
@@ -79,6 +89,16 @@ public:
 	///	When an Interrupt Occurs this method is responsible for calling its isr.
 	///
 	static void HandleInterrupt();
+
+	///
+	///	Returns true when there are Pisrs pending to execute.
+	///
+	static bool ArePisrsPending();
+
+	///
+	///	Runs the pending pisr
+	///
+	static void RunPendingPisrs();
 
 
 

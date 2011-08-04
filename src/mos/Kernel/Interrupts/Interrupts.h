@@ -10,7 +10,8 @@
 enum IsrCompletationStatus { FINISHED_HANDLING, CALL_PISR, ERROR };
 
 //typedef void* IsrArgs;
-typedef void* PisrArgs;
+class InterruptDescriptor;
+typedef InterruptDescriptor& PisrArgs;
 
 ///
 ///

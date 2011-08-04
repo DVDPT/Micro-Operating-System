@@ -98,7 +98,7 @@ bool UThread::TestAndClearMask(U8 mask)
 ///
 ///	Removes this thread from ready list
 ///
-UThread::ParkerStatus UThread::ParkThread(U32 timeout)
+UThread::ParkerStatus UThread::ParkThread(U32 timeout )
 {
 	Assert::Equals(this, &GetCurrentThread());
 
@@ -115,9 +115,9 @@ UThread::ParkerStatus UThread::ParkThread(U32 timeout)
 		return _parkerStatus;
 
 	///
-	///	Acquire System lock to manipulate the ready queue
+	///	Acquire Scheduler lock to manipulate the ready queue
 	///
-	System::AcquireSystemLock();
+	UScheduler::Lock();
 
 	///
 	///	Remove this thread from ready queue
@@ -132,7 +132,6 @@ UThread::ParkerStatus UThread::ParkThread(U32 timeout)
 	///
 	///	The thread was unparked return the result
 	///
-
 	return _parkerStatus;
 
 }
@@ -247,7 +246,7 @@ void UThread::Yield()
 
 		UScheduler::InsertThreadInReadyQueue(GetCurrentThread());
 
-		UScheduler::Schedule(true);
+		UScheduler::Schedule(false);
 
 		return;
 	}

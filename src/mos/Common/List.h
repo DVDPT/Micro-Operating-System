@@ -22,6 +22,8 @@ public:
 
 	void SetValue(T* value){ _value = value; }
 
+	bool IsInList(){ return _next == NULL && _prev == NULL; }
+
 
 };
 

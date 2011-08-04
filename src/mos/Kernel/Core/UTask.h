@@ -2,7 +2,7 @@
 
 #include "UThread.h"
 #include "SystemTypes.h"
-
+#include "KernelConstants.h"
 
 class UTask : public UThread
 {

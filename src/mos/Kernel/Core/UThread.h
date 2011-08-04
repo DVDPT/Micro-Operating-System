@@ -135,7 +135,7 @@ public:
 	///
 	///	Removes this thread from ready list
 	///
-	ParkerStatus ParkThread(U32 timeout);
+	ParkerStatus ParkThread(U32 timeout = -1);
 
 	///
 	///	Schedules this thread
