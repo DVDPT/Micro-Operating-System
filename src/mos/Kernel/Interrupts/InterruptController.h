@@ -37,7 +37,7 @@ class InterruptController
 	///
 	///	The task responsible for running all PISRs
 	///
-	static Task _pisrTask;
+	static UTask _pisrTask;
 	///
 	///	Returns the number of the current Interrupt.
 	///

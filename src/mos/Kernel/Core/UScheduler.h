@@ -9,6 +9,7 @@
 #include "KernelConstants.h"
 #include "UThread.h"
 #include "UTask.h"
+#include "InterruptController.h"
 
 class UScheduler
 {
@@ -62,7 +63,6 @@ private:
 	///	Inserts this thread passed as argument in its ready queue
 	///
 	static void InsertThreadInReadyQueue(UThread& thread);
-
 	
 	///
 	///	Returns and removes from the ready list the next thread ready to run
@@ -75,16 +75,26 @@ private:
 	///		NOTE: this function always return a thread, because idle thread never blocks
 	///
 	static UThread& PeekNextReadyThread();
+
 	///
 	///	Returns TRUE when there is a ready thread with a bigger priority than the running thread. Returns FALSE otherwise.
 	///
 	static bool HaveReadyThreads();
 
 	///
-	///	The scheduler function
+	///	This function switches the the current thread if there are other threads to run.
 	///
-	static void Schedule(bool locked);
+	static void TrySwitchThread();
 
+	///
+	///	Always switch the current thread to another one.
+	///
+	static void SwitchThread();
+
+	///
+	///	The scheduler function is responsible for returning the next fit thread to run.
+	///
+	static UThread& Schedule();
 	///
 	///	Returns the current running thread
 	///
@@ -94,6 +104,18 @@ private:
 	///	This functions returns TRUE when the current thread timeslice is over, the lock is free and there are new threads available.
 	///
 	static bool CanScheduleThreads();
+
+	///
+	///	Switch the context @trapContext to the next ready thread context.
+	///		This is an auxiliary function to switch threads in a ISR.
+	///		Only system functions should call this method.
+	///
+	static void SwitchContexts(Context ** trapContext);
+
+	///
+	///	This function must not be called outside the Scheduler. Switch the current thread.
+	///
+	static void UnlockInner(U32 lockCount);
 
 	///
 	///	BaseUThread class can access private BaseUScheduler members
@@ -123,7 +145,7 @@ public:
 	///
 	///	Sets the lock count
 	///
-	static void SetLockCount(U32 newlock);
+	static void SetLockCount(U32 newlockCount);
 
 	///
 	///	Disables context switching

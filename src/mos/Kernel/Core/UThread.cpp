@@ -127,7 +127,7 @@ UThread::ParkerStatus UThread::ParkThread(U32 timeout )
 	///
 	///	Call the scheduler to block this thread
 	///
-	UScheduler::Schedule(true);
+	UScheduler::SwitchThread();
 
 	///
 	///	The thread was unparked return the result
@@ -239,14 +239,16 @@ UThread& UThread::GetCurrentThread()
 ///
 void UThread::Yield()
 {
-	System::AcquireSystemLock();
+	UScheduler::Lock();
 
 	if (UScheduler::HaveReadyThreads())
 	{
 
 		UScheduler::InsertThreadInReadyQueue(GetCurrentThread());
 
-		UScheduler::Schedule(false);
+		UScheduler::TrySwitchThread();
+
+		UScheduler::Unlock();
 
 		return;
 	}

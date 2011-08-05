@@ -105,44 +105,36 @@ bool UScheduler::HaveReadyThreads()
 	///	Get the value of the next thread
 	///
 	UThread& nextThread = PeekNextReadyThread();
-
+/*
 	///
 	///	Check if the next thread have a lower priority than the current thread, if so return FALSE
 	///
-	if (nextThread._threadPriority > GetRunningThread()._threadPriority)
+	if (nextThread._threadPriority < GetRunningThread()._threadPriority)
 		return false;
 
 	return true;
+	*/
+
+	return &nextThread != &_Scheduler._idleThread;
 }
 
 ///
 ///	The scheduler function
 ///
-void UScheduler::Schedule(bool threadBlocking)
+UThread& UScheduler::Schedule()
 {
 
-	///
-	///	Check if there are ready threads to run
-	///
-	if (!threadBlocking && !HaveReadyThreads())
-	{
-		Unlock();
-		return;
-	}
-
-	UThread& currentThread = GetRunningThread();
 	UThread& nextThread = DequeueNextReadyThread();
 
-	_Scheduler._pRunningThread = &nextThread;
 
 
-	DebugExec(currentThread.SetTimestamp(-1));
+
+	DebugExec(GetRunningThread().SetTimestamp(-1));
 
 	nextThread.SetTimestamp(System::GetTickCount() + KERNEL_THREAD_TIME_SLICE);
 
-	Unlock();
+	return nextThread;
 
-	_Scheduler.ContextSwitch(&currentThread, &nextThread);
 }
 
 ///
@@ -170,7 +162,10 @@ void UScheduler::Lock()
 
 void UScheduler::Unlock()
 {
-
+	if(--_Scheduler._schedulerLock == 0)
+	{
+		UnlockInner(0);
+	}
 }
 
 bool UScheduler::CanScheduleThreads()
@@ -187,4 +182,75 @@ bool UScheduler::CanScheduleThreads()
 bool UScheduler::IsLocked()
 {
 	return _Scheduler._schedulerLock == 0;
+}
+
+void UScheduler::UnlockInner(U32 lockCount)
+{
+	DebugAssertEquals(lockCount,GetLockCount());
+	do
+	{
+		///
+		///	If there are pending pisrs run them.
+		///
+		if(InterruptController::ArePisrsPending())
+			InterruptController::RunPendingPisrs();
+		else
+		{
+
+			///
+			///	Get the next thread from the scheduler. And a reference to the current.
+			///
+			UThread& nextThread = Schedule();
+			UThread& currentThread = *_Scheduler._pRunningThread;
+
+			///
+			/// Set the next thread as the running thread.
+			///
+			_Scheduler._pRunningThread = &nextThread;
+
+			///
+			///	Reset the lock count.
+			///
+			SetLockCount(0);
+
+			///
+			///	Switch threads
+			///
+			_Scheduler.ContextSwitch(&currentThread,&nextThread);
+
+
+			DebugAssertEquals(GetLockCount(),0);
+
+			///
+			///	Set the scheduler lock with the value before the switch happened.
+			///
+			SetLockCount(lockCount);
+
+			return;
+		}
+
+	}while(true);
+}
+
+void UScheduler::TrySwitchThread()
+{
+	if(HaveReadyThreads())
+		SwitchThread();
+}
+
+void UScheduler::SwitchThread()
+{
+	UnlockInner(GetLockCount());
+}
+
+void UScheduler::SwitchContexts(Context ** trapContext)
+{
+	DebugAssertEquals(0,GetLockCount());
+	DebugAssertTrue(CanScheduleThreads());
+
+	UThread& next = Schedule();
+	_Scheduler._pRunningThread = &next;
+
+	*trapContext = next._context;
+
 }

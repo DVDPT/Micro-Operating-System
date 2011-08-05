@@ -17,6 +17,11 @@ void Assert::Equals(void * expected, void* value)
 	//printf("EQUALS %s", expected != value ? "FALSE": "TRUE");
 }
 
+void Assert::Equals(U32 expected, U32 value)
+{
+
+}
+
 void Assert::True(bool expr)
 {
 
