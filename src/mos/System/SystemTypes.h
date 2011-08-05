@@ -2,6 +2,7 @@
 
 #include "PortConfig.h"
 
+#define PORT_SPECIFIC
 
 typedef void* Void_P;
 

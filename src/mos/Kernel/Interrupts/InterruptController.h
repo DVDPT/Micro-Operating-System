@@ -41,7 +41,7 @@ class InterruptController
 	///
 	///	Returns the number of the current Interrupt.
 	///
-	static U8 GetCurrentInterruptVectorIndex();
+	PORT_SPECIFIC static U8 GetCurrentInterruptVectorIndex();
 
 	///
 	///	The routine of pisr task.
@@ -53,22 +53,22 @@ public:
 	///
 	///	Enables interrupts, returns the previous state of the interrupts.
 	///
-	static void EnableInterrupts();
+	PORT_SPECIFIC static void EnableInterrupts();
 
 	///
 	///	Disables interrupts, returns the previous state of the interrupts.
 	///
-	static void DisableInterrupts();
+	PORT_SPECIFIC static void DisableInterrupts();
 
 	///
 	///	Masks the interrupt with interruptIndex.
 	///
-	static void MaskInterrupt(U8 interruptIndex);
+	PORT_SPECIFIC static void MaskInterrupt(U8 interruptIndex);
 
 	///
 	///	Unmasks the interrupt with interruptIndex.
 	///
-	static void UnmaskInterrupt(U8 interruptIndex);
+	PORT_SPECIFIC static void UnmaskInterrupt(U8 interruptIndex);
 
 	///
 	///	Sets the state of the interrupts to @state.

@@ -126,7 +126,7 @@ private:
 	///	Performs context switch this function is not implemented by the kernel core
 	///		for porting reasons
 	///
-	NAKED static void ContextSwitch(UThread * old, UThread * next);
+	PORT_SPECIFIC NAKED static void ContextSwitch(UThread * old, UThread * next);
 
 
 	///
