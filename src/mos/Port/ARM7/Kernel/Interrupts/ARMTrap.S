@@ -1,15 +1,16 @@
 .EQU SYSTEM_MODE,0x13
 .EQU IRQ_MODE, 0x12
-.EQU IRQ_MASK, 0x80
+.EQU IRQ_MASK, 0x40
 .EQU SIZE_OF_USER_MODE_STORED_REGISTERS_SIZE,(14*4)
 
 .text
-.global arm_common_trap
+.global arm_common_trap,arm_clear_interrupt,arm_set_interrupt
 
 arm_clear_interrupt:
     MRS     r1, CPSR
     BIC     r1, r1, #IRQ_MASK
     MSR     CPSR, r1
+    mov pc,lr
 
 
 
@@ -17,7 +18,7 @@ arm_set_interrupt:
     MRS     r1, CPSR
     ORR     r1, r1, #IRQ_MASK
     MSR     CPSR_c, r1
-
+    mov pc,lr
 arm_common_trap:
 
     ///

@@ -19,3 +19,6 @@
 
 #define FASTCALL
 
+
+void port_init();
+

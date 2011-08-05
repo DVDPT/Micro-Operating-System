@@ -71,6 +71,11 @@ public:
 	PORT_SPECIFIC static void UnmaskInterrupt(U8 interruptIndex);
 
 	///
+	///	Tells the hardware that the interrupt was handled.
+	///
+	PORT_SPECIFIC static void InterruptHandled();
+
+	///
 	///	Sets the state of the interrupts to @state.
 	///
 	static void SetInterruptState(bool state);

@@ -8,6 +8,14 @@
 
 #include "InterruptController.h"
 
+InterruptDescriptor* InterruptController::_interrupts[KERNEL_INTERRUPTS_MAX_NUMBER_OF_INTERRUPTS];
+
+
+List<InterruptDescriptor> InterruptController::_pendingPisr;
+
+
+UTask InterruptController::_pisrTask;
+
 void InterruptController::SetInterruptState(bool state)
 {
 	if(state)
@@ -81,9 +89,10 @@ void InterruptController::HandleInterrupt()
 			break;
 		}
 		default:
-			Assert::Error("An error occured when calling an isr");
-	}
+				Assert::Error("An error occured when calling an isr");
 
+	}
+	InterruptHandled();
 }
 
 void InterruptController::PisrTaskRoutine()

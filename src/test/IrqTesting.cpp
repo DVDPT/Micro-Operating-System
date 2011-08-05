@@ -5,27 +5,30 @@
  *      Author: DVD
  */
 
-#include <ARMContext.h>
+#include <Interrupts.h>
+#include <InterruptController.h>
+
 int main();
 
-ARMContext demoContext;
-extern "C"
-{
-	extern void arm_common_trap();
-	void system_common_trap(ARMContext ** ctx)
-	{
-		demoContext.SetThreadStartFunction((void (*)())main);
-		demoContext.pc = (U32)main;
-		*ctx = &demoContext;
-		demoContext.flags.cpsr = 0;
-		demoContext.flags.mode = 0x13;
-	}
-}
 
+
+IsrCompletationStatus some_isr()
+{
+
+	return FINISHED_HANDLING;
+}
 
 int main()
 {
-	arm_common_trap();
+	InterruptController::GetInterruptDescritor(KERNEL_INTERRUPTS_SERIAL)
+		.SetIsr(some_isr);
+	InterruptController::UnmaskInterrupt(KERNEL_INTERRUPTS_SERIAL);
+
+	int i = 0;
+	while(true)
+	{
+		i++;
+	}
 	return 0;
 }
 

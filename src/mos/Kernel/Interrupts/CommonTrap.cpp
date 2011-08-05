@@ -5,12 +5,11 @@
  *      Author: DVD
  */
 #include "Threading.h"
+#include "InterruptController.h"
 
 extern "C" void system_common_trap(Context ** runningThread)
 {
-	/*
-	 IRQ Context switch
-	 Thread::GetCurrentThread() context =
 
-	 */
+	InterruptController::HandleInterrupt();
+
 }

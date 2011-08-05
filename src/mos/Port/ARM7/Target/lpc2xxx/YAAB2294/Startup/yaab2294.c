@@ -10,6 +10,9 @@ SECTION(".targetconfig") NAKED void  target_config()
 			    "ldr r3,=0x1000348F\n"
 			    "str r2,[r0]\n"
 			    "str r3,[r1]\n"
+				"ldr r0, =0xe01fc040\n"
+				"mov r1,#2\n"
+				"str r1,[r0]\n"
 			    "mov pc,lr\n"
 		);
 }

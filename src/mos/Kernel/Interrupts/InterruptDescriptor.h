@@ -24,7 +24,7 @@ class InterruptDescriptor
 	///
 	///	This interrupt service routine.
 	///
-	const IsrFunction _isr;
+	IsrFunction _isr;
 
 	///
 	///	This interrupt pos interrupt service routine.
@@ -94,6 +94,22 @@ public:
 		DebugAssertNotNull(_isr);
 		_node.SetValue(this);
 	}
+
+	InterruptDescriptor(U8 interruptVectorIndex)
+		:
+			_interruptVectorIndex(interruptVectorIndex),
+			_isr(NULL),
+			_pisr(NULL),
+			_numberOfNestedIsr(0)
+	{
+		DebugAssertNotNull(_isr);
+		_node.SetValue(this);
+	}
+
+	///
+	///	Set the  Interrupt Service Routine
+	///
+	void SetIsr(IsrFunction isr)	{		_isr = isr;	}
 
 	///
 	///	Set the Post Interrupt Service Routine
