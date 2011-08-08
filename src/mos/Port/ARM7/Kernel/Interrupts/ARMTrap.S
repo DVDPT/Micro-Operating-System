@@ -19,6 +19,9 @@ arm_set_interrupt:
     ORR     r1, r1, #IRQ_MASK
     MSR     CPSR_c, r1
     mov pc,lr
+
+
+
 arm_common_trap:
 
     ///
@@ -79,12 +82,12 @@ arm_common_trap:
     stmfd  r0!, {r2}
 
     ///
-    /// Store stack pointer in the IRQ stack
+    /// Store r0 (aka stack pointer) in the IRQ stack
     ///
     push {r0}
 
     ///
-    /// Move to r0 the address stored previously
+    /// Move to r0 the address stored previously, r0 = Context **
     ///
     mov r0,sp
 
@@ -97,6 +100,9 @@ arm_common_trap:
     /// Retrieve User Stack Pointer (if context switch happened this value is different from the pushed value)
     ///
     pop {r0}
+    //ldr r1, =0xFFFFF030
+    //mov r2, #0
+    //str r2,[r1]
 
     ///
     /// Restore flags

@@ -15,6 +15,11 @@ int main();
 IsrCompletationStatus some_isr()
 {
 
+	int * reg = (int*)0xE000C014;
+	int xpto = *reg;
+	reg -= 0x14/4;
+	xpto = *reg;
+	xpto++;
 	return FINISHED_HANDLING;
 }
 

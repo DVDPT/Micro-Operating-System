@@ -7,30 +7,31 @@
 
 #pragma once
 #include "LPC2xxxTypes.h"
+#include "PeripheralsAddress.h"
+#include "Debug.h"
+
+#define CLOCK_CRYSTAL_FREQUENCY (12)
 
 class PhaseLockedLoop {
 
-	typedef struct _PLL
+	struct PLLRegisters
 	{
 		LPC2xxx_REG PLLCON;
 		LPC2xxx_REG PLLCFG;
 		LPC2xxx_REG PLLSTAT;
 		LPC2xxx_REG PLLFEED;
 
-	}*LPC22xx_PLL;
+	};
 
-	LPC22xx_PLL _pll;
-	U32 _multiplier ;
-	U32 _divider;
+	static PLLRegisters* _pllRegs;
 
-	static PhaseLockedLoop _instance;
+	static U8 GetPLLPValue();
 public:
-	PhaseLockedLoop();
-	PhaseLockedLoop getInstance();
-	void aprove();
-	void configuration(U32 m, U32 p);
-	void stop();
-	void start();
+	static void Aprove();
+	static void Configure(U32 m, U32 p);
+	static void Stop();
+	static void Start();
+	static void SetClock(U8 clock);
 };
 
 
