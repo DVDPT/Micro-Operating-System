@@ -64,13 +64,21 @@ void InterruptController::HandleInterrupt()
 
 	irqDesc->IncrementNumberOfNestedIsr();
 
-	switch(irqDesc->GetIsr()())
+	switch(irqDesc->RunIsr())
 	{
 		case FINISHED_HANDLING:
 			break;
 		case CALL_PISR:
 		{
+
+			///
+			///	If there isn't any PISR available do nothing.
+			///
+			if(irqDesc->GetPisr() == NULL)
+				break;
+
 			Node<InterruptDescriptor>& descNode = irqDesc->GetNode();
+
 
 			///
 			///	If the pisr task is not running and the scheduler is not locked
@@ -130,7 +138,7 @@ void InterruptController::PisrTaskRoutine()
 		///
 		///	Run pisr and restore the number of calls of the isr with the previous store value.
 		///
-		interrupt->GetPisr()(*interrupt);
+		interrupt->RunPisr();
 
 		interrupt->SubtractNumberOfNestedIsr(nrOfCallsToIsr);
 

@@ -68,20 +68,33 @@ class InterruptDescriptor
 		Interlocked::Subtract<U16>((U16*)&_numberOfNestedIsr,value);
 	}
 
+
+
 ///
 ///	The get pisr and isr methods are protected so that anyone that wishes to
 ///	override the behaviour of an isr can do it by inheritance
 ///
 protected:
+
 	///
 	///	Returns the Pisr function.
 	///
-	virtual PisrFunction GetPisr(){ return _pisr; }
+	PisrFunction GetPisr(){ return _pisr; }
 
 	///
 	///	Returns the Isr function.
 	///
-	virtual IsrFunction GetIsr(){ return _isr; }
+	IsrFunction GetIsr(){ return _isr; }
+
+	///
+	///	Call the Isr.
+	///
+	virtual IsrCompletationStatus RunIsr(){ return _isr != NULL?_isr():FINISHED_HANDLING; }
+
+	///
+	///	Call the Pisr.
+	///
+	virtual void RunPisr(){ _pisr(*this); }
 
 
 public:
@@ -89,27 +102,17 @@ public:
 	///
 	///
 	///
-	InterruptDescriptor(U8 interruptVectorIndex,IsrFunction function)
+	InterruptDescriptor(U8 interruptVectorIndex,IsrFunction function = NULL)
 		:
 			_interruptVectorIndex(interruptVectorIndex),
 			_isr(function),
 			_pisr(NULL),
 			_numberOfNestedIsr(0)
 	{
-		DebugAssertNotNull(_isr);
 		_node.SetValue(this);
 	}
 
-	InterruptDescriptor(U8 interruptVectorIndex)
-		:
-			_interruptVectorIndex(interruptVectorIndex),
-			_isr(NULL),
-			_pisr(NULL),
-			_numberOfNestedIsr(0)
-	{
-		DebugAssertNotNull(_isr);
-		_node.SetValue(this);
-	}
+
 
 	///
 	///	Set the  Interrupt Service Routine

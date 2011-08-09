@@ -1,9 +1,10 @@
 #include "InterruptController.h"
+#include "SystemInterruptDescriptor.h"
 #include "PlatformConfig.h"
 
 #include "Peripherals.h"
 
-InterruptDescriptor _uart0(KERNEL_INTERRUPTS_SERIAL);
+SystemInterruptDescriptor _uart0(KERNEL_INTERRUPTS_SERIAL);
 
 void platform_init()
 {
