@@ -9,7 +9,7 @@
 
 List<ClockChangeListener> Clock::_hooks;
 
-void Clock::TriggerAllEvents(ClockEventType type)
+void Clock::TriggerAllEvents(ClockEventType type, U16 oldClock, U16 newClock)
 {
 	Node<ClockChangeListener> * curr = _hooks.GetFirst();
 	if(curr == NULL)
@@ -18,7 +18,7 @@ void Clock::TriggerAllEvents(ClockEventType type)
 	{
 		if(curr->GetValue()->GetEventType() == type)
 		{
-			curr->GetValue()->GetEventFunction()();
+			curr->GetValue()->GetEventFunction()(oldClock,newClock);
 		}
 	}while((curr = _hooks.GetNext(curr)) != NULL);
 

@@ -29,29 +29,28 @@
 							<builder buildPath="${workspace_loc:/test/Debug}" id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.builder.debug.1676242916" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="ARM Sourcery Windows GNU Make builder" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.builder.debug"/>
 							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.assembler.debug.537055903" name="ARM Sourcery Windows GCC Assembler" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.assembler.debug">
 								<option id="org.eclipse.cdt.cross.arm.gnu.assembler.option.include.paths.971689188" name="Include paths (-I)" superClass="org.eclipse.cdt.cross.arm.gnu.assembler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="/mos/Config"/>
-									<listOptionValue builtIn="false" value="/mos/Kernel/Common"/>
-									<listOptionValue builtIn="false" value="/mos/Kernel/Concurrent"/>
-									<listOptionValue builtIn="false" value="/mos/Kernel/Core"/>
-									<listOptionValue builtIn="false" value="/mos/Port/Common"/>
-									<listOptionValue builtIn="false" value="/mos/System"/>
-									<listOptionValue builtIn="false" value="/mos/Kernel/Interrupts"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Common/Config"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Startup"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Kernel"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Kernel/Concurrent"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Kernel/Core"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Kernel/Interrupts"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Target/LPC2XXX/Common"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Target/LPC2XXX/Peripherals/GPIO"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Target/LPC2XXX/Peripherals/UART0"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Target/LPC2XXX/Peripherals/VIC"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Common"/>
-									<listOptionValue builtIn="false" value="/mos/Common"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Target/LPC2XXX/Config"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Target/LPC2XXX/Peripherals"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Target/LPC2XXX/Kernel/Interrupts"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Concurrent}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Interrupts}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Common/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Startup}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Interrupts}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Peripherals/GPIO}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Peripherals/UART0}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Peripherals/VIC}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Peripherals}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Kernel/Interrupts}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System/Clock}&quot;"/>
 								</option>
 								<option id="org.eclipse.cdt.cross.arm.gnu.assembler.option.preprocessor.def.102984017" name="Defined symbols (-D)" superClass="org.eclipse.cdt.cross.arm.gnu.assembler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__DEBUG__=1"/>
@@ -61,29 +60,29 @@
 							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.c.compiler.debug.1185896030" name="ARM Sourcery Windows GCC C Compiler" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.c.compiler.debug">
 								<option id="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.optimization.level.592647792" name="Optimization level" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.optimization.level" value="org.eclipse.cdt.cross.arm.gnu.base.option.optimization.level.none" valueType="enumerated"/>
 								<option id="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.include.paths.512040869" name="Include paths (-I)" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="/mos/Config"/>
-									<listOptionValue builtIn="false" value="/mos/Kernel/Common"/>
-									<listOptionValue builtIn="false" value="/mos/Kernel/Concurrent"/>
-									<listOptionValue builtIn="false" value="/mos/Kernel/Core"/>
-									<listOptionValue builtIn="false" value="/mos/Port/Common"/>
-									<listOptionValue builtIn="false" value="/mos/System"/>
-									<listOptionValue builtIn="false" value="/mos/Kernel/Interrupts"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Common/Config"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Startup"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Kernel/Concurrent"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Kernel/Core"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Kernel"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Kernel/Interrupts"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Target/LPC2XXX/Common"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Target/LPC2XXX/Peripherals/GPIO"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Target/LPC2XXX/Peripherals/UART0"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Target/LPC2XXX/Peripherals/VIC"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Common"/>
-									<listOptionValue builtIn="false" value="/mos/Common"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Target/LPC2XXX/Config"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Target/LPC2XXX/Peripherals"/>
-									<listOptionValue builtIn="false" value="/mos/Port/ARM7/Target/LPC2XXX/Kernel/Interrupts"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Concurrent}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Interrupts}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Common/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Startup}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Concurrent}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Interrupts}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Peripherals/GPIO}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Peripherals/UART0}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Peripherals/VIC}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Common}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Config}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Peripherals}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Kernel/Interrupts}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System/Clock}&quot;"/>
 								</option>
 								<option id="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.preprocessor.def.206730583" name="Defined symbols (-D)" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__DEBUG__=1"/>
@@ -115,6 +114,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Config}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Peripherals}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Kernel/Interrupts}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System/Clock}&quot;"/>
 								</option>
 								<option id="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.misc.std.785893109" name="Language Standard" superClass="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.misc.std" value="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.misc.std.default" valueType="enumerated"/>
 								<option id="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.preprocessor.def.1943953679" name="Defined symbols (-D)" superClass="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
@@ -133,6 +133,8 @@
 								</option>
 								<option id="org.eclipse.cdt.cross.arm.gnu.cpp.link.option.libs.83738012" name="Libraries (-l)" superClass="org.eclipse.cdt.cross.arm.gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="mos"/>
+									<listOptionValue builtIn="false" value="m"/>
+									<listOptionValue builtIn="false" value="gcc"/>
 								</option>
 								<option id="org.eclipse.cdt.cross.arm.gnu.cpp.link.option.otherflags.1251650429" name="Other flags" superClass="org.eclipse.cdt.cross.arm.gnu.cpp.link.option.otherflags" value="" valueType="string"/>
 								<option id="org.eclipse.cdt.cross.arm.gnu.cpp.link.option.printgcsections.962664660" name="Print removed sections (-Xlinker --print-gc-sections)" superClass="org.eclipse.cdt.cross.arm.gnu.cpp.link.option.printgcsections" value="true" valueType="boolean"/>
@@ -3833,6 +3835,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Interrupts}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Kernel/Interrupts}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Interrupts}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System/Clock}&quot;"/>
 								</option>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input.203374894" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input"/>
 							</tool>
@@ -3862,6 +3865,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Interrupts}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Kernel/Interrupts}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Interrupts}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System/Clock}&quot;"/>
 								</option>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input.2070375422" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input"/>
 							</tool>
@@ -3892,6 +3896,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Kernel/Interrupts}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Kernel/Interrupts}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Interrupts}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System/Clock}&quot;"/>
 								</option>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.cpp.compiler.base.input.223552620" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.cpp.compiler.base.input"/>
 							</tool>

@@ -53,16 +53,6 @@ class InterruptDescriptor
 	Node<InterruptDescriptor>& GetNode(){ return _node; }
 
 	///
-	///	Returns the Pisr function.
-	///
-	PisrFunction GetPisr(){ return _pisr; }
-
-	///
-	///	Returns the Isr function.
-	///
-	IsrFunction GetIsr(){ return _isr; }
-
-	///
 	///	Increments the number of nested isrs
 	///
 	void IncrementNumberOfNestedIsr()
@@ -77,6 +67,21 @@ class InterruptDescriptor
 	{
 		Interlocked::Subtract<U16>((U16*)&_numberOfNestedIsr,value);
 	}
+
+///
+///	The get pisr and isr methods are protected so that anyone that wishes to
+///	override the behaviour of an isr can do it by inheritance
+///
+protected:
+	///
+	///	Returns the Pisr function.
+	///
+	virtual PisrFunction GetPisr(){ return _pisr; }
+
+	///
+	///	Returns the Isr function.
+	///
+	virtual IsrFunction GetIsr(){ return _isr; }
 
 
 public:

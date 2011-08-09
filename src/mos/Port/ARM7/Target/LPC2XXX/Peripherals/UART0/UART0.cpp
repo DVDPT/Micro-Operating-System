@@ -6,7 +6,7 @@
  */
 
 #include "UART0.h"
-#include "PeripheralsAddress.h"
+#include "LPC2xxx.h"
 
 #define BAUD 115200
 #define UART0_Receiver_Pin 1

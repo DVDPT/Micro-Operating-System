@@ -7,7 +7,7 @@
 
 #include "GPIO.h"
 #include "Bits.h"
-#include "PeripheralsAddress.h"
+#include "LPC2xxx.h"
 #include "PinConnectBlock.h"
 
 #define PINSELECT_GPIOMASK 0

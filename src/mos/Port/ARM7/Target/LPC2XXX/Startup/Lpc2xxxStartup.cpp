@@ -13,5 +13,5 @@ void platform_init()
 
 	InterruptController::SetInterruptDescritor(_uart0);
 
-	PeripheralContainer::GetInstance().GetVic().EnableInterrupt();
+
 }

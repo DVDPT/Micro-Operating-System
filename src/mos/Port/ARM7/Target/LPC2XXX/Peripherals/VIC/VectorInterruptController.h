@@ -7,7 +7,7 @@
 #pragma once
 
 #include "LPC2xxxTypes.h"
-#include "PeripheralsAddress.h"
+#include "LPC2xxx.h"
 #include "Bits.h"
 
 typedef void (*ISR)();

@@ -18,7 +18,7 @@ void Func()
 //*/
 int main2()
 {
-	unsigned int i = 0;
+	//unsigned int i = 0;
 
 	//Interlocked::Decrement(&i);
 	/*/::CompareExchange((volatile unsigned int*)&i,123,123);
