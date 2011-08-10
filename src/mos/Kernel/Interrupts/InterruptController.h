@@ -93,7 +93,7 @@ public:
 	///
 	///	When an Interrupt Occurs this method is responsible for calling its isr.
 	///
-	static void HandleInterrupt();
+	static void HandleInterrupt(InterruptArgs * args);
 
 	///
 	///	Returns true when there are Pisrs pending to execute.

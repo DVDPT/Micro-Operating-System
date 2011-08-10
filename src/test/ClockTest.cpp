@@ -1,5 +1,5 @@
 #include <Clock.h>
-
+/*/
 int main()
 {
 	Clock::SetClockFrequency(12);
@@ -12,3 +12,4 @@ int main()
 
 	return 1;
 }
+//*/

@@ -49,7 +49,7 @@ void VectorInterruptController::ModifyPriority(U32 entry, U32 priority)
 void VectorInterruptController::UnmaskInterrupt(U32 irqIdx)
 {
 	_interruptController->VICIntEnable = (1 << irqIdx);
-	SetISR(irqIdx,&arm_common_trap,1,0);
+
 }
 void VectorInterruptController::MaskInterrupt(U32 irqIdx)
 {

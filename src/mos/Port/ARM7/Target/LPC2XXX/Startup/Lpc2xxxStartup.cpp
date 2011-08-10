@@ -14,5 +14,15 @@ void platform_init()
 
 	InterruptController::SetInterruptDescritor(_uart0);
 
+	SystemInterruptDescriptor& timerIntrDesc = PeripheralContainer::GetInstance().GetTimer0().GetInterruptDescriptor();
+
+	PeripheralContainer::GetInstance().GetTimer0().SetClock(6000000);
+	PeripheralContainer::GetInstance().GetTimer0().SetInterruptPeriod(100);
+	PeripheralContainer::GetInstance().GetTimer0().Enable();
+	InterruptController::SetInterruptDescritor(timerIntrDesc);
+
+	SystemConfiguration::GetInstance().WithTimer(timerIntrDesc);
+
+
 
 }

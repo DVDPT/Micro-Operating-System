@@ -7,7 +7,7 @@
 
 #pragma once
 
-#define ENTRY_UART0_INTERRUPT 6
+#define INTERRUPT_ENTRY_UART0 6
 
 #include "LPC2xxxTypes.h"
 #include "PinConnectBlock.h"

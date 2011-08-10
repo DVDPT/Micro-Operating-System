@@ -10,6 +10,7 @@
 #include "UThread.h"
 #include "UTask.h"
 #include "InterruptController.h"
+#include "SystemConfiguration.h"
 
 class UScheduler
 {
@@ -51,8 +52,16 @@ private:
 	///
 	static UScheduler _Scheduler;
 
-
+	///
+	///	The routine that the idle thread will be running.
+	///
 	static void IdleThreadRoutine();
+
+	///
+	///	The system timer interrupt service routine, this function is responsable
+	///	to do the context switch inside an isr if possible.
+	///
+	static void SystemTimerInterruptRoutine(InterruptArgs* args, SystemIsrArgs sargs);
 
 	///
 	///	Removes the thread passed as argument from its ready list
@@ -121,6 +130,8 @@ private:
 	///	BaseUThread class can access private BaseUScheduler members
 	///
 	friend class UThread;
+
+	friend class SystemConfiguration;
 
 	///
 	///	Performs context switch this function is not implemented by the kernel core

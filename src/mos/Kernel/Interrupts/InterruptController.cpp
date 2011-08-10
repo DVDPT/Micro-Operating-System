@@ -47,7 +47,7 @@ void InterruptController::RunPendingPisrs()
 	PisrTaskRoutine();
 }
 
-void InterruptController::HandleInterrupt()
+void InterruptController::HandleInterrupt(InterruptArgs * args)
 {
 	U8 interruptVectorIndex = GetCurrentInterruptVectorIndex();
 
@@ -64,7 +64,7 @@ void InterruptController::HandleInterrupt()
 
 	irqDesc->IncrementNumberOfNestedIsr();
 
-	switch(irqDesc->RunIsr())
+	switch(irqDesc->RunIsr(args))
 	{
 		case FINISHED_HANDLING:
 			break;

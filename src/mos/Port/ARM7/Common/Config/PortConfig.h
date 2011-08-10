@@ -9,7 +9,6 @@
 
 #include "GCCCompilerAtributes.h"
 
-
 ///
 ///	On ARM FASTCALL makes no sense since the first 4 parameters are passed by register
 ///

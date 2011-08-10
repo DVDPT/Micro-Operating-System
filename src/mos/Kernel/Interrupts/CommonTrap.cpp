@@ -9,7 +9,8 @@
 
 extern "C" void system_common_trap(Context ** runningThread)
 {
+	InterruptArgs irqArgs(runningThread);
 
-	InterruptController::HandleInterrupt();
+	InterruptController::HandleInterrupt(&irqArgs);
 
 }

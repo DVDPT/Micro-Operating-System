@@ -7,7 +7,7 @@
 
 #include <Interrupts.h>
 #include <InterruptController.h>
-/*/
+//
 int main();
 
 
@@ -25,9 +25,9 @@ IsrCompletationStatus some_isr()
 
 int main()
 {
-	InterruptController::GetInterruptDescritor(KERNEL_INTERRUPTS_SERIAL)
-		.SetIsr(some_isr);
+
 	InterruptController::UnmaskInterrupt(KERNEL_INTERRUPTS_SERIAL);
+	InterruptController::UnmaskInterrupt(KERNEL_INTERRUPTS_TIMER);
 
 	int i = 0;
 	while(true)

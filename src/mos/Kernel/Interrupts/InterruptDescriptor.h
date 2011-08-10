@@ -89,7 +89,7 @@ protected:
 	///
 	///	Call the Isr.
 	///
-	virtual IsrCompletationStatus RunIsr(){ return _isr != NULL?_isr():FINISHED_HANDLING; }
+	virtual IsrCompletationStatus RunIsr(InterruptArgs* args){ return _isr != NULL?_isr(args):FINISHED_HANDLING; }
 
 	///
 	///	Call the Pisr.

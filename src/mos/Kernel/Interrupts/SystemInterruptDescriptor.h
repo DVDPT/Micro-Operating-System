@@ -6,12 +6,14 @@
  */
 #pragma once
 
-#include "InterruptDescriptor.h"
+class SystemInterruptDescriptor;
 
-typedef void (*SystemDefinedIsr)();
-typedef void (*SystemDefinedPisr)();
-typedef void (*IsrComplete)();
-typedef void (*PisrComplete)();
+#include "InterruptDescriptor.h"
+#include "Interrupts.h"
+
+
+
+
 
 ///
 ///	The purpose of this class is to redefine the Interrupt handling execution.
@@ -25,12 +27,12 @@ class SystemInterruptDescriptor : public InterruptDescriptor
 	///
 	///	The system defined ISR, this function will be called before any system defined ISR.
 	///
-	SystemDefinedIsr _sIsr;
+	SystemIsr _sIsr;
 
 	///
 	///	The system defined PISR, this function will be called before any system defined PISR.
 	///
-	SystemDefinedPisr _sPisr;
+	SystemPisr _sPisr;
 
 	///
 	///	This function will be called after both user and system isr ran.
@@ -42,18 +44,28 @@ class SystemInterruptDescriptor : public InterruptDescriptor
 	///
 	PisrComplete _pisrEpilogue;
 
+	///
+	///	The parameter to pass to the system ISR.
+	///
+	SystemIsrArgs _systemIsrArgs;
+
+	///
+	///	The parameter to pass to the system PISR.
+	///
+	SystemPisrArgs _pisrArgs;
+
 protected:
 	///
 	///	Overrided method, to add functionality.
 	///
-	IsrCompletationStatus RunIsr()
+	IsrCompletationStatus RunIsr(InterruptArgs* args)
 	{
 		if(_sIsr != NULL)
-			_sIsr();
-		IsrCompletationStatus res = InterruptDescriptor::RunIsr();
+			_sIsr(args,_systemIsrArgs);
+		IsrCompletationStatus res = InterruptDescriptor::RunIsr(args);
 
 		if(_isrEpilogue != NULL)
-			_isrEpilogue();
+			_isrEpilogue(args,_systemIsrArgs);
 
 		return res;
 	}
@@ -64,34 +76,36 @@ protected:
 	void RunPisr()
 	{
 		if(_sPisr != NULL)
-			_sPisr();
+			_sPisr(_pisrArgs);
 
 		InterruptDescriptor::RunPisr();
 
 		if(_pisrEpilogue != NULL)
-			_pisrEpilogue();
+			_pisrEpilogue(_pisrArgs);
 
 }
 
 public:
-	SystemInterruptDescriptor(U8 interruptVectorIndex,IsrFunction function = NULL)
+	SystemInterruptDescriptor(U8 interruptVectorIndex,IsrFunction function = NULL,SystemIsrArgs systemIsrData = NULL)
 		:
 			InterruptDescriptor(interruptVectorIndex,function),
 			_sIsr(NULL),
 			_sPisr(NULL),
 			_isrEpilogue(NULL),
-			_pisrEpilogue(NULL)
+			_pisrEpilogue(NULL),
+			_systemIsrArgs(systemIsrData)
+
 	{}
 
 	///
 	///	Sets the system defined isr to @sIsr.
 	///
-	void SetSystemDefinedIsr(SystemDefinedIsr sIsr){_sIsr = sIsr;}
+	void SetSystemDefinedIsr(SystemIsr sIsr){_sIsr = sIsr;}
 
 	///
 	///	Sets the system defined isr to @sPisr.
 	///
-	void SetSystemDefinedPisr(SystemDefinedPisr sPisr){_sIsr = sPisr;}
+	void SetSystemDefinedPisr(SystemPisr sPisr){_sPisr = sPisr;}
 
 	///
 	///	Sets the system isr epilogue to @isr.

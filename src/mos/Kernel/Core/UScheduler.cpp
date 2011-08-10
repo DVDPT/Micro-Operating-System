@@ -254,3 +254,9 @@ void UScheduler::SwitchContexts(Context ** trapContext)
 	*trapContext = next._context;
 
 }
+
+void UScheduler::SystemTimerInterruptRoutine(InterruptArgs* args, SystemIsrArgs sargs)
+{
+	if(CanScheduleThreads())
+		SwitchContexts(args->InterruptContext);
+}
