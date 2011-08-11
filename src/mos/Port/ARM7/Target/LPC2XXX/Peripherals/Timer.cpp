@@ -11,7 +11,7 @@
 #define	TIMER_TCR_COUNTER_ENABLE (0x1)
 #define	TIMER_TCR_COUNTER_RESET (0x2)
 
-#define TIMER_IR_CLEAR_MR0_INTR (0)
+#define TIMER_IR_CLEAR_MR0_INTR (0x1)
 
 ///
 ///	Interrupt when MR0 == TC
@@ -21,9 +21,18 @@
 void Timer::Enable()
 {
 	DebugAssertNotEquals(0,_timer->PR);
-	_timer->TCR = TIMER_TCR_COUNTER_ENABLE;
-	_timer->MCR = TIMER_MCR_MR0_IRQ_ENABLE;
 	ResetInterruptRequest();
+
+	///
+	///	Enable timer interrupts.
+	///
+	_timer->MCR = TIMER_MCR_MR0_IRQ_ENABLE;
+
+	///
+	///	Enable timer.
+	///
+	_timer->TCR = TIMER_TCR_COUNTER_ENABLE;
+
 }
 
 void Timer::Disable()
@@ -46,11 +55,10 @@ void Timer::OnTimerIsrComplete(InterruptArgs* irq,Timer* timer)
 	timer->ResetInterruptRequest();
 }
 
-#include "Peripherals.h"
 void Timer::ResetInterruptRequest()
 {
 	///
-	///	Clear a possible irq request first.
+	///	Clear the irq request first.
 	///
 	_timer->IR = TIMER_IR_CLEAR_MR0_INTR;
 
@@ -58,5 +66,5 @@ void Timer::ResetInterruptRequest()
 	///	Set up the next one.
 	///
 	_timer->MR0 = GetTimerCount() + _intrPeriod;
-	PeripheralContainer::GetInstance().GetUart0Instance().WriteChar('.');
+
 }

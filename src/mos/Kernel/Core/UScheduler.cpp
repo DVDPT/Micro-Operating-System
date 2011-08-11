@@ -26,7 +26,7 @@ UScheduler::UScheduler()
 	///
 	///	Set idle thread priority and start it
 	///
-	_idleThread._threadPriority = KERNEL_MINIMUM_THREAD_PRIORITY;
+	_idleThread._threadPriority = KERNEL_THREAD_MINIMUM_PRIORITY;
 	InsertThreadInReadyQueue(_idleThread);
 }
 

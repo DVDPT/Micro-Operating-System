@@ -1,5 +1,7 @@
 #include "System.h"
 #include "Interlocked.h"
+#include "SystemTimer.h"
+
 void System::AcquireSystemLock()
 {
 	/// disable interrupts
@@ -12,6 +14,5 @@ void System::ReleaseSystemLock()
 
 U32 System::GetTickCount()
 {
-	///	get timer values
-	return 0;
+	return SystemTimer::GetCurrentTicks();
 }

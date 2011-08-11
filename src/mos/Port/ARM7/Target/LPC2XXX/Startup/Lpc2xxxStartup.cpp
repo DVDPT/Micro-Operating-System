@@ -4,6 +4,8 @@
 
 #include "Peripherals.h"
 
+#include "Clock.h"
+
 SystemInterruptDescriptor _uart0(KERNEL_INTERRUPTS_SERIAL);
 
 void platform_init()
@@ -14,11 +16,11 @@ void platform_init()
 
 	InterruptController::SetInterruptDescritor(_uart0);
 
-	SystemInterruptDescriptor& timerIntrDesc = PeripheralContainer::GetInstance().GetTimer0().GetInterruptDescriptor();
+	Timer& timer = PeripheralContainer::GetInstance().GetTimer0();
 
-	PeripheralContainer::GetInstance().GetTimer0().SetClock(6000000);
-	PeripheralContainer::GetInstance().GetTimer0().SetInterruptPeriod(100);
-	PeripheralContainer::GetInstance().GetTimer0().Enable();
+
+	SystemInterruptDescriptor& timerIntrDesc = timer.GetInterruptDescriptor();
+
 	InterruptController::SetInterruptDescritor(timerIntrDesc);
 
 	SystemConfiguration::GetInstance().WithTimer(timerIntrDesc);

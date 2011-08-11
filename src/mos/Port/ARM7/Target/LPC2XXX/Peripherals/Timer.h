@@ -39,7 +39,7 @@ class Timer
 	///
 	///	This timer pointer to its registers.
 	///
-	LPC2xxxTimer * _timer;
+	volatile LPC2xxxTimer * _timer;
 
 	///
 	///	The instance of this timer interrupt descriptor.
@@ -68,7 +68,7 @@ public:
 	///
 	Timer(void* timer, U32 clock = 0)
 		:
-			_timer((LPC2xxxTimer*)timer),
+			_timer((volatile LPC2xxxTimer*)timer),
 			_timerIrq(( (( (U32)timer) == (U32)TIMER0_BASE_ADDRESS) ? INTERRUPT_ENTRY_TIMER0 : INTERRUPT_ENTRY_TIMER1)
 						,NULL
 						,this)

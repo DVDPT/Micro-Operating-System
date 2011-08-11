@@ -17,7 +17,7 @@ UThread::UThread(Void_P stack, U32 size, ThreadFunction func /*= NULL*/, ThreadA
 		_sizeOfStack(size),
 		_func(func),
 		_arg(arg),
-		_threadPriority(KERNEL_DEFAULT_THREAD_PRIORITY),
+		_threadPriority(KERNEL_THREAD_DEFAULT_PRIORITY),
 		_node(),
 		_parkerState(0),
 		_parkerStatus(Success)
@@ -33,7 +33,7 @@ UThread::UThread()
 		_sizeOfStack(0),
 		_func(NULL),
 		_arg(NULL),
-		_threadPriority(KERNEL_DEFAULT_THREAD_PRIORITY),
+		_threadPriority(KERNEL_THREAD_DEFAULT_PRIORITY),
 		_node(),
 		_parkerState(0),
 		_parkerStatus(Success)

@@ -20,7 +20,7 @@ private:
 	///
 	///	The array of ready queues supported by the kernel.
 	///
-	List<UThread> _readyQueues[KERNEL_NR_OF_THREAD_PRIORITIES];
+	List<UThread> _readyQueues[KERNEL_THREAD_NR_OF_PRIORITIES];
 
 	///
 	///	A bit map that indicates witch ready queues have threads.

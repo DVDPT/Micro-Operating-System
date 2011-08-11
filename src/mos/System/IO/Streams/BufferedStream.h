@@ -3,7 +3,7 @@
 #include "IOutputStream.h"
 
 
-class BufferedStream : public IOutputStream
+class BaseOutputStream : public IOutputStream
 {
 
 	void WriteShort(U16 data) = 0;
