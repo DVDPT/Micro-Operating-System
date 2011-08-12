@@ -1,16 +1,23 @@
 #include "System.h"
 #include "Interlocked.h"
 #include "SystemTimer.h"
+#include "InterruptController.h"
 
-void System::AcquireSystemLock()
+
+
+IOutputStream* System::_out = (IOutputStream*)NULL;
+
+void System::EnableInterrupts()
 {
-	/// disable interrupts
+	InterruptController::EnableInterrupts();
 }
 
-void System::ReleaseSystemLock()
+
+void System::DisableInterrupts()
 {
-	/// enable interrupts
+	InterruptController::DisableInterrupts();
 }
+
 
 U32 System::GetTickCount()
 {

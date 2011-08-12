@@ -72,14 +72,14 @@ void PhaseLockedLoop::Start()
 
 bool PhaseLockedLoop::SetClock(U16 clock)
 {
-	System::AcquireSystemLock();
+	System::EnableInterrupts();
 	Stop();
 	///
 	///	m = FOSC / CCLK
 	///
 	if(clock == CLOCK_CRYSTAL_FREQUENCY)
 	{
-		System::ReleaseSystemLock();
+		System::EnableInterrupts();
 		return true;
 	}
 	U32 m = clock / CLOCK_CRYSTAL_FREQUENCY;
@@ -96,7 +96,7 @@ bool PhaseLockedLoop::SetClock(U16 clock)
 	Configure(m,p == 0x8 ? 0x3 : p);
 	Start();
 
-	System::ReleaseSystemLock();
+	System::EnableInterrupts();
 	return true;
 
 }

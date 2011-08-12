@@ -3,6 +3,10 @@
 ///
 .EQU SYSTEM_MODE,0x13
 .EQU IRQ_MODE, 0x12
+.EQU UNDIFINED_MODE, 0x1B
+.EQU DATA_ABORT_MODE, 0x17
+
+
 .EQU IRQ_STACK_SIZE,2048
 .EQU USER_STACK_SIZE, 2048 + IRQ_STACK_SIZE
 
@@ -67,6 +71,16 @@ _system_start:
     msr cpsr,#IRQ_MODE
     ldr sp, =__stack_end__
     mov r0,sp
+
+    ///
+    /// Initialize Exceptions stacks.
+    ///
+    msr cpsr,#UNDIFINED_MODE
+    mov sp,r0
+
+    msr cpsr,#DATA_ABORT_MODE
+    mov sp,r0
+
     ///
     /// Set the user mode base stack pointer on r0
     ///
@@ -107,6 +121,24 @@ _system_start:
     ///
     bl system_main
     b .
+
+////
+////    This function is used only for debug purposes.
+////
+get_stack:
+    ///
+    /// Change to irq mode.
+    ///
+    msr cpsr,#IRQ_MODE
+
+    ///
+    /// Save r0 on irq stack
+    ///
+    push {r0}
+
+
+
+
 
 
 .section .stack

@@ -7,6 +7,7 @@
 
 #include "UART0.h"
 #include "LPC2xxx.h"
+#include "System.h"
 
 #define BAUD 115200
 #define UART0_Receiver_Pin 1
@@ -87,12 +88,19 @@ void UART0::WriteString(const U8 * string, U32 length)
 {
 
 }
-void UART0::WriteInt(U32 number)
+void UART0::Write(U32 number)
 {
 
 }
 void UART0::WriteChar(U8 character)
 {
+	System::DisableInterrupts();
 	while(!CanWrite());
 	_uart0->U0Base.U0THR = character & 0xFF;
+	System::EnableInterrupts();
+}
+
+void UART0::Write(U8 data)
+{
+	WriteChar(data);
 }

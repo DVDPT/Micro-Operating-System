@@ -12,8 +12,9 @@
 #include "LPC2xxxTypes.h"
 #include "PinConnectBlock.h"
 #include "VectorInterruptController.h"
+#include "TextOutputStream.h"
 
-class UART0 {
+class UART0 : public TextOutputStream{
 private:
 
 	typedef struct _UART
@@ -60,9 +61,10 @@ public:
 	U8 ReadChar();
 
 	void WriteString(const U8 * string, U32 length);
-	void WriteInt(U32 number);
+	void Write(U32 number);
 	void WriteChar(U8 character);
 
+	void Write(U8 data);
 
 };
 

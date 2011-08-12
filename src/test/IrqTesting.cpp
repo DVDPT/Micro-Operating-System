@@ -22,17 +22,19 @@ IsrCompletationStatus some_isr()
 	xpto++;
 	return FINISHED_HANDLING;
 }
-
+int xpto()
+{
+	return 1;
+}
 int main()
 {
 
-	InterruptController::UnmaskInterrupt(KERNEL_INTERRUPTS_SERIAL);
-	InterruptController::UnmaskInterrupt(KERNEL_INTERRUPTS_TIMER);
-
-	int i = 0;
 	while(true)
 	{
-		i++;
+
+		System::GetStandardOutput().Write("a");
+		xpto();
+
 	}
 	return 0;
 }

@@ -9,7 +9,7 @@
 arm_clear_interrupt:
     MRS     r1, CPSR
     BIC     r1, r1, #IRQ_MASK
-    MSR     CPSR, r1
+    MSR     CPSR_c, r1
     mov pc,lr
 
 
@@ -45,6 +45,7 @@ arm_common_trap:
     /// |            | /
     /// +------------+
     //
+
     ///
     /// Change back to system mode to store all registers.
     ///
@@ -70,6 +71,7 @@ arm_common_trap:
     ///
     msr cpsr,#IRQ_MODE
 
+    sub lr,lr,#4
     ///
     /// Store the user PC on its stack (LR in IRQ MODE = PC before IRQ)
     ///
@@ -100,14 +102,12 @@ arm_common_trap:
     /// Retrieve User Stack Pointer (if context switch happened this value is different from the pushed value)
     ///
     pop {r0}
-    //ldr r1, =0xFFFFF030
-    //mov r2, #0
-    //str r2,[r1]
 
     ///
     /// Restore flags
     ///
-    ldr r1,[r0],#4
+    //ldr r1,[r0],#4
+    ldmfd  r0!, {r1}
     msr cpsr,r1
 
     ///
@@ -119,6 +119,7 @@ arm_common_trap:
     /// Restore all registers
     ///
     pop {r0-r12,lr,pc}
+
 
 
     .end

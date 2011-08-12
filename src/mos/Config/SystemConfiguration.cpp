@@ -13,6 +13,14 @@ SystemConfiguration* SystemConfiguration::_configuration = NULL;
 
 void SystemConfiguration::Configure()
 {
+	///
+	///	Sets the standard output.
+	///
+	System::SetStandardOutput(_systemOutStream);
+
+	///
+	///	The system can't work without at least one timer.
+	///
 	DebugAssertNotNull(_timerIntrDesc);
 
 	///
@@ -35,5 +43,8 @@ void SystemConfiguration::Configure()
 	///
 	SystemTimer::Enable();
 
+	///
+	///	Reset the configuration pointer so that is no longer possible to configure the system.
+	///
 	_configuration = NULL;
 }

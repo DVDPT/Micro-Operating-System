@@ -5,17 +5,24 @@
 class IOutputStream
 {
 public:
-	void WriteByte(U8 data) = 0;
-	void WriteShort(U16 data) = 0;
-	void WriteInt(U32 data) = 0;
-	void WriteString(const U8* str) = 0;
+	virtual void Write(U8 data) = 0;
+	virtual void Write(U16 data) = 0;
+	virtual void Write(U32 data) = 0;
 
-	void Write(U8* buf,U32 size)
+
+	virtual void Write(const char* str) = 0;
+
+	template <class T>
+	void Write(T* buf,U32 size)
 	{
 		for(int i = 0; i < size; ++i,buf++)
 		{
-			WriteByte(*buf);
+			Write(*buf);
 		}
 	}
+
+	virtual void Write(S8 data) = 0;
+	virtual void Write(S16 data) = 0;
+	virtual void Write(S32 data) = 0;
 
 };

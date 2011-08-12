@@ -23,7 +23,9 @@ void platform_init()
 
 	InterruptController::SetInterruptDescritor(timerIntrDesc);
 
-	SystemConfiguration::GetInstance().WithTimer(timerIntrDesc);
+	SystemConfiguration::GetInstance()
+		.WithTimer(timerIntrDesc)
+		.WithOutputStream(PeripheralContainer::GetInstance().GetUart0Instance());
 
 
 

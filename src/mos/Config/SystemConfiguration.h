@@ -13,12 +13,15 @@
 #include "InterruptController.h"
 #include "UScheduler.h"
 #include "Debug.h"
+#include "IOutputStream.h"
 
 class SystemConfiguration
 {
 
 	static SystemConfiguration* _configuration;
 	SystemInterruptDescriptor* _timerIntrDesc;
+	IOutputStream* _systemOutStream;
+
 
 public:
 	SystemConfiguration(){ _configuration = this; }
@@ -31,9 +34,9 @@ public:
 		return *this;
 	}
 
-	SystemConfiguration& WithDefaultOutputStream()
+	SystemConfiguration& WithOutputStream(IOutputStream& systemOutStream )
 	{
-
+		_systemOutStream = &systemOutStream;
 		return *this;
 	}
 

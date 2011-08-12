@@ -9,7 +9,7 @@ private:
 	static U32 const MultiplyDeBruijnBitPosition[32];
 
 public:
-	static void ClearBit(T * position, T bitnumber)
+	static void ClearBit(T * position, U32 bitnumber)
 	{
 		*position = *position & (~(1 << bitnumber)); 
 	}

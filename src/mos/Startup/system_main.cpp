@@ -20,6 +20,11 @@ void system_main()
 	port_init();
 
 	///
+	///	Configure the system.
+	///
+	config.Configure();
+
+	///
 	///	Enable interrupts.
 	///
 	InterruptController::EnableInterrupts();

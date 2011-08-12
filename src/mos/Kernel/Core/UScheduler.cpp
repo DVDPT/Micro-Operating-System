@@ -115,7 +115,7 @@ bool UScheduler::HaveReadyThreads()
 	return true;
 	*/
 
-	return &nextThread != &_Scheduler._idleThread;
+	return &nextThread != &_Scheduler._idleThread && &GetRunningThread() != &nextThread;
 }
 
 ///
@@ -125,9 +125,6 @@ UThread& UScheduler::Schedule()
 {
 
 	UThread& nextThread = DequeueNextReadyThread();
-
-
-
 
 	DebugExec(GetRunningThread().SetTimestamp(-1));
 
@@ -171,7 +168,7 @@ void UScheduler::Unlock()
 bool UScheduler::CanScheduleThreads()
 {
 	if(System::GetTickCount() >= _Scheduler._pRunningThread->_timestamp
-			&& GetLockCount() == 0
+			&& !IsLocked()
 			&& HaveReadyThreads())
 	{
 		return true;
@@ -226,6 +223,7 @@ void UScheduler::UnlockInner(U32 lockCount)
 			///
 			SetLockCount(lockCount);
 
+
 			return;
 		}
 
@@ -248,7 +246,10 @@ void UScheduler::SwitchContexts(Context ** trapContext)
 	DebugAssertEquals(0,GetLockCount());
 	DebugAssertTrue(CanScheduleThreads());
 
+	InsertThreadInReadyQueue(GetRunningThread());
+
 	UThread& next = Schedule();
+
 	_Scheduler._pRunningThread = &next;
 
 	*trapContext = next._context;

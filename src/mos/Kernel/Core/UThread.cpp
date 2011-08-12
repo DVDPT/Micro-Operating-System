@@ -100,7 +100,6 @@ bool UThread::TestAndClearMask(U8 mask)
 ///
 UThread::ParkerStatus UThread::ParkThread(U32 timeout )
 {
-	Assert::Equals(this, &GetCurrentThread());
 
 	///
 	///	if the park in progress bit is cleared the thread was already unparked so just return the result
@@ -130,6 +129,11 @@ UThread::ParkerStatus UThread::ParkThread(U32 timeout )
 	UScheduler::SwitchThread();
 
 	///
+	///	Unlock the Scheduler lock.
+	///
+	UScheduler::Unlock();
+
+	///
 	///	The thread was unparked return the result
 	///
 	return _parkerStatus;
@@ -148,11 +152,11 @@ void UThread::UnparkThread(ParkerStatus status /*= Success*/)
 	///
 	if (!TestAndClearMask(PARK_IN_PROGRESS_MASK))
 	{
-		System::AcquireSystemLock();
+		UScheduler::Lock();
 
 		UScheduler::InsertThreadInReadyQueue(*this);
 
-		System::ReleaseSystemLock();
+		UScheduler::Unlock();
 	}
 
 }
@@ -248,11 +252,8 @@ void UThread::Yield()
 
 		UScheduler::TrySwitchThread();
 
-		UScheduler::Unlock();
-
-		return;
 	}
 
-	System::ReleaseSystemLock();
+	UScheduler::Unlock();
 
 }

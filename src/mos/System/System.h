@@ -1,27 +1,43 @@
 #pragma once
 
 #include "SystemTypes.h"
-
+#include "SystemConfiguration.h"
+#include "IOutputStream.h"
 ///
 ///	The System class is a facade for some basic system operations
 ///
 class System
 {
+	friend class SystemConfiguration;
 	
+	///
+	///	The system outputstream.
+	///
+	static IOutputStream* _out;
+
+	///
+	///	Sets the standard output to @out.
+	///
+	static void SetStandardOutput(IOutputStream* out){_out = out;}
 public:
 
 	///
-	///	This function ensures multiple exclusion through out the entire system
+	///	Enables the system interrupts.
 	///
-	static void AcquireSystemLock();
+	static void EnableInterrupts();
 	
 	///
-	///	Release the multiple exclusion
+	/// Disable system interrupts.
 	///
-	static void ReleaseSystemLock();
+	static void DisableInterrupts();
 
 	///
-	///	Returns the current system ticks
+	///	Returns the current system ticks.
 	///
 	static U32 GetTickCount();
+
+	///
+	///	Returns the system standard output.
+	///
+	static IOutputStream& GetStandardOutput(){return *_out;}
 };
