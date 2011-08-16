@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SystemTypes.h"
+#include "Debug.h"
 
 template<class T>
 class List;
@@ -22,7 +23,10 @@ public:
 
 	void SetValue(T* value){ _value = value; }
 
-	bool IsInList(){ return _next == NULL && _prev == NULL; }
+	bool IsInList()
+	{
+		return (_next != NULL && _prev != NULL);
+	}
 
 
 };
@@ -54,18 +58,34 @@ public:
 
 	NOINLINE void AddFirst(Node<T>* node)
 	{
-		node->_prev = &_head;
-		node->_next = _head._next;
-		_head._next->_prev = node;
-		_head._next = node;
+		AddAfter(&_head,node);
+	}
+
+	NOINLINE void AddAfter(Node<T>* node, Node<T>* newNode)
+	{
+		DebugAssertTrue(!newNode->IsInList());
+		DebugAssertTrue(node->IsInList());
+
+		newNode->_prev = node;
+		newNode->_next = node->_next;
+		node->_next->_prev = newNode;
+		node->_next = newNode;
 	}
 
 	NOINLINE void AddLast(Node<T>* node)
 	{
-		node->_next = &_head;
-		node->_prev = _head._prev;
-		_head._prev->_next = node;
-		_head._prev = node;
+		AddBefore(&_head,node);
+	}
+
+	NOINLINE void AddBefore(Node<T>* node, Node<T>* newNode)
+	{
+		DebugAssertTrue(!newNode->IsInList());
+		DebugAssertTrue(node->IsInList());
+
+		newNode->_next = node;
+		newNode->_prev = node->_prev;
+		node->_prev->_next = newNode;
+		node->_prev = newNode;
 	}
 
 	NOINLINE void Remove(Node<T>* node)

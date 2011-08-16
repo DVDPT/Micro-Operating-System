@@ -1,16 +1,16 @@
 .EQU SYSTEM_MODE,0x13
 .EQU IRQ_MODE, 0x12
-.EQU IRQ_MASK, 0x40
+.EQU IRQ_MASK, 0x80
 .EQU SIZE_OF_USER_MODE_STORED_REGISTERS_SIZE,(14*4)
 
 .text
-.global arm_common_trap,arm_clear_interrupt,arm_set_interrupt
+.global arm_common_trap,arm_clear_interrupt,arm_set_interrupt,arm_is_intr_enable
 
 arm_clear_interrupt:
     MRS     r1, CPSR
     BIC     r1, r1, #IRQ_MASK
     MSR     CPSR_c, r1
-    mov pc,lr
+    bx lr
 
 
 
@@ -18,8 +18,12 @@ arm_set_interrupt:
     MRS     r1, CPSR
     ORR     r1, r1, #IRQ_MASK
     MSR     CPSR_c, r1
-    mov pc,lr
+    bx lr
 
+arm_is_intr_enable:
+    mrs r0,cpsr
+    and r0,r1,#IRQ_MASK
+    bx lr
 
 
 arm_common_trap:
@@ -46,23 +50,24 @@ arm_common_trap:
     /// +------------+
     //
 
+
     ///
     /// Change back to system mode to store all registers.
     ///
     msr cpsr,#SYSTEM_MODE
 
     ///
-    /// Leave space for the PC register stored in IRQ mode
+    /// Leave space for the PC register stored in IRQ mode.
     ///
     push {r0}
 
     ///
-    /// Save registers on user stack
+    /// Save registers on user stack.
     ///
     push {r0-r12,lr}
 
     ///
-    /// Set the sp addr on r0 to parameterize system call common trap
+    /// Set the sp addr on r0 to parameterize system call common trap.
     ///
     mov r0,sp
 
@@ -71,52 +76,55 @@ arm_common_trap:
     ///
     msr cpsr,#IRQ_MODE
 
-    sub lr,lr,#4
     ///
-    /// Store the user PC on its stack (LR in IRQ MODE = PC before IRQ)
+    /// PC (lr in IRQ MODE) is 1 instruction ahead, so put it in the correct position.
+    ///
+    sub lr,lr,#4
+
+    ///
+    /// Store the user PC on its stack (LR in IRQ MODE = PC before IRQ).
     ///
     str lr,[r0,#SIZE_OF_USER_MODE_STORED_REGISTERS_SIZE]
 
     ///
-    /// Store flags
+    /// Store flags.
     ///
     mrs r2,SPSR
     stmfd  r0!, {r2}
 
     ///
-    /// Store r0 (aka stack pointer) in the IRQ stack
+    /// Store r0 (aka stack pointer) in the IRQ stack.
     ///
     push {r0}
 
     ///
-    /// Move to r0 the address stored previously, r0 = Context **
+    /// Move to r0 the address stored previously, r0 = Context **.
     ///
     mov r0,sp
 
     ///
-    /// Call system trap with Context pointer as first parameter
+    /// Call system trap with Context pointer as first parameter.
     ///
     bl system_common_trap
 
     ///
-    /// Retrieve User Stack Pointer (if context switch happened this value is different from the pushed value)
+    /// Retrieve User Stack Pointer (if context switch happened this value is different from the pushed value).
     ///
     pop {r0}
 
     ///
-    /// Restore flags
+    /// Restore flags.
     ///
-    //ldr r1,[r0],#4
     ldmfd  r0!, {r1}
     msr cpsr,r1
 
     ///
-    /// Set the stack pointer
+    /// Set the stack pointer.
     ///
     mov sp,r0
 
     ///
-    /// Restore all registers
+    /// Restore all registers.
     ///
     pop {r0-r12,lr,pc}
 

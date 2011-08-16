@@ -9,12 +9,16 @@
 
 #define INTERRUPT_ENTRY_UART0 6
 
+
+#include "TextOutputStream.h"
 #include "LPC2xxxTypes.h"
 #include "PinConnectBlock.h"
 #include "VectorInterruptController.h"
-#include "TextOutputStream.h"
 
-class UART0 : public TextOutputStream{
+
+
+class UART0 : public TextOutputStream
+{
 private:
 
 	typedef struct _UART

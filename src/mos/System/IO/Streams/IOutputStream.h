@@ -2,6 +2,7 @@
 
 #include "SystemTypes.h"
 
+
 class IOutputStream
 {
 public:
@@ -19,8 +20,8 @@ public:
 		{
 			Write(*buf);
 		}
-	}
 
+	}
 	virtual void Write(S8 data) = 0;
 	virtual void Write(S16 data) = 0;
 	virtual void Write(S32 data) = 0;

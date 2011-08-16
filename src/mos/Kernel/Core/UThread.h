@@ -6,7 +6,7 @@
 #include "Interlocked.h"
 #include "KernelConfig.h"
 
-
+#define TIMEOUT_INFINITE ((U32) -1)
 
 typedef Void_P ThreadArgument;
 typedef void (*ThreadFunction)(ThreadArgument);
@@ -81,13 +81,12 @@ private:
 	///
 	///	The Parker Result, stores the last UnPark result
 	///
-
 	volatile ParkerStatus _parkerStatus;
 
 	///
 	///	The time where the thread was putted on run state, this field is needed for timeslice calculation
 	///
-	volatile U32 _timestamp;
+	volatile U64 _timestamp;
 
 	///
 	///	This method is initializes the thread stack, and its context
@@ -117,6 +116,7 @@ private:
 	{
 		_timestamp = newStamp;
 	}
+
 	friend class UScheduler;
 
 

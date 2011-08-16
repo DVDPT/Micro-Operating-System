@@ -23,7 +23,7 @@ UThread::UThread(Void_P stack, U32 size, ThreadFunction func /*= NULL*/, ThreadA
 		_parkerStatus(Success)
 {
 	InitializeStackAndContext(stack, size);
-
+	ResetParker();
 	_node.SetValue(this);
 }
 
@@ -69,6 +69,7 @@ void UThread::UtThreadStart()
 {
 	UThread &thread = UScheduler::GetRunningThread();
 	thread._func(thread._arg);
+	thread.ParkThread(TIMEOUT_INFINITE);
 
 }
 
@@ -80,11 +81,11 @@ bool UThread::TestAndClearMask(U8 mask)
 	int aux;
 	do
 	{
-		aux = _parkerState & mask;
+		aux = _parkerState;
 		///
 		///	if the bit was already cleared return
 		///
-		if (aux == 0)
+		if (aux & mask)
 			return false;
 
 		if (Interlocked::CompareExchange(&_parkerState, aux & ~mask, aux) == aux)
@@ -98,7 +99,7 @@ bool UThread::TestAndClearMask(U8 mask)
 ///
 ///	Removes this thread from ready list
 ///
-UThread::ParkerStatus UThread::ParkThread(U32 timeout )
+UThread::ParkerStatus UThread::ParkThread(U32 timeout)
 {
 
 	///
@@ -117,6 +118,12 @@ UThread::ParkerStatus UThread::ParkThread(U32 timeout )
 	///	Acquire Scheduler lock to manipulate the ready queue
 	///
 	UScheduler::Lock();
+
+	if(timeout != TIMEOUT_INFINITE)
+	{
+		UScheduler::Timer timer(*this);
+		timer.SetTimeout(timeout);
+	}
 
 	///
 	///	Remove this thread from ready queue
@@ -208,6 +215,11 @@ bool UThread::Start(ThreadFunction func /*= NULL*/, ThreadArgument arg /*= NULL*
 	}
 
 	///
+	///	Acquire scheduler lock to insert thread into the ready queue.
+	///
+	UScheduler::Lock();
+
+	///
 	///	Schedule this thread
 	///
 	UnparkThread();
@@ -216,6 +228,11 @@ bool UThread::Start(ThreadFunction func /*= NULL*/, ThreadArgument arg /*= NULL*
 	/// Reset parker to further use
 	///
 	ResetParker();
+
+	///
+	///	Renable context switching.
+	///
+	UScheduler::Unlock();
 
 	return true;
 }
@@ -249,8 +266,6 @@ void UThread::Yield()
 	{
 
 		UScheduler::InsertThreadInReadyQueue(GetCurrentThread());
-
-		UScheduler::TrySwitchThread();
 
 	}
 

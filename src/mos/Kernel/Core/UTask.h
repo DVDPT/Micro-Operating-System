@@ -13,7 +13,7 @@ public:
 		: 	UThread(this->_stack,KERNEL_TASKS_STACK_SIZE)
 	{}
 
-	UTask(ThreadFunction func, ThreadArgument arg)
+	UTask(ThreadFunction func, ThreadArgument arg = NULL)
 		:	UThread(this->_stack,KERNEL_TASKS_STACK_SIZE,func,arg)
 	{}
 };

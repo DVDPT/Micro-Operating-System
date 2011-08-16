@@ -94,10 +94,10 @@ void UART0::Write(U32 number)
 }
 void UART0::WriteChar(U8 character)
 {
-	System::DisableInterrupts();
+
 	while(!CanWrite());
 	_uart0->U0Base.U0THR = character & 0xFF;
-	System::EnableInterrupts();
+
 }
 
 void UART0::Write(U8 data)

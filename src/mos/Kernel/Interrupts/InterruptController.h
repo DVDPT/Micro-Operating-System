@@ -61,6 +61,11 @@ public:
 	PORT_SPECIFIC static void DisableInterrupts();
 
 	///
+	///	Returns true if interrupts are enable false otherwise.
+	///
+	PORT_SPECIFIC static bool AreInterruptsEnable();
+
+	///
 	///	Masks the interrupt with interruptIndex.
 	///
 	PORT_SPECIFIC static void MaskInterrupt(U8 interruptIndex);

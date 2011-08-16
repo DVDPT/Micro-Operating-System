@@ -5,6 +5,8 @@
 #include "LPC2xxxTypes.h"
 #include "Debug.h"
 #include "SystemInterruptDescriptor.h"
+#include "SystemConfig.h"
+#include "SystemTimer.h"
 
 #define INTERRUPT_ENTRY_TIMER0 (0x4)
 #define INTERRUPT_ENTRY_TIMER1 (0x5)

@@ -14,14 +14,25 @@
 #define TIMER_IR_CLEAR_MR0_INTR (0x1)
 
 ///
-///	Interrupt when MR0 == TC
+///	Interrupt when MR0 == TC, Reset TC.
 ///
-#define TIMER_MCR_MR0_IRQ_ENABLE (0x1)
+#define TIMER_MCR_MR0_IRQ_ENABLE (0x3)
 
+#include "Peripherals.h"
 void Timer::Enable()
 {
+	///
+	///	Reset timer.
+	///
+	_timer->TCR = TIMER_TCR_COUNTER_RESET;
+
 	DebugAssertNotEquals(0,_timer->PR);
-	ResetInterruptRequest();
+
+	///
+	///	Set the interrupt period on MR0 to trigger interrupt and clear TC when matches MR0.
+	///
+	_intrPeriod = 1000;
+	_timer->MR0 = _intrPeriod;
 
 	///
 	///	Enable timer interrupts.
@@ -32,7 +43,10 @@ void Timer::Enable()
 	///	Enable timer.
 	///
 	_timer->TCR = TIMER_TCR_COUNTER_ENABLE;
-
+	PeripheralContainer::GetInstance().GetGpio().InitializePinAsGPIO(18);
+	PeripheralContainer::GetInstance().GetGpio().SetPinWrite(18,1);
+	PeripheralContainer::GetInstance().GetGpio().WriteValue(_intrPeriod&0x1,18,1);
+	_intrPeriod = 1001;
 }
 
 void Timer::Disable()
@@ -55,16 +69,22 @@ void Timer::OnTimerIsrComplete(InterruptArgs* irq,Timer* timer)
 	timer->ResetInterruptRequest();
 }
 
+
 void Timer::ResetInterruptRequest()
 {
+
+	PeripheralContainer::GetInstance().GetGpio().WriteValue(_intrPeriod&0x1,18,1);
+	_intrPeriod = _intrPeriod == 1001? 1000: 1001;
+
 	///
 	///	Clear the irq request first.
 	///
 	_timer->IR = TIMER_IR_CLEAR_MR0_INTR;
 
+
 	///
-	///	Set up the next one.
+	///	Update system clock.
 	///
-	_timer->MR0 = GetTimerCount() + _intrPeriod;
+	SystemTimer::AddTimerCounter(_intrPeriod);
 
 }

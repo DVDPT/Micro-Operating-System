@@ -46,9 +46,6 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Core}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Interrupts}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Common}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Peripherals/GPIO}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Peripherals/UART0}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Peripherals/VIC}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Common}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Common}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Config}&quot;"/>
@@ -81,9 +78,6 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Interrupts}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Common}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Peripherals/GPIO}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Peripherals/UART0}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Peripherals/VIC}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Common}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Common}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Config}&quot;"/>
@@ -115,9 +109,6 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Concurrent}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Interrupts}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Common}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Peripherals/GPIO}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Peripherals/UART0}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Peripherals/VIC}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Common}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Common}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Target/LPC2XXX/Config}&quot;"/>

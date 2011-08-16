@@ -8,6 +8,11 @@ class SystemTimer
 {
 
 	///
+	///	The system global timer counter.
+	///
+	static U64 _timerCounter;
+
+	///
 	///	This method configures the platform timer to work at @clock(in Hz), and to generate an interrupt
 	///	every @interruptPeriod (in milis).
 	///
@@ -24,13 +29,20 @@ class SystemTimer
 	PORT_SPECIFIC void static Disable();
 
 	///
-	///	Returns the current ticks.
-	///
-	PORT_SPECIFIC U32 static GetCurrentTicks();
-
-	///
 	///	Classes System and SystemConfiguration can access private members of this class.
 	///
 	friend class SystemConfiguration;
 	friend class System;
+
+public:
+
+	///
+	///	Adds to the counter @milis.
+	///
+	void static AddTimerCounter(U32 milis);
+
+	///
+	///	Returns the current ticks.
+	///
+	U64 static GetCurrentTicks(){ return _timerCounter; }
 };

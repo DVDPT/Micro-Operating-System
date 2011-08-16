@@ -32,7 +32,6 @@ void TextOutputStream::Write(U16 data)
 
 void TextOutputStream::Write(U32 data)
 {
-	CHECK_IF_IS_NEGATIVE(data);
 
 	U8 buf[MAX_U32_NUMBERS];
 
@@ -46,6 +45,8 @@ void TextOutputStream::Write(U32 data)
 
 	DebugAssertTrue(i <= MAX_U32_NUMBERS);
 
+
+
 	for(i-=1 ; i>-1 ; i--)
 		///
 		///	This cast is to garantee that the right method is called.
@@ -53,6 +54,9 @@ void TextOutputStream::Write(U32 data)
 		///		the (U8)data to S32.
 		///
 		((IOutputStream*)this)->Write(buf[i]);
+
+
+
 }
 
 void TextOutputStream::Write(const char* str)
@@ -71,13 +75,11 @@ void TextOutputStream::Write(S8 data)
 void TextOutputStream::Write(S16 data)
 {
 	CHECK_IF_IS_NEGATIVE(data);
-	Write((U32)(-1 - data));
+	Write(data);
 }
 
 void TextOutputStream::Write(S32 data)
 {
 	CHECK_IF_IS_NEGATIVE(data);
-
-	Bits<S32>::ClearBit(&data,INT_SIGNAL_BIT);
 	Write((U32)(data));
 }
