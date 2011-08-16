@@ -13,6 +13,7 @@ extern "C"
 {
 	void arm_clear_interrupt();
 	void arm_set_interrupt();
+	bool arm_is_intr_enable();
 }
 
 void InterruptController::EnableInterrupts()
@@ -23,6 +24,11 @@ void InterruptController::EnableInterrupts()
 void InterruptController::DisableInterrupts()
 {
 	arm_clear_interrupt();
+}
+
+bool InterruptController::AreInterruptsEnable()
+{
+	return arm_is_intr_enable();
 }
 
 

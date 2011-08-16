@@ -3,9 +3,13 @@
 #include "SystemTypes.h"
 #include "SystemConfiguration.h"
 #include "IOutputStream.h"
+
+
 ///
 ///	The System class is a facade for some basic system operations
 ///
+
+
 class System
 {
 	friend class SystemConfiguration;
@@ -21,6 +25,16 @@ class System
 	static void SetStandardOutput(IOutputStream* out){_out = out;}
 public:
 
+
+	///
+	///	Disable interrupts, return true if the interrupts were enable.
+	///
+	static bool AcquireSystemLock();
+
+	///
+	///	Enables interrupts if @previousState is true.
+	///
+	static void ReleaseSystemLock(bool previousState);
 	///
 	///	Enables the system interrupts.
 	///
@@ -32,9 +46,10 @@ public:
 	static void DisableInterrupts();
 
 	///
-	///	Returns the current system ticks.
+	///	Returns the current system ticks 32bits.
 	///
-	static U32 GetTickCount();
+	static U64 GetTickCount();
+
 
 	///
 	///	Returns the system standard output.

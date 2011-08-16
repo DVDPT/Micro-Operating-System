@@ -7,6 +7,12 @@
 
 typedef void* Void_P;
 
+typedef unsigned long long U64;
+typedef unsigned long long* U64_P;
+
+typedef long long S64;
+typedef long long* S64_P;
+
 typedef unsigned int U32;
 typedef unsigned int* U32_P;
 

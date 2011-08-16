@@ -19,7 +19,7 @@ UScheduler  UScheduler::_Scheduler;
 ///
 UScheduler::UScheduler()
 	:
-	_queuesBitMap(0), _mainThread(),_idleThread()
+	_queuesBitMap(0), _mainThread(),_idleThread((ThreadFunction)UScheduler::IdleThreadRoutine)
 
 {
 	_pRunningThread = &_mainThread;
@@ -31,7 +31,7 @@ UScheduler::UScheduler()
 }
 
 
-void IdleThreadRoutine()
+void UScheduler::IdleThreadRoutine()
 {
 	while(true)
 		UThread::Yield();
@@ -59,6 +59,8 @@ void UScheduler::RemoveThreadFromReadyQueue(UThread& thread)
 ///
 void UScheduler::InsertThreadInReadyQueue(UThread& thread)
 {
+	if(thread._node.IsInList())
+		return;
 
 	List<UThread >& list =
 			_Scheduler._readyQueues[thread._threadPriority];
@@ -105,17 +107,14 @@ bool UScheduler::HaveReadyThreads()
 	///	Get the value of the next thread
 	///
 	UThread& nextThread = PeekNextReadyThread();
-/*
 	///
 	///	Check if the next thread have a lower priority than the current thread, if so return FALSE
 	///
-	if (nextThread._threadPriority < GetRunningThread()._threadPriority)
+	if (nextThread._threadPriority >= GetRunningThread()._threadPriority)
 		return false;
 
 	return true;
-	*/
 
-	return &nextThread != &_Scheduler._idleThread && &GetRunningThread() != &nextThread;
 }
 
 ///
@@ -165,9 +164,14 @@ void UScheduler::Unlock()
 	}
 }
 
+bool UScheduler::HasCurrentThreadTimestampPassed()
+{
+	return System::GetTickCount() >= _Scheduler._pRunningThread->_timestamp;
+}
+
 bool UScheduler::CanScheduleThreads()
 {
-	if(System::GetTickCount() >= _Scheduler._pRunningThread->_timestamp
+	if(HasCurrentThreadTimestampPassed()
 			&& !IsLocked()
 			&& HaveReadyThreads())
 	{
@@ -178,9 +182,9 @@ bool UScheduler::CanScheduleThreads()
 
 bool UScheduler::IsLocked()
 {
-	return _Scheduler._schedulerLock == 0;
+	return _Scheduler._schedulerLock != 0;
 }
-
+#include "System.h"
 void UScheduler::UnlockInner(U32 lockCount)
 {
 	DebugAssertEquals(lockCount,GetLockCount());
@@ -195,6 +199,11 @@ void UScheduler::UnlockInner(U32 lockCount)
 		{
 
 			///
+			///	Check if this thread already consumed its time stamp.
+			///
+			if(!HasCurrentThreadTimestampPassed())
+				return;
+			///
 			///	Get the next thread from the scheduler. And a reference to the current.
 			///
 			UThread& nextThread = Schedule();
@@ -204,6 +213,14 @@ void UScheduler::UnlockInner(U32 lockCount)
 			/// Set the next thread as the running thread.
 			///
 			_Scheduler._pRunningThread = &nextThread;
+
+			///
+			///	Store this thread into the ready queue, only if the counter is 0
+			///		this means that the thread isn't blocking, and just came out
+			///		of a system critical section.
+			///
+			if(lockCount == 0)
+				InsertThreadInReadyQueue(currentThread);
 
 			///
 			///	Reset the lock count.
@@ -243,7 +260,7 @@ void UScheduler::SwitchThread()
 
 void UScheduler::SwitchContexts(Context ** trapContext)
 {
-	DebugAssertEquals(0,GetLockCount());
+	DebugAssertTrue(IsLocked());
 	DebugAssertTrue(CanScheduleThreads());
 
 	InsertThreadInReadyQueue(GetRunningThread());
@@ -261,3 +278,65 @@ void UScheduler::SystemTimerInterruptRoutine(InterruptArgs* args, SystemIsrArgs 
 	if(CanScheduleThreads())
 		SwitchContexts(args->InterruptContext);
 }
+
+void UScheduler::AddOperationWithTimeout(Node<Timer>& operation)
+{
+	DebugAssertTrue(IsLocked());
+	if(_Scheduler._waitingQueue.IsEmpty())
+	{
+		_Scheduler._waitingQueue.AddFirst(&operation);
+		return;
+	}
+
+	Node<Timer>* aux = _Scheduler._waitingQueue.GetFirst();
+
+	U64 timeout = operation.GetValue()->GetTimeoutTime();
+
+	do
+	{
+		if(aux->GetValue()->GetTimeoutTime() >= timeout)
+		{
+			_Scheduler._waitingQueue.AddBefore(aux,&operation);
+			return;
+		}
+	}while((aux = _Scheduler._waitingQueue.GetNext(aux)) != NULL);
+
+	_Scheduler._waitingQueue.AddLast(&operation);
+}
+
+/////
+/////
+/////	UScheduler::Timer implementation.
+/////
+/////
+
+void UScheduler::Timer::SetTimeout(U32 timeout)
+{
+	DebugAssertTrue(IsLocked());
+	_timeoutTime = System::GetTickCount() + timeout;
+	AddOperationWithTimeout(_node);
+}
+
+bool UScheduler::Timer::HasTimedout()
+{
+	return System::GetTickCount() >= _timeoutTime;
+}
+
+void UScheduler::Timer::Disable()
+{
+	if(!_node.IsInList())
+		return;
+
+}
+
+void UScheduler::Timer::Trigger()
+{
+	DebugAssertTrue(IsLocked());
+
+	if(!_node.IsInList())
+		return;
+
+	_Scheduler._waitingQueue.Remove(&_node);
+	_thread.UnparkThread(UThread::Timeout);
+}
+

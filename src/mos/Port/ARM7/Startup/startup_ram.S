@@ -8,7 +8,7 @@
 
 
 .EQU IRQ_STACK_SIZE,2048
-.EQU USER_STACK_SIZE, 2048 + IRQ_STACK_SIZE
+.EQU USER_STACK_SIZE, 2048 * 4 + IRQ_STACK_SIZE
 
 
 
@@ -52,13 +52,18 @@ _start:
 .reset_handler:
     b   _system_start
 .undefined_handler:
-    b   .
+    mrs r8,SPSR
+    b .
 .swi_handler:
-    b   .
+    mrs r8,SPSR
+    b .
 .prefetch_abort_handler:
-    b   .
+    mrs r8,SPSR
+    b .
 .data_abort_handler:
-    b   .
+   mrs r8,SPSR
+   b .
+
 
 ///
 /// System initialization
@@ -71,15 +76,6 @@ _system_start:
     msr cpsr,#IRQ_MODE
     ldr sp, =__stack_end__
     mov r0,sp
-
-    ///
-    /// Initialize Exceptions stacks.
-    ///
-    msr cpsr,#UNDIFINED_MODE
-    mov sp,r0
-
-    msr cpsr,#DATA_ABORT_MODE
-    mov sp,r0
 
     ///
     /// Set the user mode base stack pointer on r0
@@ -119,22 +115,9 @@ _system_start:
     ///
     /// Call system main
     ///
+    ldr r8,=0xbeef
     bl system_main
     b .
-
-////
-////    This function is used only for debug purposes.
-////
-get_stack:
-    ///
-    /// Change to irq mode.
-    ///
-    msr cpsr,#IRQ_MODE
-
-    ///
-    /// Save r0 on irq stack
-    ///
-    push {r0}
 
 
 

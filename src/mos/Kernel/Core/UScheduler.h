@@ -15,12 +15,74 @@
 class UScheduler
 {
 
+	///
+	///	The purpose of this class is to handle the timeout when a thread is blocked.
+	///
+	class Timer
+	{
 
-private:
+		///
+		///	General purpose node.
+		///
+		Node<Timer> _node;
+
+		///
+		///	The thread that created this timer.
+		///
+		UThread& _thread;
+
+		///
+		///	The operation timeout time.
+		///
+		U64 _timeoutTime;
+
+
+
+
+	public:
+
+		Timer(UThread& thread) : _thread(thread){}
+
+		///
+		///	Shedules this thread to be awake when timeout has passed.
+		///
+		void SetTimeout(U32 timeout);
+
+		///
+		///	Returns if the operation timed out.
+		///
+		bool HasTimedout();
+
+		///
+		///	Wake up the thread.
+		///
+		void Trigger();
+
+		///
+		///	Disables this timer.
+		///
+		void Disable();
+
+		///
+		///	Returns the timeout time.
+		///
+		U64 GetTimeoutTime(){ return _timeoutTime; }
+
+		///
+		///	The destructor of this instance, disables the timer.
+		///
+		~Timer(){ Disable(); }
+	};
+
 	///
 	///	The array of ready queues supported by the kernel.
 	///
 	List<UThread> _readyQueues[KERNEL_THREAD_NR_OF_PRIORITIES];
+
+	///
+	///	An array of threads waiting for an event with timeout.
+	///
+	List<Timer> _waitingQueue;
 
 	///
 	///	A bit map that indicates witch ready queues have threads.
@@ -28,17 +90,17 @@ private:
 	U8 _queuesBitMap;
 
 	///
-	///	The current running thread
+	///	The current running thread.
 	///
 	UThread * _pRunningThread;
 	
 	///
-	///	The main thread	descriptor
+	///	The main thread	descriptor.
 	///
 	UThread _mainThread;
 
 	///
-	///	The idle Thread descriptor
+	///	The idle Thread descriptor.
 	///
 	UTask _idleThread;
 
@@ -110,6 +172,11 @@ private:
 	static UThread& GetRunningThread();
 
 	///
+	///	Returns true if the thread timestamp was already consumed, false otherwise.
+	///
+	static bool HasCurrentThreadTimestampPassed();
+
+	///
 	///	This functions returns TRUE when the current thread timeslice is over, the lock is free and there are new threads available.
 	///
 	static bool CanScheduleThreads();
@@ -125,6 +192,12 @@ private:
 	///	This function must not be called outside the Scheduler. Switch the current thread.
 	///
 	static void UnlockInner(U32 lockCount);
+
+	///
+	///	Adds to the waiting queue the @operation. This timer will
+	///	be triggered when the timeout is reached.
+	///
+	static void AddOperationWithTimeout(Node<Timer>& operation);
 
 	///
 	///	BaseUThread class can access private BaseUScheduler members

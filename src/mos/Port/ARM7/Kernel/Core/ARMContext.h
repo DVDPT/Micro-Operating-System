@@ -2,12 +2,15 @@
 
 #include "SystemTypes.h"
 
-//No thuumb Context
+//
+//ARM7 context (no thumb)
+//
 struct ARMContext
 {
-#define USER_MODE (1<<4)
+#define USER_MODE (0x13)
 #define INTERRUPTS_ENABLE (1<<7)
 #define FIQ_ENABLE (1<<6)
+
 	union ARMFlags
 	{
 		U32 cpsr;
@@ -36,8 +39,7 @@ struct ARMContext
 
 	void SetThreadStartFunction(void (*ThreadStart)())
 	{
-
-		flags.cpsr = INTERRUPTS_ENABLE | FIQ_ENABLE | USER_MODE	;
+		flags.cpsr = INTERRUPTS_ENABLE | USER_MODE	;
 		r4  = 0x1111111;
 		r5  = 0x2222222;
 		r6  = 0x3333333;
@@ -48,5 +50,6 @@ struct ARMContext
 		fp  = 0x8888888;
 		r12 = 0x9999999;
 		lr = ThreadStart;
+		pc = (U32)ThreadStart;
 	}
 };
