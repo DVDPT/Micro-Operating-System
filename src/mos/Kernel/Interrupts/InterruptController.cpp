@@ -29,7 +29,7 @@ InterruptDescriptor& InterruptController::GetInterruptDescritor(U8 interruptInde
 	return *_interrupts[interruptIndex];
 }
 
-void InterruptController::SetInterruptDescritor(InterruptDescriptor& desc)
+void InterruptController::SetInterruptDescriptor(InterruptDescriptor& desc)
 {
 
 	DebugAssertTrue(_interrupts[desc.GetInterruptVectorIndex()] == NULL);

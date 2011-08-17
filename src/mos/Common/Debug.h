@@ -11,6 +11,8 @@
 #define DebugAssertNotEquals(value1,value2) Assert::NotEquals((void*)value1,(void*)value2);
 #define DebugMethod(retType,name,code) retType name() {code}
 #define DebugAssertEquals(expected,value) Assert::Equals(expected,value)
+#define DebugAssertEqualsP(type,expected,value) Assert::Equals<type*>(expected,value)
+
 #else
 #define DebugExec(x)
 #define DebugField(fieldType,fieldName)
@@ -19,4 +21,5 @@
 #define DebugAssertNotNull(value)
 #define DebugAssertNotEquals(value1,value2)
 #define DebugAssertEquals(expected,value)
+DebugAssertEqualsT(type,expected,value)
 #endif

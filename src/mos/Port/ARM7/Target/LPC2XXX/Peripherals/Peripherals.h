@@ -30,7 +30,7 @@ public:
 		_timer0(LPC2xxx_TIMER0)
 	{}
 
-	UART0& GetUart0Instance(){return _serial;}
+	UART0& GetUart0(){return _serial;}
 	VectorInterruptController& GetVic(){return _intrCtrl;}
 	GPIO& GetGpio(){return _gpio;}
 	Timer& GetTimer0(){ return _timer0; }

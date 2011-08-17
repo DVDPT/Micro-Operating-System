@@ -93,7 +93,7 @@ public:
 	///
 	///	Sets the interrupt descritor in the controller vector table.
 	///
-	static void SetInterruptDescritor(InterruptDescriptor& desc);
+	static void SetInterruptDescriptor(InterruptDescriptor& desc);
 
 	///
 	///	When an Interrupt Occurs this method is responsible for calling its isr.

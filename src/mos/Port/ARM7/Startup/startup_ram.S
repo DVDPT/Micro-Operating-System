@@ -1,8 +1,8 @@
 ///
 /// Constants
 ///
-.EQU SYSTEM_MODE,0x13
-.EQU IRQ_MODE, 0x12
+.EQU SYSTEM_MODE,0xD3
+.EQU IRQ_MODE, 0xD2
 .EQU UNDIFINED_MODE, 0x1B
 .EQU DATA_ABORT_MODE, 0x17
 
@@ -115,7 +115,6 @@ _system_start:
     ///
     /// Call system main
     ///
-    ldr r8,=0xbeef
     bl system_main
     b .
 

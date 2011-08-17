@@ -123,7 +123,13 @@ class UScheduler
 	///	The system timer interrupt service routine, this function is responsable
 	///	to do the context switch inside an isr if possible.
 	///
-	static void SystemTimerInterruptRoutine(InterruptArgs* args, SystemIsrArgs sargs);
+	static IsrCompletationStatus SystemTimerInterruptRoutine(InterruptArgs* args, SystemIsrArgs sargs);
+
+	///
+	///	The system timer post interrupt service routine. this function is responsable
+	///	to wake up threads that are in an EVENT state.
+	///
+	static void SystemTimerPostInterruptRoutine(SystemPisrArgs args);
 
 	///
 	///	Removes the thread passed as argument from its ready list

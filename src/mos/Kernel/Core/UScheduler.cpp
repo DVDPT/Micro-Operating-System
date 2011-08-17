@@ -62,6 +62,8 @@ void UScheduler::InsertThreadInReadyQueue(UThread& thread)
 	if(thread._node.IsInList())
 		return;
 
+	thread.SetThreadState(UThread::READY);
+
 	List<UThread >& list =
 			_Scheduler._readyQueues[thread._threadPriority];
 
@@ -110,7 +112,7 @@ bool UScheduler::HaveReadyThreads()
 	///
 	///	Check if the next thread have a lower priority than the current thread, if so return FALSE
 	///
-	if (nextThread._threadPriority >= GetRunningThread()._threadPriority)
+	if (nextThread._threadPriority < GetRunningThread()._threadPriority)
 		return false;
 
 	return true;
@@ -198,16 +200,19 @@ void UScheduler::UnlockInner(U32 lockCount)
 		else
 		{
 
+			UThread& currentThread = *_Scheduler._pRunningThread;
+
 			///
 			///	Check if this thread already consumed its time stamp.
 			///
-			if(!HasCurrentThreadTimestampPassed())
+			if(currentThread.GetThreadState() == UThread::READY && !HasCurrentThreadTimestampPassed())
 				return;
+
 			///
 			///	Get the next thread from the scheduler. And a reference to the current.
 			///
 			UThread& nextThread = Schedule();
-			UThread& currentThread = *_Scheduler._pRunningThread;
+
 
 			///
 			/// Set the next thread as the running thread.
@@ -219,7 +224,7 @@ void UScheduler::UnlockInner(U32 lockCount)
 			///		this means that the thread isn't blocking, and just came out
 			///		of a system critical section.
 			///
-			if(lockCount == 0)
+			if(currentThread.GetThreadState() == UThread::READY)
 				InsertThreadInReadyQueue(currentThread);
 
 			///
@@ -263,7 +268,11 @@ void UScheduler::SwitchContexts(Context ** trapContext)
 	DebugAssertTrue(IsLocked());
 	DebugAssertTrue(CanScheduleThreads());
 
-	InsertThreadInReadyQueue(GetRunningThread());
+	UThread& current = GetRunningThread();
+
+	current._context = *trapContext;
+
+	InsertThreadInReadyQueue(current);
 
 	UThread& next = Schedule();
 
@@ -273,11 +282,78 @@ void UScheduler::SwitchContexts(Context ** trapContext)
 
 }
 
-void UScheduler::SystemTimerInterruptRoutine(InterruptArgs* args, SystemIsrArgs sargs)
+IsrCompletationStatus UScheduler::SystemTimerInterruptRoutine(InterruptArgs* args, SystemIsrArgs sargs)
 {
+	///
+	///	If its possible and its time to schedule the current thread do it.
+	///
 	if(CanScheduleThreads())
 		SwitchContexts(args->InterruptContext);
+
+	///
+	///
+	///	The following code is reading data from the kernel without the scheduler lock
+	///	this is possible because even if there is a thread manipulating the waitingQueue
+	///	the reads made inside the isr won't do any kind of damage, and even if this function
+	///	returns CALL_PISR the InterruptController is smart enough to know that someone has the
+	/// scheduler lock so there's no point on Unparking the PISR thread.
+	///
+	///
+
+	///
+	///	Check if there are threads waiting to be awaken.
+	///
+	if(_Scheduler._waitingQueue.IsEmpty())
+		return FINISHED_HANDLING;
+
+	///
+	///	Check if there are sleeping threads ready to run.
+	///		if so mobilize the pisr to unlock all threads that are ready.
+	///
+
+	if(_Scheduler._waitingQueue.GetFirst()->GetValue()->HasTimedout())
+		return CALL_PISR;
+
+	return FINISHED_HANDLING;
+
 }
+
+void UScheduler::SystemTimerPostInterruptRoutine(SystemPisrArgs args)
+{
+	///
+	///	Acquire the scheduler lock to manipulate the waiting queue.
+	///
+	Lock();
+
+
+	if(_Scheduler._waitingQueue.IsEmpty())
+	{
+		Unlock();
+		return;
+	}
+
+	List<Timer>& sleepThreads = _Scheduler._waitingQueue;
+
+	Timer* threadTimer;
+	do
+	{
+		threadTimer = sleepThreads.GetFirst()->GetValue();
+
+		///
+		///	Check if the thread is ready to run.
+		///
+		if(!threadTimer->HasTimedout())
+			break;
+
+		threadTimer->Trigger();
+
+		sleepThreads.RemoveFirst();
+
+	}while(true);
+
+	Unlock();
+}
+
 
 void UScheduler::AddOperationWithTimeout(Node<Timer>& operation)
 {
@@ -303,6 +379,8 @@ void UScheduler::AddOperationWithTimeout(Node<Timer>& operation)
 
 	_Scheduler._waitingQueue.AddLast(&operation);
 }
+
+
 
 /////
 /////
@@ -336,7 +414,6 @@ void UScheduler::Timer::Trigger()
 	if(!_node.IsInList())
 		return;
 
-	_Scheduler._waitingQueue.Remove(&_node);
-	_thread.UnparkThread(UThread::Timeout);
+	_thread.UnparkThread(UThread::TIMEOUT);
 }
 

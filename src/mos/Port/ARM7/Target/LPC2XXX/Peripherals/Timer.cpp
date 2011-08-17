@@ -18,7 +18,6 @@
 ///
 #define TIMER_MCR_MR0_IRQ_ENABLE (0x3)
 
-#include "Peripherals.h"
 void Timer::Enable()
 {
 	///
@@ -43,10 +42,7 @@ void Timer::Enable()
 	///	Enable timer.
 	///
 	_timer->TCR = TIMER_TCR_COUNTER_ENABLE;
-	PeripheralContainer::GetInstance().GetGpio().InitializePinAsGPIO(18);
-	PeripheralContainer::GetInstance().GetGpio().SetPinWrite(18,1);
-	PeripheralContainer::GetInstance().GetGpio().WriteValue(_intrPeriod&0x1,18,1);
-	_intrPeriod = 1001;
+
 }
 
 void Timer::Disable()
@@ -66,25 +62,17 @@ U32 Timer::GetTimerCount()
 
 void Timer::OnTimerIsrComplete(InterruptArgs* irq,Timer* timer)
 {
-	timer->ResetInterruptRequest();
+
+	timer->_timer->IR = TIMER_IR_CLEAR_MR0_INTR;
+
 }
 
 
-void Timer::ResetInterruptRequest()
+void Timer::OnTimerInterrupt(InterruptArgs* irq,Timer* timer)
 {
-
-	PeripheralContainer::GetInstance().GetGpio().WriteValue(_intrPeriod&0x1,18,1);
-	_intrPeriod = _intrPeriod == 1001? 1000: 1001;
-
-	///
-	///	Clear the irq request first.
-	///
-	_timer->IR = TIMER_IR_CLEAR_MR0_INTR;
-
-
 	///
 	///	Update system clock.
 	///
-	SystemTimer::AddTimerCounter(_intrPeriod);
+	SystemTimer::AddTimerCounter(timer->_intrPeriod);
 
 }

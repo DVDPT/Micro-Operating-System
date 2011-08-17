@@ -28,14 +28,7 @@ void system_main()
 	///	Enable interrupts.
 	///
 	InterruptController::EnableInterrupts();
-	InterruptController::EnableInterrupts();
-	int i=0;
-	do
-	{
-	//System::GetStandardOutput().Write('_');
-	while(i++ < 100000);
-	i=0;
-	}while(true);
+
 	///
 	///	Call user program.
 	///

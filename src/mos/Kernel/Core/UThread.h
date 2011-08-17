@@ -16,60 +16,70 @@ typedef void (*ThreadFunction)(ThreadArgument);
 class UScheduler;
 
 ///
-///	The basic representations of a system thread
+///	The basic representations of a system thread.
 ///
 class UThread
 {
 public:
 	///
-	///	The possible results that an UnPark method can return
+	///	The possible results that an UnPark method can return.
 	///
-	enum ParkerStatus { Success, Cancelled, Timeout };
+	enum ParkerStatus { SUCCESS, CANCELLED, TIMEOUT };
 
 
 private:
+
 	///
-	///	A pointer to the thread context
+	///	The possible states that a thread can have:
+	///		READY - Ready for execution.
+	///		WAIT  - Waiting for sinalization.
+	///		EVENT - Waiting for a system event. Like the sleep method.
+	///
+	enum ThreadState { READY, WAIT, EVENT };
+
+	///
+	///	A pointer to the thread context.
 	///
 	Context * _context;
 
 	///
-	///	The thread stack
+	///	The thread stack.
 	///
 	Void_P _stack;
 
 	///
-	///	The size of the thread stack
+	///	The size of the thread stack.
 	///
 	U32 _sizeOfStack;
 
 	///
-	///	The Thread function
+	///	The Thread function.
 	///
 	ThreadFunction _func;
 
 	///
-	///	The Thread Argument
+	///	The Thread Argument.
 	///
 	ThreadArgument _arg;
 
 	///
-	///	The Thread Priority
+	///	The Thread Priority.
 	///
 	U8 _threadPriority;
 
 	///
-	///	A general purpose Node to store this thread in queues
+	///	A general purpose Node to store this thread in queues.
 	///
 	Node<UThread> _node;
 	
 	///
-	///	Auxiliary constants to control the state of the parker
+	///	Auxiliary constants to control the state of the parker.
 	///
 #define LOCK_BIT  (0)
 #define PARK_IN_PROGRESS_BIT (1)
 #define LOCK_MASK  (1 << LOCK_BIT)
 #define PARK_IN_PROGRESS_MASK (1 << PARK_IN_PROGRESS_BIT)
+
 
 	///
 	///	This thread parker state:
@@ -79,18 +89,23 @@ private:
 	volatile U8 _parkerState;
 
 	///
-	///	The Parker Result, stores the last UnPark result
+	///	The Parker Result, stores the last UnPark result.
 	///
 	volatile ParkerStatus _parkerStatus;
 
 	///
-	///	The time where the thread was putted on run state, this field is needed for timeslice calculation
+	///	This thread current state.
+	///
+	ThreadState _currentState;
+
+	///
+	///	The time where the thread was putted on run state, this field is needed for timeslice calculation.
 	///
 	volatile U64 _timestamp;
 
 	///
 	///	This method is initializes the thread stack, and its context
-	/// The context is located at the first X bytes of the thread stack, being X the size of the context
+	/// The context is located at the first X bytes of the thread stack, being X the size of the context.
 	///
 	void InitializeStackAndContext(Void_P stack, U32 size);
 
@@ -100,22 +115,35 @@ private:
 	static void UtThreadStart();
 
 	///
-	///	Auxiliary function to the thread parker
+	///	The inner function to ParkThread method.
+	///
+	ParkerStatus ParkInner(U32 timeout, ThreadState threadState);
+
+	///
+	///	Auxiliary function to the thread parker.
 	///
 	bool TestAndClearMask(U8 mask);
 
 	///
+	///	Returns the thread timestamp.
 	///
-	///
-	U32 GetTimestamp()
-	{
-		return _timestamp;
-	}
+	U64 GetTimestamp(){return _timestamp;}
 
-	void SetTimestamp(U32 newStamp)
-	{
-		_timestamp = newStamp;
-	}
+	///
+	///	Sets the thread timestamp.
+	///
+	void SetTimestamp(U64 newStamp)	{_timestamp = newStamp;}
+
+	///
+	///	Returns the thread current state.
+	///
+	ThreadState GetThreadState(){return _currentState;}
+
+	///
+	///	Sets the thread current state.
+	///
+	void SetThreadState(ThreadState state)	{_currentState = state;}
+
 
 	friend class UScheduler;
 
@@ -125,7 +153,7 @@ public:
 	
 
 	///
-	///	Create and configure a new UThread
+	///	Create and configure a new UThread.
 	///
 	UThread(Void_P stack, U32 size, ThreadFunction func = NULL, ThreadArgument arg = NULL);
 
@@ -133,44 +161,48 @@ public:
 
 
 	///
-	///	Removes this thread from ready list
+	///	Removes this thread from ready list.
 	///
-	ParkerStatus ParkThread(U32 timeout = -1);
+	ParkerStatus ParkThread(U32 timeout = TIMEOUT_INFINITE);
 
 	///
-	///	Schedules this thread
+	///	Schedules this thread.
 	///
-	void UnparkThread(ParkerStatus status = Success);
+	void UnparkThread(ParkerStatus status = SUCCESS);
 
 	///
-	///	Tries to lock this thread parker
+	///	Tries to lock this thread parker.
 	///
 	bool TryLockParker();
 
 	///
-	///	Resets this parker for further use
+	///	Resets this parker for further use.
 	///
 	void ResetParker();
 
-
 	///
-	///	Schedules this thread instance as ready
+	///	Schedules this thread instance as ready.
 	///
 	bool Start(ThreadFunction func = NULL, ThreadArgument arg = NULL,Void_P stack = NULL, U32 size=-1);
 
 	///
-	///	Sets a new priority for this thread
+	///	Sets a new priority for this thread.
 	///
 	void SetThreadPriority(U8 newPriority);
 	///
-	///	This function returns the instance of the current running thread
+	///	This function returns the instance of the current running thread.
 	///	
 	static UThread& GetCurrentThread();
 
 	///
-	///	Yields the current thread
+	///	Yields the current thread.
 	///
 	static void Yield();
+
+	///
+	///	Suspend this thread @milis.
+	///
+	static void Sleep(U32 milis);
 
 };
 

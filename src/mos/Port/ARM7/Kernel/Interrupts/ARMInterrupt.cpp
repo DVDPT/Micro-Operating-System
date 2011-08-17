@@ -11,19 +11,19 @@
 
 extern "C"
 {
-	void arm_clear_interrupt();
-	void arm_set_interrupt();
+	void arm_enable_interrupt();
+	void arm_disable_interrupt();
 	bool arm_is_intr_enable();
 }
 
 void InterruptController::EnableInterrupts()
 {
-	arm_set_interrupt();
+	arm_enable_interrupt();
 }
 
 void InterruptController::DisableInterrupts()
 {
-	arm_clear_interrupt();
+	arm_disable_interrupt();
 }
 
 bool InterruptController::AreInterruptsEnable()

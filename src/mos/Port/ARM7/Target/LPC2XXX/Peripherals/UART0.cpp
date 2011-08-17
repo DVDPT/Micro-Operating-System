@@ -32,27 +32,30 @@
 
 
 
-extern "C" void trap_uart();
 
-UART0::UART0(PinConnectBlock& p):_uart0((LPC22xx_UART0)UART0_BASE_ADDRESS)
+UART0::UART0(PinConnectBlock& p)
+	:
+	_uart0((LPC22xx_UART0)UART0_BASE_ADDRESS),
+	_uartIrq(INTERRUPT_ENTRY_UART0,NULL,this)
 {
-		p.pinSelect(UART0_Receiver_Pin,UART0_Pin );
-		p.pinSelect(UART0_Transmiter_Pin, UART0_Pin);
 
-		_uart0->U0LCR = (1<<DLAB);
-		_uart0->U0FDR = (DIV) |(MUL << 4);
-		_uart0->U0Base.U0DLL = DLL;
-		_uart0->U0Base2.U0DLM = DLM;
-		_uart0->U0LCR = (0<<DLAB) | LCR_WORD_MASK | LCR_STOPBIT_MASK;
+	_uartIrq.SetEpilogueForIsr((IsrComplete)UART0::OnUartIsrComplete);
+	p.pinSelect(UART0_Receiver_Pin,UART0_Pin );
+	p.pinSelect(UART0_Transmiter_Pin, UART0_Pin);
 
-}
+	_uart0->U0LCR = (1<<DLAB);
+	_uart0->U0FDR = (DIV) |(MUL << 4);
+	_uart0->U0Base.U0DLL = DLL;
+	_uart0->U0Base2.U0DLM = DLM;
+	_uart0->U0LCR = (0<<DLAB) | LCR_WORD_MASK | LCR_STOPBIT_MASK;
 
-void UART0::ConfigureInterrupts(VectorInterruptController& vic)
-{
+	///
+	///	enable receive interrupts.
+	///
 	_uart0->U0Base2.U0IER = UART_RDA_INTERRUPT_MASK;
-	//vic.SetISR(ENTRY_UART0_INTERRUPT,trap_uart,1,0);
-	//vic.UnmaskInterrupt(ENTRY_UART0_INTERRUPT);
+
 }
+
 
 U32 UART0::CanWrite()
 {
@@ -103,4 +106,11 @@ void UART0::WriteChar(U8 character)
 void UART0::Write(U8 data)
 {
 	WriteChar(data);
+}
+
+void UART0::OnUartIsrComplete(InterruptArgs* irq,UART0* uart)
+{
+	U32 status = uart->_uart0->U0Base3.U0IIR;
+	DebugAssertEquals(0,status&1);
+	uart->ReadChar();
 }

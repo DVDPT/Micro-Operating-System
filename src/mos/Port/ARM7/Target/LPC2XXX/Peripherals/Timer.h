@@ -61,7 +61,7 @@ class Timer
 	///
 	///	Clears the current interrupt request and sets the next.
 	///
-	void ResetInterruptRequest();
+	static void OnTimerInterrupt(InterruptArgs* irq,Timer* timer);
 
 public:
 	///
@@ -76,6 +76,7 @@ public:
 						,this)
 	{
 		SetClock(clock);
+		_timerIrq.SetPrologueForIsr((IsrPending)&OnTimerInterrupt);
 		_timerIrq.SetEpilogueForIsr((IsrComplete)&OnTimerIsrComplete);
 	}
 

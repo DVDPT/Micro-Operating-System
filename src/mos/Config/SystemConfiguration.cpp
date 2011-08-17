@@ -29,9 +29,14 @@ void SystemConfiguration::Configure()
 	SystemTimer::Configure(SYSTEM_TIMER_CLOCK_FREQUENCY, SYSTEM_TIMER_INTERRUPT_PERIOD);
 
 	///
-	///	Set its system isr as the scheduler timer isr.
+	///	Set the system isr as the scheduler timer isr.
 	///
 	_timerIntrDesc->SetSystemDefinedIsr((SystemIsr)&UScheduler::SystemTimerInterruptRoutine);
+
+	///
+	///	Set the system pisr for the timer.
+	///
+	_timerIntrDesc->SetSystemDefinedPisr((SystemPisr)&UScheduler::SystemTimerPostInterruptRoutine);
 
 	///
 	///	Enable timer interrupts.

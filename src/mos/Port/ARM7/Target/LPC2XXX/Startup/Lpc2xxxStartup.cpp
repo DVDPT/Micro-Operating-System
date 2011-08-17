@@ -6,27 +6,17 @@
 
 #include "Clock.h"
 
-SystemInterruptDescriptor _uart0(KERNEL_INTERRUPTS_SERIAL);
 
 void platform_init()
 {
-	PeripheralContainer::GetInstance().GetUart0Instance()
-			.ConfigureInterrupts(PeripheralContainer::GetInstance().GetVic());
-
-
-	InterruptController::SetInterruptDescritor(_uart0);
-
+	UART0 uart = PeripheralContainer::GetInstance().GetUart0();
 	Timer& timer = PeripheralContainer::GetInstance().GetTimer0();
 
-
-	SystemInterruptDescriptor& timerIntrDesc = timer.GetInterruptDescriptor();
-
-	InterruptController::SetInterruptDescritor(timerIntrDesc);
+	InterruptController::SetInterruptDescriptor(timer.GetInterruptDescriptor());
+	InterruptController::SetInterruptDescriptor(uart.GetInterruptDescriptor());
 
 	SystemConfiguration::GetInstance()
-		.WithTimer(timerIntrDesc)
-		.WithOutputStream(PeripheralContainer::GetInstance().GetUart0Instance());
-
-
+		.WithTimer(timer.GetInterruptDescriptor())
+		.WithOutputStream(PeripheralContainer::GetInstance().GetUart0());
 
 }

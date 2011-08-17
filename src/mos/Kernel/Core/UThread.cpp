@@ -20,7 +20,7 @@ UThread::UThread(Void_P stack, U32 size, ThreadFunction func /*= NULL*/, ThreadA
 		_threadPriority(KERNEL_THREAD_DEFAULT_PRIORITY),
 		_node(),
 		_parkerState(0),
-		_parkerStatus(Success)
+		_parkerStatus(SUCCESS)
 {
 	InitializeStackAndContext(stack, size);
 	ResetParker();
@@ -36,9 +36,10 @@ UThread::UThread()
 		_threadPriority(KERNEL_THREAD_DEFAULT_PRIORITY),
 		_node(),
 		_parkerState(0),
-		_parkerStatus(Success)
+		_parkerStatus(SUCCESS)
 {
 	_node.SetValue(this);
+	ResetParker();
 }
 
 
@@ -70,7 +71,6 @@ void UThread::UtThreadStart()
 	UThread &thread = UScheduler::GetRunningThread();
 	thread._func(thread._arg);
 	thread.ParkThread(TIMEOUT_INFINITE);
-
 }
 
 ///
@@ -85,7 +85,7 @@ bool UThread::TestAndClearMask(U8 mask)
 		///
 		///	if the bit was already cleared return
 		///
-		if (aux & mask)
+		if (!(aux & mask))
 			return false;
 
 		if (Interlocked::CompareExchange(&_parkerState, aux & ~mask, aux) == aux)
@@ -95,12 +95,20 @@ bool UThread::TestAndClearMask(U8 mask)
 }
 
 
+UThread::ParkerStatus UThread::ParkThread(U32 timeout /* = TIMEOUT_INFINITE */)
+{
+	return ParkInner(timeout,WAIT);
+}
 
 ///
-///	Removes this thread from ready list
+///	Removes this thread from ready listParkInner
 ///
-UThread::ParkerStatus UThread::ParkThread(U32 timeout)
+UThread::ParkerStatus UThread::ParkInner(U32 timeout, ThreadState threadState)
 {
+	///
+	///	Only this thread can park itself.
+	///
+	DebugAssertEqualsP(UThread,&GetCurrentThread(),this);
 
 	///
 	///	if the park in progress bit is cleared the thread was already unparked so just return the result
@@ -119,21 +127,23 @@ UThread::ParkerStatus UThread::ParkThread(U32 timeout)
 	///
 	UScheduler::Lock();
 
+	///
+	///	Alloc a timer to wake up this thread when the timeout passes.
+	///
+	UScheduler::Timer timer(*this);
+
 	if(timeout != TIMEOUT_INFINITE)
 	{
-		UScheduler::Timer timer(*this);
+		///
+		///	Enable timeout.
+		///
 		timer.SetTimeout(timeout);
 	}
 
 	///
-	///	Remove this thread from ready queue
+	///	Set this thread state.
 	///
-	UScheduler::RemoveThreadFromReadyQueue(*this);
-
-	///
-	///	Call the scheduler to block this thread
-	///
-	UScheduler::SwitchThread();
+	SetThreadState(threadState);
 
 	///
 	///	Unlock the Scheduler lock.
@@ -270,5 +280,24 @@ void UThread::Yield()
 	}
 
 	UScheduler::Unlock();
+
+}
+
+void UThread::Sleep(U32 milis)
+{
+	if(milis == 0)
+		Yield();
+
+	UThread& curr = GetCurrentThread();
+
+	///
+	///	This thread parker knows how to wait with timeout so call it.
+	///
+	curr.ParkInner(milis,EVENT);
+
+	///
+	///	Reset thread parker to further use.
+	///
+	curr.ResetParker();
 
 }

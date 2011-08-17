@@ -48,10 +48,14 @@ typedef void* SystemIsrArgs;
 typedef void* SystemPisrArgs;
 
 
-typedef void (*SystemIsr)(InterruptArgs*,SystemIsrArgs);
+typedef IsrCompletationStatus (*SystemIsr)(InterruptArgs*,SystemIsrArgs);
 typedef void (*SystemPisr)(SystemPisrArgs);
+
 typedef void (*IsrComplete)(InterruptArgs*,SystemIsrArgs);
 typedef void (*PisrComplete)(SystemPisrArgs);
+
+typedef void (*IsrPending)(InterruptArgs*,SystemIsrArgs);
+typedef void (*PisrPending)(SystemPisrArgs);
 
 
 #include "PortInterrupts.h"

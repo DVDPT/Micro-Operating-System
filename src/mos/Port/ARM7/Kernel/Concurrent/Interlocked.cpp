@@ -11,17 +11,17 @@ extern "C"
 }
 
 
-bool Interlocked::CompareExchange(volatile U32* addr, U32 value, U32 comparand)
+U32 Interlocked::CompareExchange(volatile U32* addr, U32 value, U32 comparand)
 {
 	return atomic_compare_exchange32(addr,value,comparand);
 }
 
-bool Interlocked::CompareExchange(volatile U16* addr, U16 value, U16 comparand)
+U16 Interlocked::CompareExchange(volatile U16* addr, U16 value, U16 comparand)
 {
 	return atomic_compare_exchange16(addr,value,comparand);
 }
 
-bool Interlocked::CompareExchange(volatile U8* addr, U8 value, U8 comparand)
+U8 Interlocked::CompareExchange(volatile U8* addr, U8 value, U8 comparand)
 {
 	return atomic_compare_exchange8(addr,value,comparand);
 }

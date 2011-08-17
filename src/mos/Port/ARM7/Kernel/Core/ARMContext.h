@@ -8,8 +8,9 @@
 struct ARMContext
 {
 #define USER_MODE (0x13)
-#define INTERRUPTS_ENABLE (1<<7)
-#define FIQ_ENABLE (1<<6)
+#define IRQ_ENABLE (0<<7)
+#define FIQ_ENABLE (0<<6)
+#define FIQ_DISABLE (1<<6)
 
 	union ARMFlags
 	{
@@ -39,7 +40,7 @@ struct ARMContext
 
 	void SetThreadStartFunction(void (*ThreadStart)())
 	{
-		flags.cpsr = INTERRUPTS_ENABLE | USER_MODE	;
+		flags.cpsr = IRQ_ENABLE | USER_MODE | FIQ_DISABLE;
 		r4  = 0x1111111;
 		r5  = 0x2222222;
 		r6  = 0x3333333;

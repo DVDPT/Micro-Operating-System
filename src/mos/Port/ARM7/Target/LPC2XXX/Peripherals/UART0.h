@@ -14,7 +14,7 @@
 #include "LPC2xxxTypes.h"
 #include "PinConnectBlock.h"
 #include "VectorInterruptController.h"
-
+#include "SystemInterruptDescriptor.h"
 
 
 class UART0 : public TextOutputStream
@@ -53,12 +53,15 @@ private:
 
 	LPC22xx_UART0 _uart0;
 
+	SystemInterruptDescriptor _uartIrq;
+
 	U32 CanWrite();
 	U32 CanRead();
 
+	static void OnUartIsrComplete(InterruptArgs* irq, UART0* uart);
+
 public:
 	UART0(PinConnectBlock& p);
-	void ConfigureInterrupts(VectorInterruptController& vic);
 
 	U8* ReadString(U8 * string, U32 length);
 	U32 ReadInt();
@@ -70,6 +73,7 @@ public:
 
 	void Write(U8 data);
 
+	SystemInterruptDescriptor& GetInterruptDescriptor(){ return _uartIrq; }
 };
 
 
