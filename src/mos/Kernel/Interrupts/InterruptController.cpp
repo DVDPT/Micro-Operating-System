@@ -38,7 +38,7 @@ void InterruptController::SetInterruptDescriptor(InterruptDescriptor& desc)
 
 bool InterruptController::ArePisrsPending()
 {
-	return !_pendingPisr.IsEmpty();
+	return !_pendingPisr.IsEmpty() && _pisrTask.GetThreadState() != UThread::READY;
 }
 
 void InterruptController::RunPendingPisrs()
@@ -108,7 +108,7 @@ void InterruptController::PisrTaskRoutine()
 	do
 	{
 
-		if(_pendingPisr.IsEmpty())
+		while(_pendingPisr.IsEmpty())
 		{
 			///
 			///	The pisrs were ran on another thread, dont block, return.
@@ -119,29 +119,36 @@ void InterruptController::PisrTaskRoutine()
 			_pisrTask.ParkThread();
 			_pisrTask.ResetParker();
 		}
+
 		///
 		///	Disable interrupts to dequeue an pisr from queue.
 		///
 		DisableInterrupts();
 
 		///
-		///	Get an interrupt descriptor to run its pisr.
+		///	Check again if the list is empty, because the pisr could have already ran.
 		///
-		InterruptDescriptor* interrupt = _pendingPisr.Dequeue()->GetValue();
+		if(!_pendingPisr.IsEmpty())
+		{
+			///
+			///	Get an interrupt descriptor to run its pisr.
+			///
+			InterruptDescriptor* interrupt = _pendingPisr.Dequeue()->GetValue();
 
-		U16 nrOfCallsToIsr = interrupt->GetNumberOfIsrCalledBeforePisr();
+			U16 nrOfCallsToIsr = interrupt->GetNumberOfIsrCalledBeforePisr();
 
-		///
-		///	Enable interrupts, from this to the end, isrs can be called.
-		///
-		EnableInterrupts();
+			///
+			///	Enable interrupts, from this to the end, isrs can be called.
+			///
+			EnableInterrupts();
 
-		///
-		///	Run pisr and restore the number of calls of the isr with the previous store value.
-		///
-		interrupt->RunPisr();
+			///
+			///	Run pisr and restore the number of calls of the isr with the previous store value.
+			///
+			interrupt->RunPisr();
 
-		interrupt->SubtractNumberOfNestedIsr(nrOfCallsToIsr);
+			interrupt->SubtractNumberOfNestedIsr(nrOfCallsToIsr);
+		}
 
 	}while(true);
 }

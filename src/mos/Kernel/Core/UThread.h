@@ -26,9 +26,6 @@ public:
 	///
 	enum ParkerStatus { SUCCESS, CANCELLED, TIMEOUT };
 
-
-private:
-
 	///
 	///	The possible states that a thread can have:
 	///		READY - Ready for execution.
@@ -36,6 +33,11 @@ private:
 	///		EVENT - Waiting for a system event. Like the sleep method.
 	///
 	enum ThreadState { READY, WAIT, EVENT };
+
+
+private:
+
+
 
 	///
 	///	A pointer to the thread context.
@@ -134,10 +136,6 @@ private:
 	///
 	void SetTimestamp(U64 newStamp)	{_timestamp = newStamp;}
 
-	///
-	///	Returns the thread current state.
-	///
-	ThreadState GetThreadState(){return _currentState;}
 
 	///
 	///	Sets the thread current state.
@@ -189,6 +187,12 @@ public:
 	///	Sets a new priority for this thread.
 	///
 	void SetThreadPriority(U8 newPriority);
+
+	///
+	///	Returns the thread current state.
+	///
+	ThreadState GetThreadState(){return _currentState;}
+
 	///
 	///	This function returns the instance of the current running thread.
 	///	

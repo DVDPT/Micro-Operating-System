@@ -33,6 +33,7 @@ UScheduler::UScheduler()
 
 void UScheduler::IdleThreadRoutine()
 {
+
 	while(true)
 		UThread::Yield();
 }
@@ -122,7 +123,7 @@ bool UScheduler::HaveReadyThreads()
 	///
 	///	Check if the next thread have a lower priority than the current thread, if so return FALSE
 	///
-	if (nextThread._threadPriority < GetRunningThread()._threadPriority)
+	if (nextThread._threadPriority > GetRunningThread()._threadPriority)
 		return false;
 
 	return true;
@@ -139,7 +140,7 @@ UThread& UScheduler::Schedule()
 
 	DebugExec(GetRunningThread().SetTimestamp(-1));
 
-	nextThread.SetTimestamp(System::GetTickCount() + KERNEL_THREAD_TIME_SLICE);
+	RenewThread(nextThread);
 
 	return nextThread;
 
@@ -170,15 +171,22 @@ void UScheduler::Lock()
 
 void UScheduler::Unlock()
 {
-	if(--_Scheduler._schedulerLock == 0)
+	if((_Scheduler._schedulerLock -1 ) == 0)
 	{
 		UnlockInner(0);
 	}
+	else
+		_Scheduler._schedulerLock--;
+}
+
+void UScheduler::RenewThread(UThread& thread)
+{
+	thread.SetTimestamp(System::GetTickCount() + KERNEL_THREAD_TIME_SLICE);
 }
 
 bool UScheduler::HasCurrentThreadTimestampPassed()
 {
-	return System::GetTickCount() >= _Scheduler._pRunningThread->_timestamp;
+	return System::GetTickCount() > _Scheduler._pRunningThread->_timestamp;
 }
 
 bool UScheduler::CanScheduleThreads()
@@ -199,7 +207,7 @@ bool UScheduler::IsLocked()
 #include "System.h"
 void UScheduler::UnlockInner(U32 lockCount)
 {
-	DebugAssertEquals(lockCount,GetLockCount());
+	DebugAssertTrue(lockCount-1 == GetLockCount() || lockCount == GetLockCount());
 	do
 	{
 		///
@@ -214,9 +222,20 @@ void UScheduler::UnlockInner(U32 lockCount)
 
 			///
 			///	Check if this thread already consumed its time stamp.
+			///	if so and there are no more threads to run, renew its timestamp and return.
 			///
-			if(currentThread.GetThreadState() == UThread::READY && !HasCurrentThreadTimestampPassed())
-				return;
+			if(currentThread.GetThreadState() == UThread::READY)
+			{
+				if(!HasCurrentThreadTimestampPassed())
+					break;
+
+				if(!HaveReadyThreads())
+				{
+					RenewThread(currentThread);
+					break;
+				}
+			}
+
 
 			///
 			///	Get the next thread from the scheduler. And a reference to the current.
@@ -228,14 +247,6 @@ void UScheduler::UnlockInner(U32 lockCount)
 			/// Set the next thread as the running thread.
 			///
 			_Scheduler._pRunningThread = &nextThread;
-
-			///
-			///	Store this thread into the ready queue, only if the counter is 0
-			///		this means that the thread isn't blocking, and just came out
-			///		of a system critical section.
-			///
-			if(currentThread.GetThreadState() == UThread::READY)
-				InsertThreadInReadyQueue(currentThread);
 
 			///
 			///	Reset the lock count.
@@ -250,16 +261,15 @@ void UScheduler::UnlockInner(U32 lockCount)
 
 			DebugAssertEquals(GetLockCount(),0);
 
-			///
-			///	Set the scheduler lock with the value before the switch happened.
-			///
-			SetLockCount(lockCount);
-
-
-			return;
+			break;
 		}
 
 	}while(true);
+
+	///
+	///	Set the scheduler lock with the value before the switch happened.
+	///
+	SetLockCount(lockCount);
 }
 
 void UScheduler::TrySwitchThread()
@@ -415,6 +425,10 @@ void UScheduler::Timer::Disable()
 	if(!_node.IsInList())
 		return;
 
+	Lock();
+	_Scheduler._waitingQueue.Remove(&_node);
+	Unlock();
+
 }
 
 void UScheduler::Timer::Trigger()
@@ -424,6 +438,11 @@ void UScheduler::Timer::Trigger()
 	if(!_node.IsInList())
 		return;
 
-	_thread.UnparkThread(UThread::TIMEOUT);
+
+	///
+	///	if the thread is still waiting for timer event wake it up.
+	///
+	if(_thread.TryLockParker())
+		_thread.UnparkThread(UThread::TIMEOUT);
 }
 

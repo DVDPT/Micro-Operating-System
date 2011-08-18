@@ -68,7 +68,7 @@ public:
 	U8 ReadChar();
 
 	void WriteString(const U8 * string, U32 length);
-	void Write(U32 number);
+	void WriteInt(U32 number);
 	void WriteChar(U8 character);
 
 	void Write(U8 data);

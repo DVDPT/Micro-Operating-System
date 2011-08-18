@@ -142,6 +142,11 @@ class UScheduler
 	static void InsertThreadInReadyQueue(UThread& thread);
 	
 	///
+	///	Renews this thread timestamp.
+	///
+	static void RenewThread(UThread& thread);
+
+	///
 	///	Returns and removes from the ready list the next thread ready to run
 	///		NOTE: this function always return a thread, because idle thread never blocks
 	///

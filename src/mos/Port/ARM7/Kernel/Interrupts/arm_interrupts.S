@@ -7,22 +7,23 @@
 .global arm_common_trap,arm_enable_interrupt,arm_disable_interrupt,arm_is_intr_enable
 
 arm_enable_interrupt:
-    MRS     r1, CPSR
-    BIC     r1, r1, #IRQ_MASK
-    MSR     CPSR_c, r1
+    mrs     r1, CPSR
+    bic     r1, r1, #IRQ_MASK
+    msr     CPSR_c, r1
     bx lr
 
 
 
 arm_disable_interrupt:
-    MRS     r1, CPSR
-    ORR     r1, r1, #IRQ_MASK
-    MSR     CPSR_c, r1
+    mrs     r1, CPSR
+    orr     r1, r1, #IRQ_MASK
+    msr     CPSR_c, r1
     bx lr
 
 arm_is_intr_enable:
     mrs r0,cpsr
-    and r0,r1,#IRQ_MASK
+    eor r0,r0,#IRQ_MASK
+    and r0,r0,#IRQ_MASK
     bx lr
 
 

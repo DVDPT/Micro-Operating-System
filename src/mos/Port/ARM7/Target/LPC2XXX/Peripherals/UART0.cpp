@@ -91,7 +91,7 @@ void UART0::WriteString(const U8 * string, U32 length)
 {
 
 }
-void UART0::Write(U32 number)
+void UART0::WriteInt(U32 number)
 {
 
 }

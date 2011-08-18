@@ -30,7 +30,6 @@ void Timer::Enable()
 	///
 	///	Set the interrupt period on MR0 to trigger interrupt and clear TC when matches MR0.
 	///
-	_intrPeriod = 1000;
 	_timer->MR0 = _intrPeriod;
 
 	///

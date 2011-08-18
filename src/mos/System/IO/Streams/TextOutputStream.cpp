@@ -6,22 +6,11 @@
  */
 
 #include "TextOutputStream.h"
+#include "System.h"
 
-#define MAX_U32_NUMBERS (10)
-#define ZERO_CHARACTER ('0')
-#define MINUS_CHARACTER ('-')
 
-#define SHORT_SIGNAL_BIT (15)
-#define INT_SIGNAL_BIT (31)
 
-#define CONVERT_TO_UNSIGNED(value) ((-1 - (value)) +1)
-#define CHECK_IF_IS_NEGATIVE(value) \
-if(value == 0)	\
-	{ \
-		((IOutputStream*)this)->Write(ZERO_CHARACTER); \
-		value = CONVERT_TO_UNSIGNED(value); \
-		return; \
-	} \
+
 
 
 
@@ -40,12 +29,13 @@ void TextOutputStream::Write(U32 data)
 	{
 			number = data % 10;
 			data /= 10;
-			buf[i++] = number + ZERO_CHARACTER ;
+			buf[i] = number + ZERO_CHARACTER ;
 	}
 
 	DebugAssertTrue(i <= MAX_U32_NUMBERS);
 
 
+	bool prevLock = System::AcquireSystemLock();
 
 	for(i-=1 ; i>-1 ; i--)
 		///
@@ -55,16 +45,18 @@ void TextOutputStream::Write(U32 data)
 		///
 		((IOutputStream*)this)->Write(buf[i]);
 
-
+	System::ReleaseSystemLock(prevLock);
 
 }
 
 void TextOutputStream::Write(const char* str)
 {
+	bool prevLock = System::AcquireSystemLock();
 	while(*str)
 	{
 		Write(*str++);
 	}
+	System::ReleaseSystemLock(prevLock);
 }
 
 void TextOutputStream::Write(S8 data)
@@ -72,14 +64,19 @@ void TextOutputStream::Write(S8 data)
 	((IOutputStream*)this)->Write((U8)data);
 }
 
-void TextOutputStream::Write(S16 data)
+void TextOutputStream::Write(S16 value)
 {
-	CHECK_IF_IS_NEGATIVE(data);
-	Write(data);
+	Write((S32)value);
 }
 
-void TextOutputStream::Write(S32 data)
+void TextOutputStream::Write(S32 value)
 {
-	CHECK_IF_IS_NEGATIVE(data);
-	Write((U32)(data));
+	bool prevLock = System::AcquireSystemLock();
+	if(value < 0)
+	{
+		((IOutputStream*)this)->Write(MINUS_CHARACTER);
+		value = (-1 - (value) +1);
+	}
+	Write((U32)(value));
+	System::ReleaseSystemLock(prevLock);
 }

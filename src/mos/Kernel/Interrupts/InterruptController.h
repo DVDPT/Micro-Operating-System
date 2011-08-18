@@ -15,6 +15,7 @@
 #include "Assert.h"
 #include "List.h"
 #include "Threading.h"
+#include "SystemConfiguration.h"
 
 ///
 ///	This constant is returned by GetCurrentInterruptVectorIndex when the method HandleInterrupt is called
@@ -38,6 +39,7 @@ class InterruptController
 	///	The task responsible for running all PISRs
 	///
 	static UTask _pisrTask;
+
 	///
 	///	Returns the number of the current Interrupt.
 	///
@@ -47,6 +49,8 @@ class InterruptController
 	///	The routine of pisr task.
 	///
 	static void PisrTaskRoutine();
+
+	friend class SystemConfiguration;
 
 public:
 

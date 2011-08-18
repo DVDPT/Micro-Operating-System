@@ -6,6 +6,12 @@
 
 class TextOutputStream : public IOutputStream
 {
+
+#define MAX_U32_NUMBERS (10)
+#define ZERO_CHARACTER ('0')
+#define MINUS_CHARACTER ('-')
+
+
 public:
 	void Write(U16 data);
 	void Write(U32 data);

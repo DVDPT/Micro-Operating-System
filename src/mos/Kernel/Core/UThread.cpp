@@ -23,7 +23,7 @@ UThread::UThread(Void_P stack, U32 size, ThreadFunction func /*= NULL*/, ThreadA
 		_parkerStatus(SUCCESS)
 {
 	InitializeStackAndContext(stack, size);
-	ResetParker();
+
 	_node.SetValue(this);
 }
 
@@ -39,7 +39,7 @@ UThread::UThread()
 		_parkerStatus(SUCCESS)
 {
 	_node.SetValue(this);
-	ResetParker();
+
 }
 
 
@@ -105,6 +105,8 @@ UThread::ParkerStatus UThread::ParkThread(U32 timeout /* = TIMEOUT_INFINITE */)
 ///
 UThread::ParkerStatus UThread::ParkInner(U32 timeout, ThreadState threadState)
 {
+
+
 	///
 	///	Only this thread can park itself.
 	///
@@ -121,6 +123,7 @@ UThread::ParkerStatus UThread::ParkInner(U32 timeout, ThreadState threadState)
 	///
 	if (!TestAndClearMask(PARK_IN_PROGRESS_MASK))
 		return _parkerStatus;
+
 
 	///
 	///	Acquire Scheduler lock to manipulate the ready queue
@@ -162,6 +165,7 @@ UThread::ParkerStatus UThread::ParkInner(U32 timeout, ThreadState threadState)
 ///
 void UThread::UnparkThread(ParkerStatus status /*= Success*/)
 {
+
 	_parkerStatus = status;
 
 	///
@@ -170,11 +174,10 @@ void UThread::UnparkThread(ParkerStatus status /*= Success*/)
 	if (!TestAndClearMask(PARK_IN_PROGRESS_MASK))
 	{
 		UScheduler::Lock();
-
 		UScheduler::InsertThreadInReadyQueue(*this);
-
 		UScheduler::Unlock();
 	}
+
 
 }
 
@@ -252,7 +255,14 @@ bool UThread::Start(ThreadFunction func /*= NULL*/, ThreadArgument arg /*= NULL*
 ///
 void UThread::SetThreadPriority(U8 newPriority)
 {
-	_threadPriority = newPriority;
+	if(_node.IsInList())
+	{
+		UScheduler::RemoveThreadFromReadyQueue(*this);
+		_threadPriority = newPriority;
+		UScheduler::InsertThreadInReadyQueue(*this);
+	}
+	else
+		_threadPriority = newPriority;
 
 	UThread::Yield();
 }
@@ -272,14 +282,14 @@ void UThread::Yield()
 {
 	UScheduler::Lock();
 
-	if (UScheduler::HaveReadyThreads())
+	if(UScheduler::HaveReadyThreads())
 	{
-
 		UScheduler::InsertThreadInReadyQueue(GetCurrentThread());
-
 	}
 
 	UScheduler::Unlock();
+
+
 
 }
 

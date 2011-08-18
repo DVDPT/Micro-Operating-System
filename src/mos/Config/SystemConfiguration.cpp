@@ -14,6 +14,11 @@ SystemConfiguration* SystemConfiguration::_configuration = NULL;
 void SystemConfiguration::Configure()
 {
 	///
+	///	Set the pisrTak to the system thread priority.
+	///
+	InterruptController::_pisrTask.SetThreadPriority(KERNEL_SYSTEM_THREADS_PRIORITY);
+
+	///
 	///	Sets the standard output.
 	///
 	System::SetStandardOutput(_systemOutStream);

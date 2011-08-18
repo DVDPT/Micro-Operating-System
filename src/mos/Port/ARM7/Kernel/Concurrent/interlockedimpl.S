@@ -14,7 +14,6 @@ atomic_compare_exchange32:
 /// r2 - U32 comparand
 
     swp r1,r1,[r0]  // trySet *addr = *value
-    cmp r2,r1
     mov r0,r1
     bx lr
 
@@ -31,6 +30,5 @@ atomic_compare_exchange8:
 /// r1 - U8 value
 /// r2 - U8 comparand
     swpb r1,r1,[r0]  // trySet *addr = *value
-    cmp r2,r1
     mov r0,r1
     bx lr
