@@ -90,6 +90,7 @@ public:
 
 	NOINLINE void Remove(Node<T>* node)
 	{
+		DebugAssertTrue(node->IsInList());
 		node->_prev->_next = node->_next;
 		node->_next->_prev = node->_prev;
 		node->_next = node->_prev = NULL;

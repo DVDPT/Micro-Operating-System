@@ -136,6 +136,11 @@ private:
 	///
 	void SetTimestamp(U64 newStamp)	{_timestamp = newStamp;}
 
+	///
+	///	Resets this thread timestamp.
+	///
+	void ResetTimestamp(){_timestamp = 0;}
+
 
 	///
 	///	Sets the thread current state.

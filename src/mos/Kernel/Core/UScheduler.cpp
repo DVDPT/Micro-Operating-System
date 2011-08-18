@@ -43,6 +43,8 @@ void UScheduler::IdleThreadRoutine()
 ///
 void UScheduler::RemoveThreadFromReadyQueue(UThread& thread)
 {
+	DebugAssertTrue(thread._node.IsInList());
+
 	if (&thread != _Scheduler._pRunningThread)
 	{
 		List<UThread>& list =
@@ -60,8 +62,7 @@ void UScheduler::RemoveThreadFromReadyQueue(UThread& thread)
 ///
 void UScheduler::InsertThreadInReadyQueue(UThread& thread)
 {
-	if(thread._node.IsInList())
-		return;
+	DebugAssertTrue(!thread._node.IsInList());
 
 	thread.SetThreadState(UThread::READY);
 
@@ -151,7 +152,7 @@ UThread& UScheduler::Schedule()
 ///
 UThread& UScheduler::GetRunningThread()
 {
-	return *_Scheduler._pRunningThread;
+	return (UThread&)*_Scheduler._pRunningThread;
 }
 
 U32 UScheduler::GetLockCount()
@@ -186,7 +187,7 @@ void UScheduler::RenewThread(UThread& thread)
 
 bool UScheduler::HasCurrentThreadTimestampPassed()
 {
-	return System::GetTickCount() > _Scheduler._pRunningThread->_timestamp;
+	return System::GetTickCount() >= _Scheduler._pRunningThread->_timestamp;
 }
 
 bool UScheduler::CanScheduleThreads()
@@ -204,10 +205,11 @@ bool UScheduler::IsLocked()
 {
 	return _Scheduler._schedulerLock != 0;
 }
-#include "System.h"
+
 void UScheduler::UnlockInner(U32 lockCount)
 {
-	DebugAssertTrue(lockCount-1 == GetLockCount() || lockCount == GetLockCount());
+	DebugAssertTrue(lockCount+1 == GetLockCount() || lockCount == GetLockCount());
+
 	do
 	{
 		///
@@ -218,7 +220,7 @@ void UScheduler::UnlockInner(U32 lockCount)
 		else
 		{
 
-			UThread& currentThread = *_Scheduler._pRunningThread;
+			UThread& currentThread = GetRunningThread();
 
 			///
 			///	Check if this thread already consumed its time stamp.
@@ -234,6 +236,9 @@ void UScheduler::UnlockInner(U32 lockCount)
 					RenewThread(currentThread);
 					break;
 				}
+
+
+
 			}
 
 
@@ -247,6 +252,13 @@ void UScheduler::UnlockInner(U32 lockCount)
 			/// Set the next thread as the running thread.
 			///
 			_Scheduler._pRunningThread = &nextThread;
+
+			DebugExec(
+						if(!currentThread._node.IsInList())
+							DebugAssertTrue(currentThread.GetThreadState() != UThread::READY)
+					  );
+
+
 
 			///
 			///	Reset the lock count.
@@ -285,7 +297,7 @@ void UScheduler::SwitchThread()
 
 void UScheduler::SwitchContexts(Context ** trapContext)
 {
-	DebugAssertTrue(IsLocked());
+	DebugAssertTrue(!IsLocked());
 	DebugAssertTrue(CanScheduleThreads());
 
 	UThread& current = GetRunningThread();
@@ -295,6 +307,8 @@ void UScheduler::SwitchContexts(Context ** trapContext)
 	InsertThreadInReadyQueue(current);
 
 	UThread& next = Schedule();
+
+	DebugAssertNotEqualsP(UThread,&current,&next);
 
 	_Scheduler._pRunningThread = &next;
 
@@ -368,6 +382,8 @@ void UScheduler::SystemTimerPostInterruptRoutine(SystemPisrArgs args)
 		threadTimer->Trigger();
 
 		sleepThreads.RemoveFirst();
+
+
 
 	}while(!sleepThreads.IsEmpty());
 
@@ -443,6 +459,9 @@ void UScheduler::Timer::Trigger()
 	///	if the thread is still waiting for timer event wake it up.
 	///
 	if(_thread.TryLockParker())
+	{
+		DebugAssertEquals(_thread.GetThreadState(),UThread::EVENT);
 		_thread.UnparkThread(UThread::TIMEOUT);
+	}
 }
 

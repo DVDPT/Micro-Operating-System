@@ -92,7 +92,7 @@ class UScheduler
 	///
 	///	The current running thread.
 	///
-	UThread * _pRunningThread;
+	volatile UThread * _pRunningThread;
 	
 	///
 	///	The main thread	descriptor.

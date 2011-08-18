@@ -285,7 +285,9 @@ void UThread::Yield()
 	if(UScheduler::HaveReadyThreads())
 	{
 		UScheduler::InsertThreadInReadyQueue(GetCurrentThread());
+		GetCurrentThread().ResetTimestamp();
 	}
+
 
 	UScheduler::Unlock();
 

@@ -12,6 +12,9 @@ public:
 	template <class T>
 	static void Equals(T expected, T value){ Equals((void*)expected,(void*)value); }
 
+	template <class T>
+	static void NotEquals(T expected, T value){ NotEquals((void*)expected,(void*)value); }
+
 	static void Equals (U32 expected, U32 value);
 
 	static void Equals (U16 expected, U16 value){ Equals((U32)expected,(U32)value); }

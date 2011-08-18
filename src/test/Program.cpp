@@ -5,26 +5,32 @@
 #include <SystemTimer.h>
 
 #define SIZE_OF_STACK (1024 * 4 * 4)
+char stack3[SIZE_OF_STACK];
 char stack2[SIZE_OF_STACK];
 char stack[SIZE_OF_STACK];
 
 
 
 Thread t2(stack2,SIZE_OF_STACK );
+Thread t3(stack3,SIZE_OF_STACK );
+
 struct TestThreadArgs
 {
 	char print;
 	U32 time;
+	U32 count;
 };
 
 void Func(TestThreadArgs* arg)
 {
 
-	System::DisableInterrupts();
+
 	while(true)
 	{
 
 		System::GetStandardOutput().Write(arg->print);
+		Thread::Yield();
+		arg->count++;
 		Thread::Sleep(arg->time);
 
 	}
@@ -33,14 +39,16 @@ void Func(TestThreadArgs* arg)
 int main()
 {
 	Thread t(stack,SIZE_OF_STACK);
-	TestThreadArgs arg1 = {'a',2000};
-	TestThreadArgs arg2 = {'b',5000};
-	TestThreadArgs arg3 = {'M',1000};
+	TestThreadArgs arg1 = {'a',2000,0};
+	TestThreadArgs arg2 = {'b',5000,0};
+	TestThreadArgs arg3 = {'M',1000,0};
+	TestThreadArgs arg4 = {'_',100 ,0};
 
-	System::DisableInterrupts();
 	t.Start((ThreadFunction)Func,(ThreadArgument)&arg1);
 
 	t2.Start((ThreadFunction)Func,(ThreadArgument)&arg2);
+
+	t3.Start((ThreadFunction)Func,(ThreadArgument)&arg4);
 
 	System::GetStandardOutput().Write('S');
 

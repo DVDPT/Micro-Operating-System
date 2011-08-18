@@ -12,6 +12,7 @@
 #define DebugMethod(retType,name,code) retType name() {code}
 #define DebugAssertEquals(expected,value) Assert::Equals(expected,value)
 #define DebugAssertEqualsP(type,expected,value) Assert::Equals<type*>(expected,value)
+#define DebugAssertNotEqualsP(type,expected,value) Assert::NotEquals<type*>(expected,value)
 
 #else
 #define DebugExec(x)

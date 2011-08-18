@@ -8,28 +8,32 @@
 #include "Assert.h"
 
 void Assert::NotEquals(void * expected, void * value)
-	{
-		//printf("NOT EQUALS %s", expected == value ? "FALSE": "TRUE");
-	}
+{
+	if(&expected == &value)
+		for(;;);
+}
 
 void Assert::Equals(void * expected, void* value)
 {
-	//printf("EQUALS %s", expected != value ? "FALSE": "TRUE");
+	if((U32)expected != (U32)value)
+		for(;;);
 }
 
 void Assert::Equals(U32 expected, U32 value)
 {
-
+	if(expected != value)
+		for(;;);
 }
 
 void Assert::True(bool expr)
 {
-
+	if(!expr)
+		for(;;);
 }
 
 void Assert::Error(const char * msg)
 {
-
+	for(;;);
 }
 
 
