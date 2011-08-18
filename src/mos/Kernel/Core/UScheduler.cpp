@@ -96,6 +96,16 @@ UThread& UScheduler::PeekNextReadyThread()
 
 	List<UThread>& list = _Scheduler._readyQueues[queueIndex];
 
+
+	///
+	///	if the list is empty is because all the threads are Waiting or in Event.
+	///
+	if(list.IsEmpty())
+	{
+		DebugAssertEquals(0,queueIndex);
+		return _Scheduler._idleThread;
+	}
+
 	Node<UThread>* threadNode = list.GetFirst();
 	return *(threadNode->GetValue());
 }
@@ -349,7 +359,7 @@ void UScheduler::SystemTimerPostInterruptRoutine(SystemPisrArgs args)
 
 		sleepThreads.RemoveFirst();
 
-	}while(true);
+	}while(!sleepThreads.IsEmpty());
 
 	Unlock();
 }

@@ -14,7 +14,7 @@ InterruptDescriptor* InterruptController::_interrupts[KERNEL_INTERRUPTS_MAX_NUMB
 List<InterruptDescriptor> InterruptController::_pendingPisr;
 
 
-UTask InterruptController::_pisrTask;
+UTask InterruptController::_pisrTask((ThreadFunction)&PisrTaskRoutine);
 
 void InterruptController::SetInterruptState(bool state)
 {
@@ -74,7 +74,7 @@ void InterruptController::HandleInterrupt(InterruptArgs * args)
 			///
 			///	If there isn't any PISR available do nothing.
 			///
-			if(irqDesc->GetPisr() == NULL)
+			if(!irqDesc->IsPisrAvailable())
 				break;
 
 			Node<InterruptDescriptor>& descNode = irqDesc->GetNode();
@@ -85,7 +85,7 @@ void InterruptController::HandleInterrupt(InterruptArgs * args)
 			///	is save to unpark pisr task from within an isr.
 			///
 			if(!ArePisrsPending() && !Scheduler::IsLocked())
-				_pisrTask.UnparkThread();
+				Scheduler::InsertThreadInReadyQueue(_pisrTask);
 
 			///
 			///	if is already in list, dont do nothing because the pisr is gonna be called.
@@ -117,6 +117,7 @@ void InterruptController::PisrTaskRoutine()
 				return;
 
 			_pisrTask.ParkThread();
+			_pisrTask.ResetParker();
 		}
 		///
 		///	Disable interrupts to dequeue an pisr from queue.

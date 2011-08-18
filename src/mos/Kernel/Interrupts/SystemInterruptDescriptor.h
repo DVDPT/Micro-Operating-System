@@ -104,8 +104,11 @@ protected:
 
 		if(_pisrEpilogue != NULL)
 			_pisrEpilogue(_pisrArgs);
+	}
 
-}
+	bool IsIsrAvailable(){return _isrEpilogue != NULL || _isrPrologue != NULL || _sIsr != NULL || InterruptDescriptor::IsIsrAvailable();}
+
+	bool IsPisrAvailable(){return _pisrEpilogue != NULL || _pisrPrologue != NULL || _sPisr != NULL || InterruptDescriptor::IsPisrAvailable();}
 
 public:
 	SystemInterruptDescriptor(U8 interruptVectorIndex,IsrFunction function = NULL,SystemIsrArgs systemIsrData = NULL)

@@ -87,6 +87,16 @@ protected:
 	IsrFunction GetIsr(){ return _isr; }
 
 	///
+	///	Returns if there is an isr available.
+	///
+	virtual bool IsIsrAvailable(){ return _isr != NULL; }
+
+	///
+	///	Returns if there is an pisr available.
+	///
+	virtual bool IsPisrAvailable(){ return _pisr != NULL; }
+
+	///
 	///	Call the Isr.
 	///
 	virtual IsrCompletationStatus RunIsr(InterruptArgs* args){ return _isr != NULL?_isr(args):FINISHED_HANDLING; }
@@ -94,7 +104,7 @@ protected:
 	///
 	///	Call the Pisr.
 	///
-	virtual void RunPisr(){ _pisr(*this); }
+	virtual void RunPisr(){ if(_pisr != NULL) _pisr(*this); }
 
 
 public:

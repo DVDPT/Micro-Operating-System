@@ -41,7 +41,7 @@ class UScheduler
 
 	public:
 
-		Timer(UThread& thread) : _thread(thread){}
+		Timer(UThread& thread) : _thread(thread){ _node.SetValue(this);}
 
 		///
 		///	Shedules this thread to be awake when timeout has passed.
@@ -206,11 +206,13 @@ class UScheduler
 	static void AddOperationWithTimeout(Node<Timer>& operation);
 
 	///
-	///	BaseUThread class can access private BaseUScheduler members
+	///	UThread class can access private UScheduler members
 	///
 	friend class UThread;
 
 	friend class SystemConfiguration;
+
+	friend class InterruptController;
 
 	///
 	///	Performs context switch this function is not implemented by the kernel core
