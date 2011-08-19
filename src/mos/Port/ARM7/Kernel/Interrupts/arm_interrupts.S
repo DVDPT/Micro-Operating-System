@@ -90,8 +90,8 @@ arm_common_trap:
     ///
     /// Store flags.
     ///
-    mrs r2,SPSR
-    stmfd  r0!, {r2}
+    mrs r1,SPSR
+    stmfd  r0!, {r1}
 
     ///
     /// Store r0 (aka stack pointer) in the IRQ stack.
@@ -114,6 +114,17 @@ arm_common_trap:
     pop {r0}
 
     ///
+    /// Go back to System mode to set the stack pointer.
+    ///
+    //msr cpsr,#SYSTEM_MODE
+    //mov sp,r0
+
+    ///
+    /// Go to IRQ Mode to return.
+    ///
+    //msr cpsr, #IRQ_MODE
+
+    ///
     /// Restore flags.
     ///
     ldmfd  r0!, {r1}
@@ -127,7 +138,7 @@ arm_common_trap:
     ///
     /// Restore all registers.
     ///
-    pop {r0-r12,lr,pc}
+    pop {r0-r12,lr,pc}^
 
 
 

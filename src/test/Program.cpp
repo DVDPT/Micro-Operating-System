@@ -24,12 +24,12 @@ struct TestThreadArgs
 void Func(TestThreadArgs* arg)
 {
 
-
 	while(true)
 	{
 
 		System::GetStandardOutput().Write(arg->print);
-		Thread::Yield();
+		for(int i = 0; i<10;++i)
+			Thread::Yield();
 		arg->count++;
 		Thread::Sleep(arg->time);
 
@@ -38,11 +38,13 @@ void Func(TestThreadArgs* arg)
 //*/
 int main()
 {
+
 	Thread t(stack,SIZE_OF_STACK);
-	TestThreadArgs arg1 = {'a',2000,0};
-	TestThreadArgs arg2 = {'b',5000,0};
-	TestThreadArgs arg3 = {'M',1000,0};
-	TestThreadArgs arg4 = {'_',100 ,0};
+	TestThreadArgs arg1 = {'a',1,0};
+	TestThreadArgs arg2 = {'b',1,0};
+	TestThreadArgs arg3 = {'M',1,0};
+	TestThreadArgs arg4 = {'_',1 ,0};
+
 
 	t.Start((ThreadFunction)Func,(ThreadArgument)&arg1);
 

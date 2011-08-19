@@ -83,33 +83,28 @@ void UScheduler::InsertThreadInReadyQueue(UThread& thread)
 ///
 UThread& UScheduler::DequeueNextReadyThread()
 {
-	UThread& nextThread = PeekNextReadyThread();
-	RemoveThreadFromReadyQueue(nextThread);
-	return nextThread;
+
+	UThread* nextThread = PeekNextReadyThread();
+	DebugAssertNotNull(nextThread);
+	RemoveThreadFromReadyQueue(*nextThread);
+	return *nextThread;
 }
 
 ///
 ///	Returns the next ready thread.
 ///		NOTE: this function always return a thread, because idle thread never blocks
 ///
-UThread& UScheduler::PeekNextReadyThread()
+UThread* UScheduler::PeekNextReadyThread()
 {
 	U32 queueIndex = Bits<U8>::GetLowestBitSet(_Scheduler._queuesBitMap);
 
 	List<UThread>& list = _Scheduler._readyQueues[queueIndex];
 
-
-	///
-	///	if the list is empty is because all the threads are Waiting or in Event.
-	///
 	if(list.IsEmpty())
-	{
-		DebugAssertEquals(0,queueIndex);
-		return _Scheduler._idleThread;
-	}
+		return NULL;
 
 	Node<UThread>* threadNode = list.GetFirst();
-	return *(threadNode->GetValue());
+	return threadNode->GetValue();
 }
 
 ///
@@ -120,11 +115,15 @@ bool UScheduler::HaveReadyThreads()
 	///
 	///	Get the value of the next thread
 	///
-	UThread& nextThread = PeekNextReadyThread();
+	UThread* nextThread = PeekNextReadyThread();
+
+	if(nextThread == NULL)
+		return false;
+
 	///
 	///	Check if the next thread have a lower priority than the current thread, if so return FALSE
 	///
-	if (nextThread._threadPriority > GetRunningThread()._threadPriority)
+	if (nextThread->_threadPriority > GetRunningThread()._threadPriority)
 		return false;
 
 	return true;
@@ -237,8 +236,8 @@ void UScheduler::UnlockInner(U32 lockCount)
 					break;
 				}
 
-
-
+				if(!currentThread._node.IsInList())
+					InsertThreadInReadyQueue(currentThread);
 			}
 
 
@@ -258,20 +257,30 @@ void UScheduler::UnlockInner(U32 lockCount)
 							DebugAssertTrue(currentThread.GetThreadState() != UThread::READY)
 					  );
 
-
+			///
+			///	Disable interrupts so that no interrupt occur during context switching,
+			///		that way its impossible an interrupt service routine switchs threads
+			///		without their contexts are properly saved.
+			///
+			InterruptController::DisableInterrupts();
 
 			///
-			///	Reset the lock count.
+			///	Set scheduler lock count to 0 this thread isn't doing any critical operation on
+			///		the scheduler instance.
 			///
 			SetLockCount(0);
 
 			///
-			///	Switch threads
+			///	Switch threads.
 			///
 			_Scheduler.ContextSwitch(&currentThread,&nextThread);
 
+			///
+			///	Reenable interrupts, disabled before context switching.
+			///
+			InterruptController::EnableInterrupts();
 
-			DebugAssertEquals(GetLockCount(),0);
+			DebugAssertEquals(0,GetLockCount());
 
 			break;
 		}
@@ -300,18 +309,36 @@ void UScheduler::SwitchContexts(Context ** trapContext)
 	DebugAssertTrue(!IsLocked());
 	DebugAssertTrue(CanScheduleThreads());
 
+	///
+	///	Retrieve the current thread to do the context switch.
+	///
 	UThread& current = GetRunningThread();
 
+	///
+	///	Save the current thread context (saved on interrupts trap)
+	///
 	current._context = *trapContext;
 
+	///
+	///	Insert the current thread on ready queue, to further scheduling.
+	///
 	InsertThreadInReadyQueue(current);
 
+	///
+	///	Get the ready thread to run.
+	///
 	UThread& next = Schedule();
 
 	DebugAssertNotEqualsP(UThread,&current,&next);
 
+	///
+	///	Set the @next thread as the running thread.
+	///
 	_Scheduler._pRunningThread = &next;
 
+	///
+	/// Switch contexts.
+	///
 	*trapContext = next._context;
 
 }
@@ -379,6 +406,9 @@ void UScheduler::SystemTimerPostInterruptRoutine(SystemPisrArgs args)
 		if(!threadTimer->HasTimedout())
 			break;
 
+		///
+		///	Release the thread waiting for the timer to fire.
+		///
 		threadTimer->Trigger();
 
 		sleepThreads.RemoveFirst();
@@ -393,6 +423,8 @@ void UScheduler::SystemTimerPostInterruptRoutine(SystemPisrArgs args)
 
 void UScheduler::AddOperationWithTimeout(Node<Timer>& operation)
 {
+
+
 	DebugAssertTrue(IsLocked());
 	if(_Scheduler._waitingQueue.IsEmpty())
 	{

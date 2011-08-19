@@ -69,6 +69,9 @@ void UThread::InitializeStackAndContext(Void_P stack, U32 size)
 void UThread::UtThreadStart()
 {
 	UThread &thread = UScheduler::GetRunningThread();
+
+	if(UScheduler::IsLocked())
+		UScheduler::SetLockCount(0);
 	thread._func(thread._arg);
 	thread.ParkThread(TIMEOUT_INFINITE);
 }

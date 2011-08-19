@@ -24,7 +24,7 @@
 ///
 ///	Defines the thread time slice in miliseconds.
 ///
-#define KERNEL_THREAD_TIME_SLICE (10)
+#define KERNEL_THREAD_TIME_SLICE (15)
 
 ///
 ///	Defines the "static" stack of a Task.

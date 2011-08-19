@@ -156,7 +156,7 @@ class UScheduler
 	///	Returns the next ready thread.
 	///		NOTE: this function always return a thread, because idle thread never blocks
 	///
-	static UThread& PeekNextReadyThread();
+	static UThread* PeekNextReadyThread();
 
 	///
 	///	Returns TRUE when there is a ready thread with a bigger priority than the running thread. Returns FALSE otherwise.
@@ -200,6 +200,11 @@ class UScheduler
 	static void SwitchContexts(Context ** trapContext);
 
 	///
+	///	Sets the lock count
+	///
+	static void SetLockCount(U32 newlockCount);
+
+	///
 	///	This function must not be called outside the Scheduler. Switch the current thread.
 	///
 	static void UnlockInner(U32 lockCount);
@@ -238,11 +243,6 @@ public:
 	///	Returns the current lock count
 	///
 	static U32 GetLockCount();
-
-	///
-	///	Sets the lock count
-	///
-	static void SetLockCount(U32 newlockCount);
 
 	///
 	///	Disables context switching
