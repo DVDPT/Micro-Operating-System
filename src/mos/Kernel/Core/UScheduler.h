@@ -112,7 +112,7 @@ class UScheduler
 	///
 	///	The singleton instance of the scheduler
 	///
-	static UScheduler _Scheduler;
+	static  UScheduler _Scheduler;
 
 	///
 	///	The routine that the idle thread will be running.
@@ -199,10 +199,6 @@ class UScheduler
 	///
 	static void SwitchContexts(Context ** trapContext);
 
-	///
-	///	Sets the lock count
-	///
-	static void SetLockCount(U32 newlockCount);
 
 	///
 	///	This function must not be called outside the Scheduler. Switch the current thread.
@@ -258,6 +254,12 @@ public:
 	///	Returns if the scheduler lock is locked
 	///
 	static bool IsLocked();
+
+	///
+	///	Sets the lock count
+	///
+	static void SetLockCount(U32 newlockCount);
+
 };
 
 

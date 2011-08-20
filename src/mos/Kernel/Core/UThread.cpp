@@ -8,6 +8,8 @@
 #include "UThread.h"
 #include "UScheduler.h"
 
+DebugField(U32,_ThreadsId)=1;
+
 ///
 ///	Create and configure a new UThread
 ///
@@ -24,6 +26,8 @@ UThread::UThread(Void_P stack, U32 size, ThreadFunction func /*= NULL*/, ThreadA
 		_threadState(EVENT)
 {
 	InitializeStackAndContext(stack, size);
+
+	DebugExec(_threadId = _ThreadsId++);
 
 	_node.SetValue(this);
 }
@@ -156,8 +160,15 @@ UThread::ParkerStatus UThread::ParkInner(U32 timeout, ThreadState threadState)
 	///
 	///	Unlock the Scheduler lock.
 	///
-	//UScheduler::Unlock();
-	UScheduler::UnlockInner(UScheduler::GetLockCount() - 1);
+	UScheduler::UnlockInner(UScheduler::GetLockCount());
+
+	DebugAssertFalse(_parkerState & PARK_LOCK_MASK);
+	DebugAssertFalse(_node.IsInList());
+	DebugAssertEquals(_threadState,READY);
+
+	timer.Disable();
+
+	UScheduler::Unlock();
 	///
 	///	The thread was unparked return the result
 	///
@@ -171,7 +182,10 @@ UThread::ParkerStatus UThread::ParkInner(U32 timeout, ThreadState threadState)
 void UThread::UnparkThread(ParkerStatus status /*= Success*/)
 {
 
+
 	_parkerStatus = status;
+
+	DebugAssertFalse(_parkerState & PARK_LOCK_MASK);
 
 	///
 	///	Wake the thread only when the Park in progress bit is cleared, meaning that the thread have already been parked
@@ -191,7 +205,7 @@ void UThread::UnparkThread(ParkerStatus status /*= Success*/)
 ///
 bool UThread::TryLockParker()
 {
-	return TestAndClearMask(LOCK_MASK);
+	return TestAndClearMask(PARK_LOCK_MASK);
 }
 
 ///
@@ -199,7 +213,7 @@ bool UThread::TryLockParker()
 ///
 void UThread::ResetParker()
 {
-	_parkerState = LOCK_MASK | PARK_IN_PROGRESS_MASK;
+	_parkerState = PARK_LOCK_MASK | PARK_IN_PROGRESS_MASK;
 }
 
 ///

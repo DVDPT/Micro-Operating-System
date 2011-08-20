@@ -28,7 +28,9 @@ UScheduler::UScheduler()
 	///	Set idle thread priority and start it
 	///
 	_idleThread._threadPriority = KERNEL_THREAD_MINIMUM_PRIORITY;
+	DebugExec(_schedulerLock = 1);
 	InsertThreadInReadyQueue(_idleThread);
+	DebugExec(_schedulerLock = 0);
 }
 
 #include "System.h"
@@ -64,6 +66,8 @@ void UScheduler::RemoveThreadFromReadyQueue(UThread& thread)
 ///
 void UScheduler::InsertThreadInReadyQueue(UThread& thread)
 {
+
+	//DebugAssertTrue(IsLocked());
 	DebugAssertTrue(!thread._node.IsInList());
 
 	thread.SetThreadState(UThread::READY);
@@ -239,7 +243,9 @@ void UScheduler::UnlockInner(U32 lockCount)
 				}
 
 				if(!currentThread._node.IsInList())
+				{
 					InsertThreadInReadyQueue(currentThread);
+				}
 			}
 
 
@@ -248,6 +254,7 @@ void UScheduler::UnlockInner(U32 lockCount)
 			///
 			UThread& nextThread = Schedule();
 
+			DebugAssertNotEqualsP(UThread,&currentThread,&nextThread);
 
 			///
 			/// Set the next thread as the running thread.
@@ -277,14 +284,22 @@ void UScheduler::UnlockInner(U32 lockCount)
 			///
 			_Scheduler.ContextSwitch(&currentThread,&nextThread);
 
+			DebugAssertFalse(currentThread._node.IsInList());
+
+			DebugAssertEquals(0,GetLockCount());
+
+			DebugAssertEquals(&currentThread,(void*)_Scheduler._pRunningThread);
+
+			SetLockCount(lockCount);
+
 			///
 			///	Reenable interrupts, disabled before context switching.
 			///
 			InterruptController::EnableInterrupts();
 
-			DebugAssertEquals(0,GetLockCount());
 
-			break;
+
+			return;
 		}
 
 	}while(true);
@@ -293,6 +308,8 @@ void UScheduler::UnlockInner(U32 lockCount)
 	///	Set the scheduler lock with the value before the switch happened.
 	///
 	SetLockCount(lockCount);
+	DebugAssertFalse(GetRunningThread()._node.IsInList());
+
 }
 
 void UScheduler::TrySwitchThread()
@@ -315,6 +332,8 @@ void UScheduler::SwitchContexts(Context ** trapContext)
 	///	Retrieve the current thread to do the context switch.
 	///
 	UThread& current = GetRunningThread();
+
+	DebugAssertFalse(current._node.IsInList());
 
 	///
 	///	Save the current thread context (saved on interrupts trap)
@@ -495,7 +514,28 @@ void UScheduler::Timer::Trigger()
 	if(_thread.TryLockParker())
 	{
 		DebugAssertEquals(_thread.GetThreadState(),UThread::EVENT);
-		_thread.UnparkThread(UThread::PARK_TIMEOUT);
+
+		///
+		///	Its possible that the timer event was triggered before the thread could
+		///	switch to another, so to avoid control erros, check if the waiting thread already
+		///	switched. And if not set its state to ready. This behaviour is possible because the
+		///	pending pisrs call be called before the thread actually switchs with anoter.
+		///
+		if(&GetRunningThread() != &_thread)
+			_thread.UnparkThread(UThread::PARK_TIMEOUT);
+
+		///
+		///
+		///
+		else
+		{
+			///
+			///	If the thread is still on UnlockInner function, set
+			///	the park state as timeout, and the thread state to READY.
+			///
+			_thread._parkerState = UThread::PARK_TIMEOUT;
+			_thread.SetThreadState(UThread::READY);
+		}
 	}
 }
 

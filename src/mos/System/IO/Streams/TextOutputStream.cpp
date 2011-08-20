@@ -22,6 +22,11 @@ void TextOutputStream::Write(U16 data)
 void TextOutputStream::Write(U32 data)
 {
 
+	if(data == 0)
+	{
+		((IOutputStream*)this)->Write(ZERO_CHARACTER);
+		return;
+	}
 	U8 buf[MAX_U32_NUMBERS];
 
 	int i = 0;

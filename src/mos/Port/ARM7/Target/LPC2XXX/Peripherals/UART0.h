@@ -51,7 +51,7 @@ private:
 		LPC2xxx_REG U0TER;
 	}*LPC22xx_UART0;
 
-	LPC22xx_UART0 _uart0;
+	volatile LPC22xx_UART0 _uart0;
 
 	SystemInterruptDescriptor _uartIrq;
 

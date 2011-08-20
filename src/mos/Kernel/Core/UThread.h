@@ -77,9 +77,9 @@ private:
 	///
 	///	Auxiliary constants to control the state of the parker.
 	///
-#define LOCK_BIT  (0)
+#define PARK_LOCK_BIT  (0)
 #define PARK_IN_PROGRESS_BIT (1)
-#define LOCK_MASK  (1 << LOCK_BIT)
+#define PARK_LOCK_MASK  (1 << PARK_LOCK_BIT)
 #define PARK_IN_PROGRESS_MASK (1 << PARK_IN_PROGRESS_BIT)
 
 
@@ -150,6 +150,8 @@ private:
 
 	friend class UScheduler;
 
+	DebugField(U32,_threadId);
+
 
 public:
 
@@ -213,6 +215,10 @@ public:
 	///
 	static void Sleep(U32 milis);
 
+	///
+	///	Returns the thread id, this method is just for debug purposes.
+	///
+	DebugMethod(U32,GetThreadId,return _threadId;)
 };
 
 

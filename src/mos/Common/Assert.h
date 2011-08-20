@@ -23,6 +23,8 @@ public:
 
 	static void True(bool expr);
 
+	static void False(bool expr) { True(!expr); }
+
 	static void Error(char * msg = ""){ Error((const char*)msg); }
 
 	static void Error(const char * msg = "");

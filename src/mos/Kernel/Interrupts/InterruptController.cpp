@@ -85,8 +85,12 @@ void InterruptController::HandleInterrupt(InterruptArgs * args)
 			///	is save to unpark pisr task from within an isr.
 			///
 			if(!ArePisrsPending() && !Scheduler::IsLocked() && _pisrTask.GetThreadState() != UThread::READY)
+			{
+				_pisrTask.TryLockParker();
+				//DebugExec(Scheduler::SetLockCount(1));
 				Scheduler::InsertThreadInReadyQueue(_pisrTask);
-
+				//DebugExec(Scheduler::SetLockCount(0));
+			}
 			///
 			///	if is already in list, dont do nothing because the pisr is gonna be called.
 			///
