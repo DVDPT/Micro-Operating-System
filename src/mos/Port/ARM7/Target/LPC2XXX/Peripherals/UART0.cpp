@@ -59,6 +59,7 @@ UART0::UART0(PinConnectBlock& p)
 
 U32 UART0::CanWrite()
 {
+
 	return _uart0->U0LSR & LSR_THRE_MASK;
 }
 U32 UART0::CanRead()

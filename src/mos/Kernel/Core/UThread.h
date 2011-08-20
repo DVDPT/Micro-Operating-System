@@ -24,7 +24,7 @@ public:
 	///
 	///	The possible results that an UnPark method can return.
 	///
-	enum ParkerStatus { SUCCESS, CANCELLED, TIMEOUT };
+	enum ParkerStatus { PARK_SUCCESS, PARK_CANCELLED, PARK_TIMEOUT };
 
 	///
 	///	The possible states that a thread can have:
@@ -98,7 +98,7 @@ private:
 	///
 	///	This thread current state.
 	///
-	ThreadState _currentState;
+	ThreadState _threadState;
 
 	///
 	///	The time where the thread was putted on run state, this field is needed for timeslice calculation.
@@ -145,7 +145,7 @@ private:
 	///
 	///	Sets the thread current state.
 	///
-	void SetThreadState(ThreadState state)	{_currentState = state;}
+	void SetThreadState(ThreadState state)	{_threadState = state;}
 
 
 	friend class UScheduler;
@@ -171,7 +171,7 @@ public:
 	///
 	///	Schedules this thread.
 	///
-	void UnparkThread(ParkerStatus status = SUCCESS);
+	void UnparkThread(ParkerStatus status = PARK_SUCCESS);
 
 	///
 	///	Tries to lock this thread parker.
@@ -196,7 +196,7 @@ public:
 	///
 	///	Returns the thread current state.
 	///
-	ThreadState GetThreadState(){return _currentState;}
+	ThreadState GetThreadState(){return _threadState;}
 
 	///
 	///	This function returns the instance of the current running thread.

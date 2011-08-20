@@ -16,7 +16,7 @@ private:
 
 	friend class List<T>;
 public:
-	Node() : _next(NULL), _prev(NULL), _value(NULL)
+	Node(T* value = NULL) : _next(NULL), _prev(NULL), _value(value)
 	{}
 
 	T* GetValue(){return _value;}

@@ -9,8 +9,11 @@ char stack3[SIZE_OF_STACK];
 char stack2[SIZE_OF_STACK];
 char stack[SIZE_OF_STACK];
 
+volatile U32 counter;
 
+Mutex mux;
 
+Thread t(stack,SIZE_OF_STACK);
 Thread t2(stack2,SIZE_OF_STACK );
 Thread t3(stack3,SIZE_OF_STACK );
 
@@ -21,10 +24,10 @@ struct TestThreadArgs
 	U32 count;
 };
 
-void Func(TestThreadArgs* arg)
+void Func2(TestThreadArgs* arg)
 {
 
-	while(true)
+	if(true)
 	{
 
 		System::GetStandardOutput().Write(arg->print);
@@ -32,6 +35,25 @@ void Func(TestThreadArgs* arg)
 			Thread::Yield();
 		arg->count++;
 		Thread::Sleep(arg->time);
+		System::DisableInterrupts();
+	}
+}
+
+void Func(TestThreadArgs* arg)
+{
+
+	IOutputStream& c = System::GetStandardOutput();
+	for(int i = 0; i<arg->time; ++i)
+	{
+
+		DebugAssertTrue(mux.Acquire());
+
+		counter++;
+		mux.Release();
+
+		U64 time = System::GetTickCount();
+		time+=10;
+		while(System::GetTickCount() >= time);
 
 	}
 }
@@ -39,11 +61,10 @@ void Func(TestThreadArgs* arg)
 int main()
 {
 
-	Thread t(stack,SIZE_OF_STACK);
-	TestThreadArgs arg1 = {'a',1,0};
-	TestThreadArgs arg2 = {'b',1,0};
-	TestThreadArgs arg3 = {'M',1,0};
-	TestThreadArgs arg4 = {'_',1 ,0};
+	TestThreadArgs arg1 = {'a',10,0};
+	TestThreadArgs arg2 = {'b',10,0};
+	TestThreadArgs arg3 = {'M',1000,0};
+	TestThreadArgs arg4 = {'_',10 ,0};
 
 
 	t.Start((ThreadFunction)Func,(ThreadArgument)&arg1);
@@ -55,6 +76,9 @@ int main()
 	System::GetStandardOutput().Write('S');
 
 	Func(&arg3);
+
+	int val = counter;
+	val++;
 	//*/
 	return 0;
 }

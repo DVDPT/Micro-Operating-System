@@ -20,7 +20,8 @@ UThread::UThread(Void_P stack, U32 size, ThreadFunction func /*= NULL*/, ThreadA
 		_threadPriority(KERNEL_THREAD_DEFAULT_PRIORITY),
 		_node(),
 		_parkerState(0),
-		_parkerStatus(SUCCESS)
+		_parkerStatus(PARK_SUCCESS),
+		_threadState(EVENT)
 {
 	InitializeStackAndContext(stack, size);
 
@@ -36,7 +37,8 @@ UThread::UThread()
 		_threadPriority(KERNEL_THREAD_DEFAULT_PRIORITY),
 		_node(),
 		_parkerState(0),
-		_parkerStatus(SUCCESS)
+		_parkerStatus(PARK_SUCCESS),
+		_threadState(EVENT)
 {
 	_node.SetValue(this);
 
@@ -154,8 +156,8 @@ UThread::ParkerStatus UThread::ParkInner(U32 timeout, ThreadState threadState)
 	///
 	///	Unlock the Scheduler lock.
 	///
-	UScheduler::Unlock();
-
+	//UScheduler::Unlock();
+	UScheduler::UnlockInner(UScheduler::GetLockCount() - 1);
 	///
 	///	The thread was unparked return the result
 	///

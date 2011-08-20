@@ -1,7 +1,7 @@
 #include "SystemConfiguration.h"
 #include "PortConfig.h"
 #include "InterruptController.h"
-
+#include "UThread.h"
 extern "C"
 {
 
@@ -33,6 +33,12 @@ void system_main()
 	///	Call user program.
 	///
 	main();
+
+	///
+	///
+	///
+	UThread::GetCurrentThread().ParkThread();
+
 
 }
 }

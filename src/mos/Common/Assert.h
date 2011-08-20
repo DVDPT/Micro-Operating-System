@@ -27,6 +27,8 @@ public:
 
 	static void Error(const char * msg = "");
 
+	static void Fail(){ for(;;); }
+
 
 
 };

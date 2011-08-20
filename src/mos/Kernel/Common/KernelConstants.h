@@ -29,7 +29,7 @@
 ///
 ///	Defines the "static" stack of a Task.
 ///
-#define KERNEL_TASKS_STACK_SIZE (1024 * 4 * 2 )
+#define KERNEL_TASKS_STACK_SIZE (1024 * 4 * 4 )
 
 ///
 ///	Defines the value for the priority to be used in system threads.

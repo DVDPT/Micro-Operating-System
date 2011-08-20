@@ -23,6 +23,7 @@ UScheduler::UScheduler()
 
 {
 	_pRunningThread = &_mainThread;
+	_mainThread.SetThreadState(UThread::READY);
 	///
 	///	Set idle thread priority and start it
 	///
@@ -30,12 +31,15 @@ UScheduler::UScheduler()
 	InsertThreadInReadyQueue(_idleThread);
 }
 
-
+#include "System.h"
 void UScheduler::IdleThreadRoutine()
 {
 
 	while(true)
+	{
+		//System::GetStandardOutput().Write("Idle");
 		UThread::Yield();
+	}
 }
 
 ///
@@ -47,13 +51,11 @@ void UScheduler::RemoveThreadFromReadyQueue(UThread& thread)
 
 	if (&thread != _Scheduler._pRunningThread)
 	{
-		List<UThread>& list =
-				_Scheduler._readyQueues[thread._threadPriority];
+		List<UThread>& list = _Scheduler._readyQueues[thread._threadPriority];
 		list.Remove(&thread._node);
 
 		if (list.IsEmpty())
-			Bits<U8>::ClearBit(&_Scheduler._queuesBitMap,
-					thread._threadPriority);
+			Bits<U8>::ClearBit(&_Scheduler._queuesBitMap,thread._threadPriority);
 	}
 }
 
@@ -465,7 +467,7 @@ void UScheduler::Timer::SetTimeout(U32 timeout)
 
 bool UScheduler::Timer::HasTimedout()
 {
-	return System::GetTickCount() >= _timeoutTime;
+	return System::GetTickCount() > _timeoutTime;
 }
 
 void UScheduler::Timer::Disable()
@@ -493,7 +495,7 @@ void UScheduler::Timer::Trigger()
 	if(_thread.TryLockParker())
 	{
 		DebugAssertEquals(_thread.GetThreadState(),UThread::EVENT);
-		_thread.UnparkThread(UThread::TIMEOUT);
+		_thread.UnparkThread(UThread::PARK_TIMEOUT);
 	}
 }
 
