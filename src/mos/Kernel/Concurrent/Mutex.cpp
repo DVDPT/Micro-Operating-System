@@ -19,30 +19,20 @@ bool Mutex::Acquire(U32 timeout /* = TIMEOUT_INFINITE*/)
 		_reentrantCalls++;
 		return true;
 	}
-	Scheduler::Lock();
+	_waitingThreads.Lock();
 
 	if(_owner == NULL)
 	{
 		_owner = curr;
-		Scheduler::Unlock();
+		_waitingThreads.Unlock();
 		return true;
 	}
-	Node<Thread> threadNode(curr);
 
-	_waitingThreads.Enqueue(&threadNode);
+	bool success = _waitingThreads.Wait(timeout);
 
-	bool success = curr->ParkThread(timeout) == UThread::PARK_SUCCESS;
+	_waitingThreads.Unlock();
 
-	if(!success)
-	{
-		_waitingThreads.Remove(&threadNode);
-	}
-
-	curr->ResetParker();
-
-
-
-	Scheduler::Unlock();
+	DebugAssertEqualsP(Thread,curr,(Thread*)_owner);
 
 	return success;
 }
@@ -57,25 +47,18 @@ void Mutex::Release()
 	}
 	if(--_reentrantCalls == 0)
 	{
-		Scheduler::Lock();
+		_waitingThreads.Lock();
 
 		_owner = NULL;
 		_reentrantCalls = 1;
 
-		while(!_waitingThreads.IsEmpty())
+		Thread** releaseThread = NULL;
+		if(_waitingThreads.TryReleaseOne(releaseThread))
 		{
-
-			Thread* possibleOwner = _waitingThreads.Dequeue()->GetValue();
-			if(possibleOwner->TryLockParker())
-			{
-				_owner = possibleOwner;
-				possibleOwner->UnparkThread(Thread::PARK_SUCCESS);
-				break;
-			}
-
+			_owner = (volatile Thread*)*releaseThread;
 		}
 
-		Scheduler::Unlock();
+		_waitingThreads.Unlock();
 	}
 
 

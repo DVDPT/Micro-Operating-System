@@ -271,7 +271,7 @@ void UScheduler::UnlockInner(U32 lockCount)
 			///		that way its impossible an interrupt service routine switchs threads
 			///		without their contexts are properly saved.
 			///
-			InterruptController::DisableInterrupts();
+			bool prevState = System::AcquireSystemLock();
 
 			///
 			///	Set scheduler lock count to 0 this thread isn't doing any critical operation on
@@ -295,7 +295,7 @@ void UScheduler::UnlockInner(U32 lockCount)
 			///
 			///	Reenable interrupts, disabled before context switching.
 			///
-			InterruptController::EnableInterrupts();
+			System::ReleaseSystemLock(prevState);
 
 
 

@@ -2,10 +2,11 @@
 
 #include "List.h"
 #include "Threading.h"
+#include "WaitBlock.h"
 
 class Mutex
 {
-	List<Thread> _waitingThreads;
+	WaitBlock _waitingThreads;
 	volatile Thread* _owner;
 	volatile U32 _reentrantCalls;
 

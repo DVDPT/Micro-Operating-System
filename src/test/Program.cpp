@@ -2,6 +2,7 @@
 #include <Threading.h>
 #include <Interrupts.h>
 #include <System.h>
+#include <Mutex.h>
 #include <SystemTimer.h>
 
 #define SIZE_OF_STACK (1024 * 4 * 4)
@@ -45,32 +46,25 @@ void Func2(TestThreadArgs* arg)
 
 void Func(TestThreadArgs* arg)
 {
-
 	U64 time = System::GetTickCount() + 1000;
+	//for(int i = 0; i<arg->time; ++i)
 	while(true)
-	{
-		Thread::Yield();
-		Thread::Sleep(1);
-
-		if(time <= System::GetTickCount())
-		{
-			time = System::GetTickCount()+ 1000;
-			System::GetStandardOutput().Write(Thread::GetCurrentThread().GetThreadId());
-		}
-	}
-	for(int i = 0; i<arg->time; ++i)
 	{
 
 		DebugAssertTrue(mux.Acquire());
 
-
-		counter++;
-		//if(counter == 6)
-		//	da error
-		mux.Release();
-
 		Thread::Yield();
 		Thread::Sleep(1);
+		counter++;
+
+		mux.Release();
+		if(System::GetTickCount() >= time)
+		{
+			time = System::GetTickCount() + 1000;
+			System::GetStandardOutput().Write(arg->print);
+		}
+
+
 
 	}
 }
@@ -82,8 +76,8 @@ int main()
 	TestThreadArgs arg2 = {'b',10,0};
 	TestThreadArgs arg3 = {'M',1000,0};
 	TestThreadArgs arg4 = {'_',10 ,0};
-	TestThreadArgs arg5 = {'_',10 ,0};
-	TestThreadArgs arg6 = {'_',10 ,0};
+	TestThreadArgs arg5 = {'O',10 ,0};
+	TestThreadArgs arg6 = {'W',10 ,0};
 
 
 	t.Start((ThreadFunction)Func,(ThreadArgument)&arg1);
