@@ -1,4 +1,4 @@
-# Micro Operation System (mOs)
+# Micro Operating System (mOs)
 
 ## Description 
 
