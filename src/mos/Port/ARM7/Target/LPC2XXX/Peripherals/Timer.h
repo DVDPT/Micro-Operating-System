@@ -22,7 +22,7 @@ class Timer
 	{
 		LPC2xxx_REG IR;
 		LPC2xxx_REG TCR;
-		LPC2xxx_REG TC;
+		volatile LPC2xxx_REG TC;
 		LPC2xxx_REG PR;
 		LPC2xxx_REG PC;
 		LPC2xxx_REG MCR;
@@ -70,12 +70,15 @@ public:
 	///
 	Timer(void* timer, U32 clock = 0)
 		:
+
 			_timer((volatile LPC2xxxTimer*)timer),
 			_timerIrq(( (( (U32)timer) == (U32)TIMER0_BASE_ADDRESS) ? INTERRUPT_ENTRY_TIMER0 : INTERRUPT_ENTRY_TIMER1)
 						,NULL
-						,this)
+						,this),
+						_intrPeriod(0)
 	{
 		SetClock(clock);
+		_timer->MCR = 0;
 		_timerIrq.SetPrologueForIsr((IsrPending)&OnTimerInterrupt);
 		_timerIrq.SetEpilogueForIsr((IsrComplete)&OnTimerIsrComplete);
 	}

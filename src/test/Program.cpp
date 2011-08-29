@@ -4,6 +4,7 @@
 #include <System.h>
 #include <Mutex.h>
 #include <SystemTimer.h>
+#include <Timer.h>
 
 #define SIZE_OF_STACK (1024 * 4 * 4)
 char stack5[SIZE_OF_STACK];
@@ -29,6 +30,8 @@ struct TestThreadArgs
 	U32 count;
 };
 
+Timer hardTimer(LPC2xxx_TIMER1);
+
 void Func2(TestThreadArgs* arg)
 {
 
@@ -44,29 +47,30 @@ void Func2(TestThreadArgs* arg)
 	}
 }
 
+#define NR_OF_LOOPS (1000)
+
 void Func(TestThreadArgs* arg)
 {
-	U64 time = System::GetTickCount() + 1000;
+
+	System::DisableInterrupts();
+	volatile U64 time = System::GetTickCount();
+	volatile U64 time2;
+	U32 nrOfYields = NR_OF_LOOPS;
+	U32 timea = hardTimer.GetTimerCount();
 	//for(int i = 0; i<arg->time; ++i)
-	while(true)
+	while(nrOfYields-- != 0)
 	{
 
-		DebugAssertTrue(mux.Acquire());
-
 		Thread::Yield();
-		Thread::Sleep(1);
-		counter++;
-
-		mux.Release();
-		if(System::GetTickCount() >= time)
-		{
-			time = System::GetTickCount() + 1000;
-			System::GetStandardOutput().Write(arg->print);
-		}
-
-
-
 	}
+
+	hardTimer.Disable();
+	System::DisableInterrupts();
+
+	System::GetStandardOutput().Write("hard->");
+	System::GetStandardOutput().Write((hardTimer.GetTimerCount() - timea) * 1000 / NR_OF_LOOPS);
+
+
 }
 //*/
 int main()
@@ -78,19 +82,24 @@ int main()
 	TestThreadArgs arg4 = {'_',10 ,0};
 	TestThreadArgs arg5 = {'O',10 ,0};
 	TestThreadArgs arg6 = {'W',10 ,0};
+	///
+	///	timer in micros.
+	///
+	hardTimer.SetClock(60);
 
+	System::DisableInterrupts();
 
 	t.Start((ThreadFunction)Func,(ThreadArgument)&arg1);
-
+/*/
 	t2.Start((ThreadFunction)Func,(ThreadArgument)&arg2);
 
 	t3.Start((ThreadFunction)Func,(ThreadArgument)&arg4);
 
 	t4.Start((ThreadFunction)Func,(ThreadArgument)&arg5);
 	t5.Start((ThreadFunction)Func,(ThreadArgument)&arg6);
-
-	System::GetStandardOutput().Write('S');
-
+//*/
+	//System::GetStandardOutput().Write('S');
+	hardTimer.Enable();
 	Func(&arg3);
 
 	int val = counter;

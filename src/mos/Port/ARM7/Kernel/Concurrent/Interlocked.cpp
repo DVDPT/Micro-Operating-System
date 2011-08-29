@@ -15,25 +15,31 @@ extern "C"
 U32 Interlocked::CompareExchange(volatile U32* addr, U32 value, U32 comparand)
 {
 	bool prevState = System::AcquireSystemLock();
-	if(*addr == comparand)
+	U32 ret;
+	if((ret = *addr) == comparand)
 		*addr = value;
 	System::ReleaseSystemLock(prevState);
+	return ret;
 }
 
 U16 Interlocked::CompareExchange(volatile U16* addr, U16 value, U16 comparand)
 {
 	bool prevState = System::AcquireSystemLock();
-	if(*addr == comparand)
+	U16 ret;
+	if((ret = *addr) == comparand)
 		*addr = value;
 	System::ReleaseSystemLock(prevState);
+	return ret;
 }
 
 U8 Interlocked::CompareExchange(volatile U8* addr, U8 value, U8 comparand)
 {
 	bool prevState = System::AcquireSystemLock();
-	if(*addr == comparand)
+	U8 ret;
+	if((ret = *addr) == comparand)
 		*addr = value;
 	System::ReleaseSystemLock(prevState);
+	return ret;
 }
 
 

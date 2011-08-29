@@ -111,7 +111,7 @@ void UART0::Write(U8 data)
 
 void UART0::OnUartIsrComplete(InterruptArgs* irq,UART0* uart)
 {
-	U32 status = uart->_uart0->U0Base3.U0IIR;
+	uart->_uart0->U0Base3.U0IIR;
 	DebugAssertEquals(0,status&1);
 	uart->ReadChar();
 }

@@ -24,6 +24,7 @@ UScheduler::UScheduler()
 {
 	_pRunningThread = &_mainThread;
 	_mainThread.SetThreadState(UThread::READY);
+	_mainThread.ResetParker();
 	///
 	///	Set idle thread priority and start it
 	///

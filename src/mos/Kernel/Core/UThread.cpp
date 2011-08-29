@@ -8,11 +8,12 @@
 #include "UThread.h"
 #include "UScheduler.h"
 
-DebugField(U32,_ThreadsId)=1;
+DebugField(U32,_ThreadsId=1);
 
 ///
 ///	Create and configure a new UThread
 ///
+
 UThread::UThread(Void_P stack, U32 size, ThreadFunction func /*= NULL*/, ThreadArgument arg /*= NULL*/)
 	:
 		_stack(stack),
@@ -79,7 +80,7 @@ void UThread::UtThreadStart()
 	if(UScheduler::IsLocked())
 		UScheduler::SetLockCount(0);
 	thread._func(thread._arg);
-	thread.ParkThread(TIMEOUT_INFINITE);
+	thread.ParkThread();
 }
 
 ///

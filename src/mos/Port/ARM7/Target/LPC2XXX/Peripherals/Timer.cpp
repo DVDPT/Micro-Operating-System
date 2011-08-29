@@ -27,16 +27,18 @@ void Timer::Enable()
 
 	DebugAssertNotEquals(0,_timer->PR);
 
-	///
-	///	Set the interrupt period on MR0 to trigger interrupt and clear TC when matches MR0.
-	///
-	_timer->MR0 = _intrPeriod;
+	if(_intrPeriod > 0)
+	{
+		///
+		///	Set the interrupt period on MR0 to trigger interrupt and clear TC when matches MR0.
+		///
+		_timer->MR0 = _intrPeriod;
 
-	///
-	///	Enable timer interrupts.
-	///
-	_timer->MCR = TIMER_MCR_MR0_IRQ_ENABLE;
-
+		///
+		///	Enable timer interrupts.
+		///
+		_timer->MCR = TIMER_MCR_MR0_IRQ_ENABLE;
+	}
 	///
 	///	Enable timer.
 	///

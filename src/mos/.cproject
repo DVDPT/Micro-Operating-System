@@ -55,9 +55,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System/Interfaces}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System/IO/Streams}&quot;"/>
 								</option>
-								<option id="org.eclipse.cdt.cross.arm.gnu.assembler.option.preprocessor.def.423238573" name="Defined symbols (-D)" superClass="org.eclipse.cdt.cross.arm.gnu.assembler.option.preprocessor.def" valueType="definedSymbols">
-									<listOptionValue builtIn="false" value="__DEBUG__=1"/>
-								</option>
+								<option id="org.eclipse.cdt.cross.arm.gnu.assembler.option.preprocessor.def.423238573" name="Defined symbols (-D)" superClass="org.eclipse.cdt.cross.arm.gnu.assembler.option.preprocessor.def" valueType="definedSymbols"/>
 								<option id="org.eclipse.cdt.cross.arm.gnu.assembler.option.preprocessor.preprocess.1565790037" name="Preprocess only (-E)" superClass="org.eclipse.cdt.cross.arm.gnu.assembler.option.preprocessor.preprocess" value="false" valueType="boolean"/>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input.1551532796" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input"/>
 							</tool>
@@ -87,9 +85,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System/Interfaces}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System/IO/Streams}&quot;"/>
 								</option>
-								<option id="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.preprocessor.def.1050200602" name="Defined symbols (-D)" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.preprocessor.def" valueType="definedSymbols">
-									<listOptionValue builtIn="false" value="__DEBUG__=1"/>
-								</option>
+								<option id="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.preprocessor.def.1050200602" name="Defined symbols (-D)" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.preprocessor.def" valueType="definedSymbols"/>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input.566969493" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input"/>
 							</tool>
 							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.lib.cpp.compiler.debug.757640364" name="ARM Sourcery Windows GCC C++ Compiler" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.lib.cpp.compiler.debug">
@@ -118,9 +114,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System/Interfaces}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System/IO/Streams}&quot;"/>
 								</option>
-								<option id="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.preprocessor.def.162108413" name="Defined symbols (-D)" superClass="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
-									<listOptionValue builtIn="false" value="__DEBUG__=1"/>
-								</option>
+								<option id="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.preprocessor.def.162108413" name="Defined symbols (-D)" superClass="org.eclipse.cdt.cross.arm.gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols"/>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.cpp.compiler.base.input.394766575" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.cpp.compiler.base.input"/>
 							</tool>
 							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.linker.base.649628695" name="ARM Sourcery Windows GCC C Linker" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.linker.base"/>
@@ -2706,6 +2700,8 @@
 					<folderInfo id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.lib.release.1623714730." name="/" resourcePath="">
 						<toolChain id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.lib.toolchain.release.1403642468" name="ARM Windows GCC (Sourcery G++ Lite)" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.lib.toolchain.release">
 							<option id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.debugging.level.1715719549" name="Debug level" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.debugging.level" value="org.eclipse.cdt.cross.arm.gnu.base.option.debugging.level.none" valueType="enumerated"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.target.thumb.1613056475" name="Thumb (-mthumb)" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.target.thumb" value="false" valueType="boolean"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.target.processor.1006306672" name="Processor" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.target.processor" value="org.eclipse.cdt.cross.arm.gnu.base.option.mcpu.arm7tdmi" valueType="enumerated"/>
 							<targetPlatform id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.lib.platform.release.1631564088" isAbstract="false" name="Windows Platform" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.lib.platform.release"/>
 							<builder buildPath="${workspace_loc:/mos/Release}" id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.lib.builder.release.914812166" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="ARM Sourcery Windows GNU Make builder" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.lib.builder.release"/>
 							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.lib.assembler.release.1996078326" name="ARM Sourcery Windows GCC Assembler" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.lib.assembler.release">
@@ -2741,6 +2737,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System/Clock}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System/Interfaces}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System/IO/Streams}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Core}&quot;"/>
 								</option>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input.1900500621" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input"/>
 							</tool>
@@ -2778,6 +2775,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System/Clock}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System/Interfaces}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System/IO/Streams}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Core}&quot;"/>
 								</option>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input.1344711976" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input"/>
 							</tool>
@@ -2815,6 +2813,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System/Clock}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System/Interfaces}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/System/IO/Streams}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/mos/Port/ARM7/Kernel/Core}&quot;"/>
 								</option>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.cpp.compiler.base.input.1217795213" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.cpp.compiler.base.input"/>
 							</tool>
