@@ -34,6 +34,7 @@ public:
 
 	static U32 Increment(U32* location)
 	{
+
 		return Add(location,1);
 	}
 

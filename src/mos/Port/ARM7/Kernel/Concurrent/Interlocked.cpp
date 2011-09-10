@@ -52,7 +52,7 @@ U32 Interlocked::Add(U32 * addr, U32 value)
 
 		sum = addrValue + value;
 
-		if(CompareExchange(addr,sum,addrValue))
+		if(CompareExchange(addr,sum,addrValue) == addrValue)
 			return sum;
 
 	}while(true);

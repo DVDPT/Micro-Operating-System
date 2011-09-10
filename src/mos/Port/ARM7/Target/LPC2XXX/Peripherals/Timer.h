@@ -51,7 +51,7 @@ class Timer
 	///
 	///	The period that this timer should do a interrupt.
 	///
-	U32 _intrPeriod;
+	volatile U32 _intrPeriod;
 
 	///
 	///	Method to clear this timer interrupt request.
@@ -68,20 +68,7 @@ public:
 	///	@timer - the timer for this instance.
 	///	@clock - the clock that this timer should work in Hz.
 	///
-	Timer(void* timer, U32 clock = 0)
-		:
-
-			_timer((volatile LPC2xxxTimer*)timer),
-			_timerIrq(( (( (U32)timer) == (U32)TIMER0_BASE_ADDRESS) ? INTERRUPT_ENTRY_TIMER0 : INTERRUPT_ENTRY_TIMER1)
-						,NULL
-						,this),
-						_intrPeriod(0)
-	{
-		SetClock(clock);
-		_timer->MCR = 0;
-		_timerIrq.SetPrologueForIsr((IsrPending)&OnTimerInterrupt);
-		_timerIrq.SetEpilogueForIsr((IsrComplete)&OnTimerIsrComplete);
-	}
+	Timer(void* timer, U32 clock = 0);
 
 	///
 	///	Sets the @clock into the PrescaleRegister

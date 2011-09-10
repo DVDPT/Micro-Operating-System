@@ -72,7 +72,7 @@ private:
 	///
 	///	A general purpose Node to store this thread in queues.
 	///
-	Node<UThread> _node;
+	 Node<UThread> _node;
 	
 	///
 	///	Auxiliary constants to control the state of the parker.

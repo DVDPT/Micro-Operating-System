@@ -87,7 +87,7 @@ class UScheduler
 	///
 	///	A bit map that indicates witch ready queues have threads.
 	///
-	U8 _queuesBitMap;
+	volatile U8 _queuesBitMap;
 
 	///
 	///	The current running thread.

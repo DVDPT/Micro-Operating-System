@@ -12,4 +12,4 @@
 ///
 ///	The time that the timer should request an interrupt, so that threads can do context switch.
 ///
-#define SYSTEM_TIMER_INTERRUPT_PERIOD 1 //(KERNEL_THREAD_TIME_SLICE)
+#define SYSTEM_TIMER_INTERRUPT_PERIOD 15 //(KERNEL_THREAD_TIME_SLICE)

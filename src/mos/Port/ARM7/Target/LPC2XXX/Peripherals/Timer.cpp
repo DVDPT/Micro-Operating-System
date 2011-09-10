@@ -18,6 +18,24 @@
 ///
 #define TIMER_MCR_MR0_IRQ_ENABLE (0x3)
 
+
+
+Timer::Timer(void* timer, U32 clock/* = 0*/)
+	:
+
+		_timer((volatile LPC2xxxTimer*)timer),
+		_timerIrq(( (( (U32)timer) == (U32)TIMER0_BASE_ADDRESS) ? INTERRUPT_ENTRY_TIMER0 : INTERRUPT_ENTRY_TIMER1)
+					,NULL
+					,this),
+					_intrPeriod(0)
+{
+	SetClock(clock);
+	_timer->TCR = 0;
+	_timer->MCR = 0;
+	//_timerIrq.SetPrologueForIsr((IsrPending)&OnTimerInterrupt);
+
+}
+
 void Timer::Enable()
 {
 	///
@@ -38,6 +56,8 @@ void Timer::Enable()
 		///	Enable timer interrupts.
 		///
 		_timer->MCR = TIMER_MCR_MR0_IRQ_ENABLE;
+
+		_timerIrq.SetEpilogueForIsr((IsrComplete)&OnTimerIsrComplete);
 	}
 	///
 	///	Enable timer.
@@ -53,6 +73,7 @@ void Timer::Disable()
 
 void Timer::SetClock(U32 clock)
 {
+
 	_timer->PR = clock;
 }
 

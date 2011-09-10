@@ -70,7 +70,7 @@ protected:
 	///
 	IsrCompletationStatus RunIsr(InterruptArgs* args)
 	{
-		IsrCompletationStatus res;
+		IsrCompletationStatus res = FINISHED_HANDLING;
 
 		if(_isrPrologue != NULL)
 			_isrPrologue(args,_isrArgs);

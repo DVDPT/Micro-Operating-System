@@ -51,4 +51,9 @@ public:
 	///
 	bool Wait(U32 timeout = TIMEOUT_INFINITE);
 
+	///
+	///	Returns true when there are threads waiting in this waitblock.
+	///
+	bool HaveThreadsWaiting(){ return !_waitingThreads.IsEmpty(); }
+
 };

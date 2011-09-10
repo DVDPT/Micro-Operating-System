@@ -22,8 +22,8 @@ arm_disable_interrupt:
 
 arm_is_intr_enable:
     mrs r0,cpsr
-    eor r0,r0,#IRQ_MASK
     and r0,r0,#IRQ_MASK
+    eor r0,r0,#IRQ_MASK
     bx lr
 
 
@@ -113,16 +113,6 @@ arm_common_trap:
     ///
     pop {r0}
 
-    ///
-    /// Go back to System mode to set the stack pointer.
-    ///
-    //msr cpsr,#SYSTEM_MODE
-    //mov sp,r0
-
-    ///
-    /// Go to IRQ Mode to return.
-    ///
-    //msr cpsr, #IRQ_MODE
 
     ///
     /// Restore flags.
@@ -138,7 +128,7 @@ arm_common_trap:
     ///
     /// Restore all registers.
     ///
-    pop {r0-r12,lr,pc}^
+    pop {r0-r12,lr,pc}
 
 
 

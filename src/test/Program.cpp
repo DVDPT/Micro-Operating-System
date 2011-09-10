@@ -68,7 +68,7 @@ void Func(TestThreadArgs* arg)
 	System::DisableInterrupts();
 
 	System::GetStandardOutput().Write("hard->");
-	System::GetStandardOutput().Write((hardTimer.GetTimerCount() - timea) * 1000 / NR_OF_LOOPS);
+	System::GetStandardOutput().Write((hardTimer.GetTimerCount() - timea) / NR_OF_LOOPS);
 
 
 }

@@ -104,7 +104,13 @@ protected:
 	///
 	///	Call the Pisr.
 	///
-	virtual void RunPisr(){ if(_pisr != NULL) _pisr(*this); }
+	virtual void RunPisr()
+	{
+		if(_pisr != NULL)
+		{
+			_pisr(*this);
+		}
+	}
 
 
 public:

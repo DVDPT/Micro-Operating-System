@@ -7,6 +7,8 @@
 
 #include "UScheduler.h"
 #include "Debug.h"
+#include "SystemConfig.h"
+#include "SystemTimer.h"
 
 
 UScheduler  UScheduler::_Scheduler;
@@ -40,7 +42,7 @@ void UScheduler::IdleThreadRoutine()
 
 	while(true)
 	{
-		//System::GetStandardOutput().Write("Idle");
+		System::GetStandardOutput().Write("Idle");
 		UThread::Yield();
 	}
 }
@@ -58,7 +60,7 @@ void UScheduler::RemoveThreadFromReadyQueue(UThread& thread)
 		list.Remove(&thread._node);
 
 		if (list.IsEmpty())
-			Bits<U8>::ClearBit(&_Scheduler._queuesBitMap,thread._threadPriority);
+			Bits<volatile U8>::ClearBit(&_Scheduler._queuesBitMap,thread._threadPriority);
 	}
 }
 
@@ -81,7 +83,7 @@ void UScheduler::InsertThreadInReadyQueue(UThread& thread)
 	list.Enqueue(&thread._node);
 
 	if (wasEmpty)
-		Bits<U8>::SetBit(&(_Scheduler._queuesBitMap), thread._threadPriority);
+		Bits<volatile U8>::SetBit(&(_Scheduler._queuesBitMap), thread._threadPriority);
 }
 
 ///
@@ -367,6 +369,8 @@ void UScheduler::SwitchContexts(Context ** trapContext)
 
 IsrCompletationStatus UScheduler::SystemTimerInterruptRoutine(InterruptArgs* args, SystemIsrArgs sargs)
 {
+	SystemTimer::AddTimerCounter(SYSTEM_TIMER_INTERRUPT_PERIOD);
+
 	///
 	///	If its possible and its time to schedule the current thread do it.
 	///
