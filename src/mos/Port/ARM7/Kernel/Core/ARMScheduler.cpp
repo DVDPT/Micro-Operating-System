@@ -16,7 +16,6 @@ NAKED void UScheduler::ContextSwitch(Thread* oldThread, Thread* newThread)
 	//	R1 newThread
 	ASM_VOLATILE
 	(
-
 		///
 		///	Save the lr as the program counter in case that this threads switchs back via interrupt.
 		///
@@ -25,17 +24,17 @@ NAKED void UScheduler::ContextSwitch(Thread* oldThread, Thread* newThread)
 		///
 		///	Set stack 1 position down because we dont need to save lr.
 		///
-		"sub sp,sp,#4 \n"
-
+		//"sub sp,sp,#4 \n"
+		"push {r0}\n"
 		///
 		///	Save this thread context on stack.
 		///
-		"push {r4-r12};\n"
+		"push {r0-r12};\n"
 
 		///
 		///	Set stack 4 (4 registers * 32bits = 16 bytes) positions under (r0-r3) registers don't need to be saved.
 		///
-		"sub sp,sp,#16 \n"
+		//"sub sp,sp,#16 \n"
 
 		///
 		///	Get this thread flags.

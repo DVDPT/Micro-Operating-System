@@ -8,8 +8,9 @@
 
 class SystemInterruptDescriptor;
 
-#include "InterruptDescriptor.h"
 #include "Interrupts.h"
+#include "InterruptDescriptor.h"
+
 
 
 
@@ -64,51 +65,7 @@ class SystemInterruptDescriptor : public InterruptDescriptor
 	///
 	SystemPisrArgs _pisrArgs;
 
-protected:
-	///
-	///	Overrided method, to add functionality.
-	///
-	IsrCompletationStatus RunIsr(InterruptArgs* args)
-	{
-		IsrCompletationStatus res = FINISHED_HANDLING;
 
-		if(_isrPrologue != NULL)
-			_isrPrologue(args,_isrArgs);
-
-		if(_sIsr != NULL)
-			res = _sIsr(args,_isrArgs);
-
-		if(_sIsr == NULL)
-			res = InterruptDescriptor::RunIsr(args);
-		else
-			InterruptDescriptor::RunIsr(args);
-
-		if(_isrEpilogue != NULL)
-			_isrEpilogue(args,_isrArgs);
-
-		return res;
-	}
-
-	///
-	///	Overrided method, to add functionality.
-	///
-	void RunPisr()
-	{
-		if(_pisrPrologue != NULL)
-			_pisrPrologue(_pisrArgs);
-
-		if(_sPisr != NULL)
-			_sPisr(_pisrArgs);
-
-		InterruptDescriptor::RunPisr();
-
-		if(_pisrEpilogue != NULL)
-			_pisrEpilogue(_pisrArgs);
-	}
-
-	bool IsIsrAvailable(){return _isrEpilogue != NULL || _isrPrologue != NULL || _sIsr != NULL || InterruptDescriptor::IsIsrAvailable();}
-
-	bool IsPisrAvailable(){return _pisrEpilogue != NULL || _pisrPrologue != NULL || _sPisr != NULL || InterruptDescriptor::IsPisrAvailable();}
 
 public:
 	SystemInterruptDescriptor(U8 interruptVectorIndex,IsrFunction function = NULL,SystemIsrArgs systemIsrData = NULL)
@@ -162,5 +119,17 @@ public:
 	///
 	void SetPrologueForPisr(PisrPending pisr){ _pisrPrologue = pisr; }
 
+	///
+	///	Overrided method, to add functionality.
+	///
+	IsrCompletationStatus RunIsr(InterruptArgs* args);
 
+	///
+	///	Overrided method, to add functionality.
+	///
+	void RunPisr();
+
+	bool IsIsrAvailable(){return _isrEpilogue != NULL || _isrPrologue != NULL || _sIsr != NULL || InterruptDescriptor::IsIsrAvailable();}
+
+	bool IsPisrAvailable(){return _pisrEpilogue != NULL || _pisrPrologue != NULL || _sPisr != NULL || InterruptDescriptor::IsPisrAvailable();}
 };

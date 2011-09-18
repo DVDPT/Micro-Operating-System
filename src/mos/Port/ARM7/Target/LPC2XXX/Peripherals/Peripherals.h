@@ -22,18 +22,13 @@ class PeripheralContainer
 	Timer _timer0;
 
 public:
-	PeripheralContainer():
-		_pcb(),
-		_serial(_pcb),
-		_intrCtrl(),
-		_gpio(_pcb),
-		_timer0(LPC2xxx_TIMER0)
-	{}
+	PeripheralContainer();
 
 	UART0& GetUart0(){return _serial;}
 	VectorInterruptController& GetVic(){return _intrCtrl;}
 	GPIO& GetGpio(){return _gpio;}
 	Timer& GetTimer0(){ return _timer0; }
+	PinConnectBlock& GetPinConnectBlock(){ return _pcb; }
 
 	static PeripheralContainer& GetInstance();
 };

@@ -1,13 +1,14 @@
 #pragma once
 
+
 #include "List.h"
 #include "SystemTypes.h"
 #include "Interrupts.h"
-#include "InterruptController.h"
 #include "Debug.h"
 #include "Interlocked.h"
 
 class InterruptController;
+
 
 class InterruptDescriptor
 {
@@ -42,75 +43,13 @@ class InterruptDescriptor
 	///
 	volatile U16 _numberOfNestedIsr;
 
-	///
-	///	InterruptController can access private methods of this class.
-	///
-	friend class InterruptController;
-
-	///
-	///	Returns the general purpose node.
-	///
-	Node<InterruptDescriptor>& GetNode(){ return _node; }
-
-	///
-	///	Increments the number of nested isrs
-	///
-	void IncrementNumberOfNestedIsr()
-	{
-		_numberOfNestedIsr++;
-	}
-
-	///
-	///	Resets the value of the number of nested isrs to 0
-	///
-	void SubtractNumberOfNestedIsr(U16 value)
-	{
-		Interlocked::Subtract<U16>((U16*)&_numberOfNestedIsr,value);
-	}
 
 
 
-///
-///	The get pisr and isr methods are protected so that anyone that wishes to
-///	override the behaviour of an isr can do it by inheritance
-///
-protected:
 
-	///
-	///	Returns the Pisr function.
-	///
-	PisrFunction GetPisr(){ return _pisr; }
 
-	///
-	///	Returns the Isr function.
-	///
-	IsrFunction GetIsr(){ return _isr; }
 
-	///
-	///	Returns if there is an isr available.
-	///
-	virtual bool IsIsrAvailable(){ return _isr != NULL; }
 
-	///
-	///	Returns if there is an pisr available.
-	///
-	virtual bool IsPisrAvailable(){ return _pisr != NULL; }
-
-	///
-	///	Call the Isr.
-	///
-	virtual IsrCompletationStatus RunIsr(InterruptArgs* args){ return _isr != NULL?_isr(args):FINISHED_HANDLING; }
-
-	///
-	///	Call the Pisr.
-	///
-	virtual void RunPisr()
-	{
-		if(_pisr != NULL)
-		{
-			_pisr(*this);
-		}
-	}
 
 
 public:
@@ -155,5 +94,56 @@ public:
 	///	was called, this value can change during the PISR.
 	///
 	U16 GetNumberOfIsrCalledBeforePisr(){return _numberOfNestedIsr;}
+
+	///
+	///	Increments the number of nested isrs
+	///
+	void IncrementNumberOfNestedIsr()
+	{
+		_numberOfNestedIsr++;
+	}
+
+	///
+	///	Resets the value of the number of nested isrs to 0
+	///
+	void SubtractNumberOfNestedIsr(U16 value)
+	{
+		Interlocked::Subtract<U16>((U16*)&_numberOfNestedIsr,value);
+	}
+	///
+	///	Returns the Pisr function.
+	///
+	PisrFunction GetPisr(){ return _pisr; }
+
+	///
+	///	Returns the Isr function.
+	///
+	IsrFunction GetIsr(){ return _isr; }
+
+	///
+	///	Returns if there is an isr available.
+	///
+	virtual bool IsIsrAvailable();
+
+	///
+	///	Returns if there is an pisr available.
+	///
+	virtual bool IsPisrAvailable();
+
+	///
+	///	Call the Isr.
+	///
+	virtual IsrCompletationStatus RunIsr(InterruptArgs* args);
+
+	///
+	///	Call the Pisr.
+	///
+	virtual void RunPisr();
+
+	///
+	///	Returns the general purpose node.
+	///
+	Node<InterruptDescriptor>& GetNode(){ return _node; }
+
 
 };

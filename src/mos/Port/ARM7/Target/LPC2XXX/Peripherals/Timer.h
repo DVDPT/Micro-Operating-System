@@ -53,15 +53,7 @@ class Timer
 	///
 	volatile U32 _intrPeriod;
 
-	///
-	///	Method to clear this timer interrupt request.
-	///
-	static void OnTimerIsrComplete(InterruptArgs* irq,Timer* timer);
 
-	///
-	///	Clears the current interrupt request and sets the next.
-	///
-	static void OnTimerInterrupt(InterruptArgs* irq,Timer* timer);
 
 public:
 	///
@@ -93,13 +85,21 @@ public:
 	///
 	///	Sets this time interrupt period.
 	///
-	void SetInterruptPeriod(U32 period){ _intrPeriod = period; }
+	void SetInterruptPeriod(U32 period);
 
 	///
 	///	Returns this timer interrupt descriptor.
 	///
 	SystemInterruptDescriptor& GetInterruptDescriptor(){return _timerIrq;}
 
+	///
+	///	Method to clear this timer interrupt request.
+	///
+	static void OnTimerIsrComplete(InterruptArgs* irq,Timer* timer);
 
+	///
+	///	Clears the current interrupt request and sets the next.
+	///
+	static void OnTimerInterrupt(InterruptArgs* irq,Timer* timer);
 
 };

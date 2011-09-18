@@ -375,8 +375,10 @@ IsrCompletationStatus UScheduler::SystemTimerInterruptRoutine(InterruptArgs* arg
 	///	If its possible and its time to schedule the current thread do it.
 	///
 	if(CanScheduleThreads())
+	{
 		SwitchContexts(args->InterruptContext);
 
+	}
 	///
 	///
 	///	The following code is reading data from the kernel without the scheduler lock

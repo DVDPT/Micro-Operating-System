@@ -7,15 +7,10 @@
 
 #pragma once
 
+
+
 #include "SystemTypes.h"
 #include "KernelConfig.h"
-
-enum IsrCompletationStatus { FINISHED_HANDLING, CALL_PISR, ERROR };
-
-//typedef void* IsrArgs;
-class InterruptDescriptor;
-
-typedef InterruptDescriptor& PisrArgs;
 
 struct InterruptArgs
 {
@@ -28,6 +23,17 @@ struct InterruptArgs
 
 
 };
+
+enum IsrCompletationStatus { FINISHED_HANDLING, CALL_PISR, ERROR };
+
+
+
+
+class InterruptDescriptor;
+typedef InterruptDescriptor& PisrArgs;
+
+
+
 
 ///
 ///

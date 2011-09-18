@@ -40,7 +40,7 @@ struct ARMContext
 
 	void SetThreadStartFunction(void (*ThreadStart)())
 	{
-		flags.cpsr = IRQ_ENABLE | USER_MODE | FIQ_DISABLE;
+		flags.cpsr = IRQ_ENABLE | USER_MODE | FIQ_ENABLE;
 		r4  = 0x1111111;
 		r5  = 0x2222222;
 		r6  = 0x3333333;

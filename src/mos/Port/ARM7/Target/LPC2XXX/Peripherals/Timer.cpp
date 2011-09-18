@@ -32,7 +32,7 @@ Timer::Timer(void* timer, U32 clock/* = 0*/)
 	SetClock(clock);
 	_timer->TCR = 0;
 	_timer->MCR = 0;
-	//_timerIrq.SetPrologueForIsr((IsrPending)&OnTimerInterrupt);
+	_timerIrq.SetPrologueForIsr((IsrPending)&OnTimerInterrupt);
 
 }
 
@@ -98,3 +98,5 @@ void Timer::OnTimerInterrupt(InterruptArgs* irq,Timer* timer)
 	SystemTimer::AddTimerCounter(timer->_intrPeriod);
 
 }
+
+void Timer::SetInterruptPeriod(U32 period){ _intrPeriod = period; }

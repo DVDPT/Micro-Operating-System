@@ -87,7 +87,7 @@ class UScheduler
 	///
 	///	A bit map that indicates witch ready queues have threads.
 	///
-	volatile U8 _queuesBitMap;
+	U8 _queuesBitMap;
 
 	///
 	///	The current running thread.
@@ -123,23 +123,23 @@ class UScheduler
 	///	The system timer interrupt service routine, this function is responsable
 	///	to do the context switch inside an isr if possible.
 	///
-	static IsrCompletationStatus SystemTimerInterruptRoutine(InterruptArgs* args, SystemIsrArgs sargs);
+	CRITICAL_OPERATION static IsrCompletationStatus SystemTimerInterruptRoutine(InterruptArgs* args, SystemIsrArgs sargs);
 
 	///
 	///	The system timer post interrupt service routine. this function is responsable
 	///	to wake up threads that are in an EVENT state.
 	///
-	static void SystemTimerPostInterruptRoutine(SystemPisrArgs args);
+	CRITICAL_OPERATION static void SystemTimerPostInterruptRoutine(SystemPisrArgs args);
 
 	///
 	///	Removes the thread passed as argument from its ready list
 	///
-	static void RemoveThreadFromReadyQueue(UThread& thread);
+	CRITICAL_OPERATION static void RemoveThreadFromReadyQueue(UThread& thread);
 
 	///
 	///	Inserts this thread passed as argument in its ready queue
 	///
-	static void InsertThreadInReadyQueue(UThread& thread);
+	CRITICAL_OPERATION static void InsertThreadInReadyQueue(UThread& thread);
 	
 	///
 	///	Renews this thread timestamp.
@@ -150,18 +150,18 @@ class UScheduler
 	///	Returns and removes from the ready list the next thread ready to run
 	///		NOTE: this function always return a thread, because idle thread never blocks
 	///
-	static UThread& DequeueNextReadyThread();
+	CRITICAL_OPERATION static UThread& DequeueNextReadyThread();
 
 	///
 	///	Returns the next ready thread.
 	///		NOTE: this function always return a thread, because idle thread never blocks
 	///
-	static UThread* PeekNextReadyThread();
+	CRITICAL_OPERATION static UThread* PeekNextReadyThread();
 
 	///
 	///	Returns TRUE when there is a ready thread with a bigger priority than the running thread. Returns FALSE otherwise.
 	///
-	static bool HaveReadyThreads();
+	CRITICAL_OPERATION static bool HaveReadyThreads();
 
 	///
 	///	This function switches the the current thread if there are other threads to run.
@@ -176,7 +176,7 @@ class UScheduler
 	///
 	///	The scheduler function is responsible for returning the next fit thread to run.
 	///
-	static UThread& Schedule();
+	CRITICAL_OPERATION static UThread& Schedule();
 	///
 	///	Returns the current running thread
 	///
@@ -203,7 +203,7 @@ class UScheduler
 	///
 	///	This function must not be called outside the Scheduler. Switch the current thread.
 	///
-	static void UnlockInner(U32 lockCount);
+	CRITICAL_OPERATION static void UnlockInner(U32 lockCount);
 
 	///
 	///	Adds to the waiting queue the @operation. This timer will
@@ -224,7 +224,7 @@ class UScheduler
 	///	Performs context switch this function is not implemented by the kernel core
 	///		for porting reasons
 	///
-	PORT_SPECIFIC NAKED static void ContextSwitch(UThread * old, UThread * next);
+	CRITICAL_OPERATION PORT_SPECIFIC NAKED static void ContextSwitch(UThread * old, UThread * next);
 
 
 	///

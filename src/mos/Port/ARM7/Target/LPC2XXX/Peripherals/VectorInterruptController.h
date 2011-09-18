@@ -47,6 +47,8 @@ public:
 	void MaskInterrupt(U32 irqIdx);
 	void EnableInterrupt();
 	void DisableInterrupt();
+	void EnableFiq();
+	void DisableFiq();
 	void EndProcessTreatmentInterrupt();
 	///
 	///	This method should only be called when an interrupt had occured.

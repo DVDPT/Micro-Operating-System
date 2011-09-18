@@ -48,7 +48,7 @@ class InterruptController
 	///
 	///	The routine of pisr task.
 	///
-	static void PisrTaskRoutine();
+	CRITICAL_OPERATION static void PisrTaskRoutine();
 
 	friend class SystemConfiguration;
 
@@ -102,7 +102,7 @@ public:
 	///
 	///	When an Interrupt Occurs this method is responsible for calling its isr.
 	///
-	static void HandleInterrupt(InterruptArgs * args);
+	CRITICAL_OPERATION static void HandleInterrupt(InterruptArgs * args);
 
 	///
 	///	Returns true when there are Pisrs pending to execute.
@@ -112,7 +112,7 @@ public:
 	///
 	///	Runs the pending pisr
 	///
-	static void RunPendingPisrs();
+	CRITICAL_OPERATION static void RunPendingPisrs();
 
 
 

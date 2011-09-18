@@ -5,23 +5,8 @@
 #include <Mutex.h>
 #include <SystemTimer.h>
 #include <Timer.h>
+#include <Peripherals.h>
 
-#define SIZE_OF_STACK (1024 * 4 * 4)
-char stack5[SIZE_OF_STACK];
-char stack4[SIZE_OF_STACK];
-char stack3[SIZE_OF_STACK];
-char stack2[SIZE_OF_STACK];
-char stack[SIZE_OF_STACK];
-
-volatile U32 counter;
-
-Mutex mux;
-
-Thread t(stack,SIZE_OF_STACK);
-Thread t2(stack2,SIZE_OF_STACK );
-Thread t3(stack3,SIZE_OF_STACK );
-Thread t4(stack4,SIZE_OF_STACK );
-Thread t5(stack5,SIZE_OF_STACK );
 
 struct TestThreadArgs
 {
@@ -51,7 +36,7 @@ void Func2(TestThreadArgs* arg)
 
 void Func(TestThreadArgs* arg)
 {
-
+/*/
 	System::DisableInterrupts();
 	volatile U64 time = System::GetTickCount();
 	volatile U64 time2;
@@ -69,7 +54,9 @@ void Func(TestThreadArgs* arg)
 
 	System::GetStandardOutput().Write("hard->");
 	System::GetStandardOutput().Write((hardTimer.GetTimerCount() - timea) / NR_OF_LOOPS);
-
+/*/
+	while(true)
+		Thread::Yield();
 
 }
 //*/
@@ -89,7 +76,16 @@ int main()
 
 	System::DisableInterrupts();
 
-	t.Start((ThreadFunction)Func,(ThreadArgument)&arg1);
+	GPIO& gpio = PeripheralContainer::GetInstance().GetGpio();
+	int * port0 = (int*)0xe0028008;
+	*port0 |= 1<<10;
+	port0 = (int*)0xe0028004;
+	*port0 = (1<<10);
+	port0 = (int*)0xe002800C;
+	*port0 = (1<<10);
+
+	System::DisableInterrupts();
+	//t.Start((ThreadFunction)Func,(ThreadArgument)&arg1);
 /*/
 	t2.Start((ThreadFunction)Func,(ThreadArgument)&arg2);
 
@@ -102,8 +98,8 @@ int main()
 	hardTimer.Enable();
 	Func(&arg3);
 
-	int val = counter;
-	val++;
+	//int val = counter;
+	//val++;
 	//*/
 	return 0;
 }

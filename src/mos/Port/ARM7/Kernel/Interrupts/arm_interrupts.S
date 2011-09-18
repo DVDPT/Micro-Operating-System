@@ -1,22 +1,28 @@
-.EQU SYSTEM_MODE,0xD3
-.EQU IRQ_MODE, 0xD2
+.EQU SYSTEM_MODE,0x13
+.EQU IRQ_MODE, 0x12
+.EQU FIQ_MODE, 0x11
+
+.EQU NO_INTERRUPTS, 0xc0
+
+.EQU CPSR_MODE_MASK, 0x1f
+.EQU FIQ_MASK, 0x40
 .EQU IRQ_MASK, 0x80
 .EQU SIZE_OF_USER_MODE_STORED_REGISTERS_SIZE,(14*4)
+.EQU FIQ_STATUS, 0xfffff004
+
 
 .text
 .global arm_common_trap,arm_enable_interrupt,arm_disable_interrupt,arm_is_intr_enable
 
 arm_enable_interrupt:
     mrs     r1, CPSR
-    bic     r1, r1, #IRQ_MASK
+    bic     r1, r1, #IRQ_MASK | FIQ_MASK
     msr     CPSR_c, r1
     bx lr
 
-
-
 arm_disable_interrupt:
     mrs     r1, CPSR
-    orr     r1, r1, #IRQ_MASK
+    orr     r1, r1, #IRQ_MASK | FIQ_MASK
     msr     CPSR_c, r1
     bx lr
 
@@ -51,16 +57,23 @@ arm_common_trap:
     /// +------------+
     //
 
+	push {lr}
 
+	mrs lr,cpsr
+	and lr,lr,#CPSR_MODE_MASK
+	cmp lr,#FIQ_MODE	//0 -> irq, 1->fiq
+	beq fiq_trap
+	pop {lr}
     ///
     /// Change back to system mode to store all registers.
     ///
-    msr cpsr,#SYSTEM_MODE
+    msr cpsr,#SYSTEM_MODE | NO_INTERRUPTS
+
 
     ///
     /// Leave space for the PC register stored in IRQ mode.
     ///
-    push {r0}
+    sub sp,sp,#4
 
     ///
     /// Save registers on user stack.
@@ -75,7 +88,7 @@ arm_common_trap:
     ///
     /// Go back to irq mode
     ///
-    msr cpsr,#IRQ_MODE
+    msr cpsr,#IRQ_MODE | NO_INTERRUPTS
 
     ///
     /// PC (lr in IRQ MODE) is 1 instruction ahead, so put it in the correct position.
@@ -113,12 +126,7 @@ arm_common_trap:
     ///
     pop {r0}
 
-
-    ///
-    /// Restore flags.
-    ///
-    ldmfd  r0!, {r1}
-    msr cpsr,r1
+	msr cpsr,#SYSTEM_MODE | NO_INTERRUPTS
 
     ///
     /// Set the stack pointer.
@@ -126,13 +134,52 @@ arm_common_trap:
     mov sp,r0
 
     ///
+    /// Restore flags.
+    ///
+    pop {r1}
+    msr cpsr,r1
+
+
+
+    ///
     /// Restore all registers.
     ///
     pop {r0-r12,lr,pc}
+ 	/*pop {r12}
+ 	ldr r11,=0x20000056
+	cmp r12,r11
+	beq xpto
+	mov pc,r12
+*/
+
+fiq_trap:
+
+	pop {lr}
+	sub lr,lr,#4
 
 
+	///
+	///	In fiq mode, store only needed registers.
+	///
+	stmfd sp!, {r0-r7,lr}
 
-    .end
+	///
+	/// Call the fiq handler.
+	///
+	bl fiq_handler
+
+	///
+	///	Restore stored registers.
+	///
+	ldmfd sp!, {r0-r7,pc}^
+
+
+	///
+	///	Restore program counter and flags.
+	///
+	//subs pc,lr,#4
+
+.end
 
 
 

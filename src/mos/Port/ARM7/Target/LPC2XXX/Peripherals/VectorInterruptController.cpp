@@ -33,8 +33,9 @@ VectorInterruptController::VectorInterruptController()
 
 void VectorInterruptController::SetISR(U32 entry, ISR function, U32 priority, U32 fiq)
 {
+	_interruptController = (LPC22xx_VIC)VIC_BASE_ADDRESS;
 	//_interruptController.VICVectAddrs[entry] =(U32)function;
-	_interruptController->VICVectAddrs[priority] = (U32)function;
+	_interruptController->VICVectAddrs[entry] = (U32)function;
 	//_isrs[entry] = function;
 	_interruptController->VICVectCntls[priority] = (entry | VICVectCntl_IRQ_ENABLE) & 0x3F;
 
@@ -79,5 +80,19 @@ void VectorInterruptController::DisableInterrupt()
 {
 	asm("mrs r0, cpsr");
 	asm("orr r0, r0, #(3 << 6)");
+	asm("msr cpsr_c, r0");
+}
+
+void VectorInterruptController::EnableFiq()
+{
+	asm("mrs r0, cpsr");
+	asm("bic r0, r0, #(1 << 5)");
+	asm("msr cpsr_c, r0");
+}
+
+void VectorInterruptController::DisableFiq()
+{
+	asm("mrs r0, cpsr");
+	asm("orr r0, r0, #(1 << 5)");
 	asm("msr cpsr_c, r0");
 }

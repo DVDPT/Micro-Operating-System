@@ -14,6 +14,15 @@ extern "C"
 	void arm_enable_interrupt();
 	void arm_disable_interrupt();
 	bool arm_is_intr_enable();
+
+	/*
+#ifndef fiq_handler
+	void fiq_handler()
+	{
+		System::GetStandardOutput().Write("FIQ");
+	}
+#endif
+*/
 }
 
 void InterruptController::EnableInterrupts()

@@ -49,6 +49,7 @@ void InterruptController::RunPendingPisrs()
 
 void InterruptController::HandleInterrupt(InterruptArgs * args)
 {
+
 	U8 interruptVectorIndex = GetCurrentInterruptVectorIndex();
 
 	DebugAssertNotEquals(interruptVectorIndex,KERNEL_INTERRUPTS_NOT_ATTENDING_AN_INTERRUPT);
@@ -63,8 +64,8 @@ void InterruptController::HandleInterrupt(InterruptArgs * args)
 	DebugExec(irqDesc->IncrementInterruptCounterDebug());
 
 	irqDesc->IncrementNumberOfNestedIsr();
-
-	switch(irqDesc->RunIsr(args))
+	IsrCompletationStatus irqResult = irqDesc->RunIsr(args);
+	switch(irqResult )
 	{
 		case FINISHED_HANDLING:
 			break;
@@ -105,6 +106,8 @@ void InterruptController::HandleInterrupt(InterruptArgs * args)
 
 	}
 	InterruptHandled();
+
+
 }
 
 void InterruptController::PisrTaskRoutine()

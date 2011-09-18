@@ -1,14 +1,17 @@
 ///
 /// Constants
 ///
-.EQU SYSTEM_MODE,0xD3
-.EQU IRQ_MODE, 0xD2
+.EQU INTERRUPTS_DISABLE, 0xC0
+.EQU SYSTEM_MODE,0x13
+.EQU IRQ_MODE, 0x12
+.EQU FIQ_MODE, 0X11
 .EQU UNDIFINED_MODE, 0x1B
 .EQU DATA_ABORT_MODE, 0x17
 
 
-.EQU IRQ_STACK_SIZE,2048
-.EQU USER_STACK_SIZE, 2048 * 4 + IRQ_STACK_SIZE
+.EQU IRQ_STACK_SIZE,2048 * 4 * 2
+.EQU FIQ_STACK_SIZE, 2048 * 4 * 2
+.EQU USER_STACK_SIZE, (2048 * 4 * 2) + IRQ_STACK_SIZE + FIQ_STACK_SIZE
 
 
 
@@ -31,7 +34,7 @@ _start:
     ldr pc, .data_abort_handler_address          /* Data abort */
     .word   0xb5403fba                           /* Reserved */
     ldr pc, [pc, #-0xFF0]                        /* IRQ */
-    ldr pc, [pc, #-0xFF0]                        /* FIQ */
+    ldr pc, [pc, #-0xFF0]                         /* FIQ */
 
 ///
 /// Exception handlers addresses
@@ -44,7 +47,8 @@ _start:
     .word .prefetch_abort_handler
 .data_abort_handler_address:
     .word   .data_abort_handler
-
+.fiq_handler_address:
+	.word fiq_handler
 
 ///
 /// Exception handlers
@@ -65,6 +69,39 @@ _start:
    b .
 
 
+.fiq_handler:
+
+	//pop {lr}
+	//add sp,sp,#4
+
+
+	//msr cpsr, #FIQ_MODE | NO_INTERRUPTS
+
+
+	sub lr,lr,#4
+
+
+	///
+	///	In fiq mode, store only needed registers.
+	///
+	stmfd sp!, {r0-r7,lr}
+
+	///
+	/// Call the fiq handler.
+	///
+	bl fiq_handler
+
+	///
+	///	Restore stored registers.
+	///
+	ldmfd sp!,{r0-r7,pc}^
+
+	///
+	///	Restore program counter and flags.
+	///
+	//subs pc,lr,#4
+
+
 ///
 /// System initialization
 ///
@@ -73,7 +110,7 @@ _system_start:
     ///
     /// Change to IRQ mode to configure its stack
     ///
-    msr cpsr,#IRQ_MODE
+    msr cpsr,#IRQ_MODE | INTERRUPTS_DISABLE
     ldr sp, =__stack_end__
     mov r0,sp
 
@@ -82,10 +119,21 @@ _system_start:
     ///
     sub r0,r0,#IRQ_STACK_SIZE
 
+	///
+	///	Initialize fiq stack.
+	///
+	msr cpsr,#FIQ_MODE | INTERRUPTS_DISABLE
+	mov sp,r0
+	mov lr, #0123
+	///
+	///	Sub the size of fiq to assert user mode stack.
+	///
+	sub r0,r0,#FIQ_STACK_SIZE
+
     ///
     /// Change to system mode
     ///
-    msr cpsr,#SYSTEM_MODE
+    msr cpsr,#SYSTEM_MODE | INTERRUPTS_DISABLE
 
     ///
     /// Initialize Program Stack
@@ -117,7 +165,6 @@ _system_start:
     ///
     bl system_main
     b .
-
 
 
 
