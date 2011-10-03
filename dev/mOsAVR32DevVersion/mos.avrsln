@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# AvrStudio Solution File, Format Version 11.00
+Project("{D1100916-62DA-4D80-A9B4-55A1E7CCEEB3}") = "mos", "mos\mos.avrgccproj", "{E28E1E42-6772-412A-BA98-EC9161B25EBE}"
+EndProject
+Project("{D1100916-62DA-4D80-A9B4-55A1E7CCEEB3}") = "mosTest", "mosTest\mosTest.avrgccproj", "{D3F40813-DF45-4FE5-9909-A4D939B01D3F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E28E1E42-6772-412A-BA98-EC9161B25EBE}.Debug|AVR.ActiveCfg = Debug|AVR
+		{E28E1E42-6772-412A-BA98-EC9161B25EBE}.Debug|AVR.Build.0 = Debug|AVR
+		{E28E1E42-6772-412A-BA98-EC9161B25EBE}.Release|AVR.ActiveCfg = Release|AVR
+		{E28E1E42-6772-412A-BA98-EC9161B25EBE}.Release|AVR.Build.0 = Release|AVR
+		{D3F40813-DF45-4FE5-9909-A4D939B01D3F}.Debug|AVR.ActiveCfg = Debug|AVR
+		{D3F40813-DF45-4FE5-9909-A4D939B01D3F}.Debug|AVR.Build.0 = Debug|AVR
+		{D3F40813-DF45-4FE5-9909-A4D939B01D3F}.Release|AVR.ActiveCfg = Release|AVR
+		{D3F40813-DF45-4FE5-9909-A4D939B01D3F}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
