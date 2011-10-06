@@ -1,0 +1,13 @@
+
+
+
+#pragma once
+
+#define NMI_MODE (7)
+#define EXCEPTION_MODE (6)
+#define INTERRUPT_LEVEL_3_MODE (5)
+#define INTERRUPT_LEVEL_2_MODE (4)
+#define INTERRUPT_LEVEL_1_MODE (3)
+#define INTERRUPT_LEVEL_0_MODE (2)
+#define SUPERVISOR_MODE (1)
+#define APPLICATION_MODE (0)

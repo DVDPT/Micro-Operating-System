@@ -1,0 +1,20 @@
+/*
+ * PlatformInterrupts.h
+ *
+ *  Created on: Aug 5, 2011
+ *      Author: DVD
+ */
+
+#pragma once
+
+
+#undef KERNEL_INTERRUPTS_TIMER
+#undef KERNEL_INTERRUPTS_SERIAL
+#undef KERNEL_INTERRUPTS_ADC
+#undef KERNEL_INTERRUPTS_WATCHDOG
+
+#define KERNEL_INTERRUPTS_TIMER 4
+#define KERNEL_INTERRUPTS_TIMER1 5
+#define KERNEL_INTERRUPTS_SERIAL 6
+#define KERNEL_INTERRUPTS_ADC 0x18
+#define KERNEL_INTERRUPTS_WATCHDOG 0

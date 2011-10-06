@@ -12,3 +12,6 @@ src/test/Release
 src/RemoteSystemsTempFiles
 *.*avrgccproj
 
+*.d
+Debug/
+*.tmp
