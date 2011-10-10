@@ -9,6 +9,7 @@
 
 void platform_init()
 {
+	/*
 	UART0 uart = PeripheralContainer::GetInstance().GetUart0();
 	Timer& timer = PeripheralContainer::GetInstance().GetTimer0();
 
@@ -18,5 +19,6 @@ void platform_init()
 	SystemConfiguration::GetInstance()
 		.WithTimer(timer.GetInterruptDescriptor())
 		.WithOutputStream(PeripheralContainer::GetInstance().GetUart0());
-
+*/
+	
 }

@@ -5,8 +5,6 @@ Project("{D1100916-62DA-4D80-A9B4-55A1E7CCEEB3}") = "mos", "mos\mos.avrgccproj",
 EndProject
 Project("{D1100916-62DA-4D80-A9B4-55A1E7CCEEB3}") = "mosTest", "mosTest\mosTest.avrgccproj", "{D3F40813-DF45-4FE5-9909-A4D939B01D3F}"
 EndProject
-Project("{D1100916-62DA-4D80-A9B4-55A1E7CCEEB3}") = "demo", "demo\demo.avrgccproj", "{0880A813-685F-4289-8F92-D44B2C1F8792}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AVR = Debug|AVR
@@ -21,10 +19,6 @@ Global
 		{D3F40813-DF45-4FE5-9909-A4D939B01D3F}.Debug|AVR.Build.0 = Debug|AVR
 		{D3F40813-DF45-4FE5-9909-A4D939B01D3F}.Release|AVR.ActiveCfg = Release|AVR
 		{D3F40813-DF45-4FE5-9909-A4D939B01D3F}.Release|AVR.Build.0 = Release|AVR
-		{0880A813-685F-4289-8F92-D44B2C1F8792}.Debug|AVR.ActiveCfg = Debug|AVR
-		{0880A813-685F-4289-8F92-D44B2C1F8792}.Debug|AVR.Build.0 = Debug|AVR
-		{0880A813-685F-4289-8F92-D44B2C1F8792}.Release|AVR.ActiveCfg = Release|AVR
-		{0880A813-685F-4289-8F92-D44B2C1F8792}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

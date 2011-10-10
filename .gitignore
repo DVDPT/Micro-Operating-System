@@ -10,7 +10,6 @@ src/mos/Release
 src/test/Debug
 src/test/Release
 src/RemoteSystemsTempFiles
-*.*avrgccproj
 
 *.d
 Debug/

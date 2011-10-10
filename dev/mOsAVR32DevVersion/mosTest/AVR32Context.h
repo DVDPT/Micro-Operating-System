@@ -1,10 +1,7 @@
 #pragma once
 
-#include "SystemTypes.h"
 #include "AVR32A.h"
-//
-//ARM7 context (no thumb)
-//
+
 struct AVR32Context
 {
 
@@ -41,7 +38,6 @@ struct AVR32Context
 	};
 
 	U32 r7,r6,r5,r4,r3,r2,r1,r0;
-	
 	AVR32Flags sr;
 	U32 pc;
 	U32 lr,r12,r11,r10,r9,r8;
@@ -50,7 +46,11 @@ struct AVR32Context
 	
 	void SetThreadStartFunction(void (*ThreadStart)())
 	{
-		sr.mode = SUPERVISOR_MODE;
+		sr.status_register = SUPERVISOR_MODE << STATUS_REGISTER_MODE_POSITION;
+		r0  = 0x0101010;
+		r1  = 0x1111000;
+		r2  = 0x2222000;
+		r3  = 0x3333000; 
 		r4  = 0x1111111;
 		r5  = 0x2222222;
 		r6  = 0x3333333;
@@ -60,7 +60,7 @@ struct AVR32Context
 		r10 = 0x7777777;
 		r11 = 0x8888888;
 		r12 = 0x9999999;
-		lr = ThreadStart;
+		lr = (U32)ThreadStart;
 		pc = (U32)ThreadStart;
 	}
 };

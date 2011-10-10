@@ -106,16 +106,14 @@ udata_clear_loop:
   brlo    udata_clear_loop
 udata_clear_loop_end:
 
-
-
   // initialize ctors
-	lda.w r12,__init_array_start
-	lda.w r11,__fini_array_end
-	rcall init_constructors
+  lda.w r12,__init_array_start
+  lda.w r11,__fini_array_end
+  rcall init_constructors
 
 
-  // Start the show.
-  lda.w   pc, main
+  // Call mos start function
+  lda.w   pc, system_main
 
 
 

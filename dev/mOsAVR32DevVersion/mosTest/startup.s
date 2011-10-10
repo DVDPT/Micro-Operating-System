@@ -45,7 +45,7 @@
 
 .equ AVR32_EVBA, 0x00000004
 .equ AVR32_SR_EM_OFFSET, 21
-.equ _evba,0
+//.equ _evba,0
 
 //! @{
 //! \verbatim

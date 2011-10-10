@@ -1,0 +1,368 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>5.0</ProjectVersion>
+    <ProjectGuid>{e28e1e42-6772-412a-ba98-ec9161b25ebe}</ProjectGuid>
+    <avrdevice>AT32UC3A3256</avrdevice>
+    <avrdeviceseries>none</avrdeviceseries>
+    <OutputType>StaticLibrary</OutputType>
+    <Language>CPP</Language>
+    <OutputFile>lib$(MSBuildProjectName).a</OutputFile>
+    <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
+    <UseGlobalToolchain>True</UseGlobalToolchain>
+    <ToolchainDirPath>
+    </ToolchainDirPath>
+    <MakeDirPath>
+    </MakeDirPath>
+    <GlobalToolchainPath>C:\Program Files (x86)\Atmel\AVR Studio 5.0\AVR ToolChain\bin</GlobalToolchainPath>
+    <AvrGccProjectExtensions>
+    </AvrGccProjectExtensions>
+    <AssemblyName>mos</AssemblyName>
+    <Name>mos</Name>
+    <RootNamespace>mos</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ToolchainSettings>
+      <AvrGcc32>
+        <avr32gcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</avr32gcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
+        <avr32gcc.compiler.optimization.level>Optimize for size (-Os)</avr32gcc.compiler.optimization.level>
+        <avr32gcc.compiler.optimization.UseAssemblerForPseudoInstructions>True</avr32gcc.compiler.optimization.UseAssemblerForPseudoInstructions>
+        <avr32gcc.compiler.warnings.AllWarnings>True</avr32gcc.compiler.warnings.AllWarnings>
+        <avr32gcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>True</avr32gcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>
+        <avr32gcccpp.compiler.optimization.level>Optimize for size (-Os)</avr32gcccpp.compiler.optimization.level>
+        <avr32gcccpp.compiler.optimization.UseAssemblerForPseudoInstructions>True</avr32gcccpp.compiler.optimization.UseAssemblerForPseudoInstructions>
+        <avr32gcccpp.compiler.warnings.AllWarnings>True</avr32gcccpp.compiler.warnings.AllWarnings>
+        <avr32gcccpp.linker.optimization.GarbageCollectUnusedSections>True</avr32gcccpp.linker.optimization.GarbageCollectUnusedSections>
+        <avr32gcccpp.linker.optimization.PutReadOnlyDataInWritableDataSection>True</avr32gcccpp.linker.optimization.PutReadOnlyDataInWritableDataSection>
+        <avr32gcccpp.linker.optimization.AllowDirectReferencesToDataSection>True</avr32gcccpp.linker.optimization.AllowDirectReferencesToDataSection>
+      </AvrGcc32>
+    </ToolchainSettings>
+    <GenerateHexFile>True</GenerateHexFile>
+    <GenerateMapFile>True</GenerateMapFile>
+    <GenerateListFile>True</GenerateListFile>
+    <GenerateEepFile>True</GenerateEepFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <ToolchainSettings>
+      <AvrGcc32>
+        <avr32gcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</avr32gcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
+        <avr32gcc.compiler.optimization.UseAssemblerForPseudoInstructions>True</avr32gcc.compiler.optimization.UseAssemblerForPseudoInstructions>
+        <avr32gcc.compiler.optimization.DebugLevel>Maximum (-g3)</avr32gcc.compiler.optimization.DebugLevel>
+        <avr32gcc.compiler.warnings.AllWarnings>True</avr32gcc.compiler.warnings.AllWarnings>
+        <avr32gcccpp.linker.optimization.GarbageCollectUnusedSections>True</avr32gcccpp.linker.optimization.GarbageCollectUnusedSections>
+        <avr32gcccpp.linker.optimization.PutReadOnlyDataInWritableDataSection>True</avr32gcccpp.linker.optimization.PutReadOnlyDataInWritableDataSection>
+        <avr32gcccpp.linker.optimization.AllowDirectReferencesToDataSection>True</avr32gcccpp.linker.optimization.AllowDirectReferencesToDataSection>
+        <avr32gcccpp.assembler.debugging.DebugLevel>Maximum (-g3)</avr32gcccpp.assembler.debugging.DebugLevel>
+        <avr32gcccpp.preprocessingassembler.debugging.DebugLevel>Maximum (-g3)</avr32gcccpp.preprocessingassembler.debugging.DebugLevel>
+        <avr32gcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>True</avr32gcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>
+        <avr32gcccpp.compiler.optimization.UseAssemblerForPseudoInstructions>True</avr32gcccpp.compiler.optimization.UseAssemblerForPseudoInstructions>
+        <avr32gcccpp.compiler.optimization.DebugLevel>Maximum (-g3)</avr32gcccpp.compiler.optimization.DebugLevel>
+        <avr32gcccpp.compiler.warnings.AllWarnings>True</avr32gcccpp.compiler.warnings.AllWarnings>
+      </AvrGcc32>
+    </ToolchainSettings>
+    <GenerateHexFile>True</GenerateHexFile>
+    <GenerateMapFile>True</GenerateMapFile>
+    <GenerateListFile>True</GenerateListFile>
+    <GenerateEepFile>True</GenerateEepFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Common" />
+    <Folder Include="Config" />
+    <Folder Include="Kernel" />
+    <Folder Include="Kernel\Common" />
+    <Folder Include="Kernel\Concurrent" />
+    <Folder Include="Kernel\Core" />
+    <Folder Include="Kernel\Interrupts" />
+    <Folder Include="System" />
+    <Folder Include="Startup" />
+    <Folder Include="Port" />
+    <Folder Include="Port\AVR32A" />
+    <Folder Include="Port\AVR32A\Common" />
+    <Folder Include="Port\AVR32A\Common\Config" />
+    <Folder Include="Port\AVR32A\Kernel\" />
+    <Folder Include="Port\AVR32A\Kernel\Core" />
+    <Folder Include="Port\AVR32A\Kernel\Concurrent" />
+    <Folder Include="Port\AVR32A\Kernel\Interrupts" />
+    <Folder Include="Port\AVR32A\Target" />
+    <Folder Include="Port\AVR32A\Startup" />
+    <Folder Include="Port\AVR32A\Target\UC3" />
+    <Folder Include="Port\AVR32A\Target\UC3\EVK1104" />
+    <Folder Include="Port\AVR32A\Target\UC3\Common" />
+    <Folder Include="Port\AVR32A\Target\UC3\Config" />
+    <Folder Include="Port\AVR32A\Target\UC3\EVK1104\Config" />
+    <Folder Include="Port\AVR32A\Target\UC3\EVK1104\Startup" />
+    <Folder Include="Port\AVR32A\Target\UC3\Kernel" />
+    <Folder Include="Port\AVR32A\Target\UC3\Kernel\Interrupts" />
+    <Folder Include="Port\AVR32A\Target\UC3\System" />
+    <Folder Include="Port\AVR32A\Target\UC3\Startup" />
+    <Folder Include="Port\AVR32A\Target\UC3\Peripherals" />
+    <Folder Include="Port\AVR32A\Target\UC3\System\Clock" />
+    <Folder Include="Port\AVR32A\Target\UC3\System\Interfaces" />
+    <Folder Include="Port\Common" />
+    <Folder Include="System\Clock" />
+    <Folder Include="System\Interfaces" />
+    <Folder Include="System\IO" />
+    <Folder Include="System\IO\Streams" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Arrays.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Common\Assert.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Common\Assert.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Common\Bits.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Common\Debug.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Common\List.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Config\SystemConfig.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Config\SystemConfiguration.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Config\SystemConfiguration.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Common\KernelConfig.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Common\KernelConstants.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Common\Threading.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Concurrent\Interlocked.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Concurrent\Monitor.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Concurrent\Monitor.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Concurrent\Mutex.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Concurrent\Mutex.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Concurrent\WaitBlock.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Concurrent\WaitBlock.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Core\UScheduler.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Core\UScheduler.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Core\UTask.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Core\UThread.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Core\UThread.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Interrupts\CommonTrap.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Interrupts\InterruptController.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Interrupts\InterruptController.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Interrupts\InterruptDescriptor.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Interrupts\InterruptDescriptor.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Interrupts\Interrupts.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Interrupts\SystemInterruptDescriptor.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kernel\Interrupts\SystemInterruptDescriptor.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Common\AVR32A.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Common\Config\PortConfig.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Common\Config\PortKernelConfig.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Kernel\Concurrent\Interlocked.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Kernel\Concurrent\interlockedimpl.S">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Kernel\Core\AVR32Context.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Kernel\Core\AVR32Scheduler.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Kernel\Core\avr32_context_switch.s">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Kernel\Interrupts\ARMInterrupt.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Kernel\Interrupts\PortInterrupts.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Startup\startup.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Common\APBDivider.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Common\LPC2xxx.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Common\LPC2xxxTypes.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Common\PhaseLockedLoop.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Common\PhaseLockedLoop.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Common\PinConnectBlock.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Common\PinConnectBlock.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Common\StructsLPC229x.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Config\PlatformConfig.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\EVK1104\Startup\startup.s">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Kernel\Interrupts\LPC2xxxInterrupt.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Kernel\Interrupts\PlatformInterrupts.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Peripherals\ADC.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Peripherals\ADC.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Peripherals\GPIO.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Peripherals\GPIO.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Peripherals\Peripherals.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Peripherals\Peripherals.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Peripherals\Timer.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Peripherals\Timer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Peripherals\UART0.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Peripherals\UART0.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Peripherals\VectorInterruptController.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Peripherals\VectorInterruptController.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\Startup\UC3Startup.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\System\Clock\LPC2xxxClock.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\AVR32A\Target\UC3\System\Interfaces\LPC2xxxTimer.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Port\Common\GCCCompilerAtributes.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Startup\system_main.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="System\Clock\Clock.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="System\Clock\Clock.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="System\Interfaces\SystemTimer.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="System\Interfaces\SystemTimer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="System\IO\Streams\IOutputStream.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="System\IO\Streams\TextOutputStream.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="System\IO\Streams\TextOutputStream.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="System\System.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="System\System.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="System\SystemTypes.h">
+      <SubType>compile</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Common\pure_virtual_methods.c">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Port\AVR32A\Target\UC3\EVK1104\Config\evk1104UC3.lds">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Startup\data_init.c">
+      <SubType>compile</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\AvrGCC32.targets" />
+</Project>

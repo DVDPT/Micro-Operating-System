@@ -30,12 +30,13 @@ public:
 
 	Cenas c(10) ;
 	Cenas d(1);
-
+extern void func();
 int main(void)
 {
 
 	int i = c.getT();
 	i+= d.getT();
+	func();
     while(1)
     {
         i++;

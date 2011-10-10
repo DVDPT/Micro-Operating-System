@@ -161,7 +161,7 @@ SECTIONS
   PROVIDE (__init_array_end = .);
 
   .fini_array     : { KEEP (*(.fini_array)) } >INTRAM AT>FLASH :INTRAM_AT_FLASH
-  PROVIDE (__fini_array_end = .);
+ 
   .ctors          :
   {
     /* gcc uses crtbegin.o to find the start of
@@ -182,6 +182,7 @@ SECTIONS
     KEEP (*(SORT(.ctors.*)))
     KEEP (*(.ctors))
   } >INTRAM AT>FLASH :INTRAM_AT_FLASH
+   PROVIDE (__fini_array_end = .);
   .dtors          :
   {
     KEEP (*crtbegin*.o(.dtors))
