@@ -14,7 +14,7 @@
  ///	R12 have the current thread pointer, R11 the next thread pointer.
  ///
  avr32_context_switch:
-
+ 
 ///
 ///	Store r8
 ///

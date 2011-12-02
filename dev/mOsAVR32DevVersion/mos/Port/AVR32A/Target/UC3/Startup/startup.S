@@ -45,7 +45,7 @@
 
 .equ AVR32_EVBA, 0x00000004
 .equ AVR32_SR_EM_OFFSET, 21
-.equ _evba,0
+//.equ _evba,0
 
 //! @{
 //! \verbatim
@@ -106,14 +106,16 @@ udata_clear_loop:
   brlo    udata_clear_loop
 udata_clear_loop_end:
 
+
+
   // initialize ctors
-  lda.w r12,__init_array_start
-  lda.w r11,__fini_array_end
-  rcall init_constructors
+	lda.w r12,__init_array_start
+	lda.w r11,__fini_array_end
+	rcall init_constructors
 
 
-  // Call mos start function
-  lda.w   pc, system_main
+  // Start the show.
+  lda.w   pc, main
 
 
 

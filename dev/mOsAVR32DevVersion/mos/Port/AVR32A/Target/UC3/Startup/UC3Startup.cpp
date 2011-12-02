@@ -1,10 +1,7 @@
 #include "InterruptController.h"
 #include "SystemInterruptDescriptor.h"
 #include "PlatformConfig.h"
-
-#include "Peripherals.h"
-
-#include "Clock.h"
+#include "UC3A3256.h"
 
 
 void platform_init()
@@ -21,4 +18,12 @@ void platform_init()
 		.WithOutputStream(PeripheralContainer::GetInstance().GetUart0());
 */
 	
+	///
+	///	add timer mask and unmask function
+	///
+	InterruptController::SetInterruptDescriptor(UC3Timer::GetTimerInterruptDescriptor());
+	
+	SystemConfiguration::GetInstance().WithTimer(UC3Timer::GetTimerInterruptDescriptor());
+	
+	INTC->SetInterruptMaskChanger(KERNEL_INTERRUPTS_TIMER,UC3Timer::MaskInterrupt);
 }
